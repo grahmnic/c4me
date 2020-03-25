@@ -51,9 +51,9 @@ export default function BasicExample() {
                     <li>Review Decisions</li>
                   </div>
                 </div>
-                
+
                 <li className="navLink">
-                  <Link to="/login">Login</Link>
+                  <Link className="login" to="/login">Login</Link>
                 </li>
               </ul>
 
