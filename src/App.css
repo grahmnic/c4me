@@ -42,7 +42,8 @@
   width: 100vw;
   height: 75px;
   position: fixed;
-  
+  z-index: 100;
+  background: white;
 }
 
 .headerBar {
@@ -88,7 +89,7 @@ a:hover {
 .content {
   width: 100vw;
   display: block;
-  padding-top: 1000px;
+  padding-top: 95px;
 }
 
 

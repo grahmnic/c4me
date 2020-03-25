@@ -47,6 +47,7 @@
 
 .showing {
     flex: 5 !important;
+    filter: brightness(100%) blur(0px) !important;
 }
 
 .showingInfo {
@@ -84,8 +85,9 @@
     background: #d4e157;
     position: relative;
     z-index: 2;
+    filter: brightness(50%);
     font-family: 'Roboto Mono', monospace;
-    transition: flex 0.5s;
+    transition: flex filter 0.5s;
 }
 
 .login-subtitle-1 {
@@ -432,13 +434,15 @@ img {
 
 .login-right {
     flex: 1;
-    background-image: url("../../assets/images/class.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
+    background: #4527a0;
     position: relative;
     z-index: 4;
     transition: flex 0.5s;
 }
+
+
+
+/* SHIFT BUTTON CSS */
 
 .login-shift {
     position: relative;
