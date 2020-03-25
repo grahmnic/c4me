@@ -41,7 +41,6 @@
   width: 100vw;
   height: 75px;
   position: fixed;
-  
 }
 
 .headerBar {
@@ -73,16 +72,7 @@
   display: inline;
 }
 
-a {
-  color: black;
-  text-decoration: none;
-}
 
-a:hover {
-  background-color: hotpink;
-  transition: 0.5s;
-  
-}
 
 .content {
   width: 100vw;
@@ -119,7 +109,7 @@ a:hover {
 .dropdown-content li:hover {
   cursor: pointer;
   background-color: rgb(55, 255, 160);
-  transition: 1s;
+  transition: 0.5s;
 }
 
 .login {
@@ -134,4 +124,82 @@ a:hover {
   padding-right: 5px;
 }
 
+.navLink.responsive {
+  display: none;
+}
 
+@media (min-width: 1000px) {
+  a {
+    color: black;
+    text-decoration: none;
+  }
+  
+  a:hover {
+    background-color: hotpink;
+    transition: 0.5s;
+    
+  }
+}
+
+@media (max-width: 999px) {
+
+  .navBar {
+    display: none;
+  }
+
+  .navLink.responsive {
+    margin-right: 3rem;
+    display: block;
+    float: right;
+  }
+
+  .navBar.responsive {
+    display: inline-block;
+    position: relative;
+  }
+
+  .respMenu:hover a {
+    float: right;
+    cursor:pointer;
+    color: gold;
+    background-color: black;
+  }
+
+  a:active {
+    background-color: rgb(150, 113, 22);
+  }
+
+  .respDropdown {
+    display: none;
+  }
+
+  .respMenu:hover .respDropdown{
+    position: absolute;
+    right:0;
+    background-color: goldenrod;
+    float: right;
+    display: block;
+    z-index: 1;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  }
+
+  .respLink {
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+    border-right: 1px solid black;
+    border-left: 1px solid black;
+    padding: 5px;
+  }
+  
+  .respLink:hover {
+    cursor: pointer;
+    background-color: gold;
+    transition: 0.5s;
+    
+  }
+
+
+
+  
+
+}

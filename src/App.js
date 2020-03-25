@@ -26,9 +26,11 @@ export default function BasicExample() {
             <div className="navBarWrap">
 
               <ul className="navBar">
+
                 <li className="navLink">
                   <Link to="/">Home</Link>
                 </li>
+
                 <div className="navLink dropdown">
                   <li>
                     <Link to="/">Student Services</Link>
@@ -40,7 +42,6 @@ export default function BasicExample() {
                   </div>
                 </div>
                 
-
                 <div className="navLink dropdown">
                   <li>
                     <Link to="/">Administration</Link>
@@ -56,6 +57,19 @@ export default function BasicExample() {
                   <Link className="login" to="/login">Login</Link>
                 </li>
               </ul>
+
+              <div className="navLink responsive">
+                  <div className="navBar responsive">
+                    <div className="respMenu">
+                      <a>MENU</a>
+                      <div className="respDropdown">
+                        <li className="respLink">Student Services</li>
+                        <li className="respLink">Administration</li>
+                        <li className="respLink">Login</li>
+                      </div>
+                    </div>
+                  </div>
+              </div>
 
             </div>
           </div>
