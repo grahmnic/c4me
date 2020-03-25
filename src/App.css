@@ -1,6 +1,6 @@
 .App {
   text-align: center;
-  height: 100vh;
+  height: 100vw;
 }
 
 .App-logo {
@@ -196,7 +196,6 @@
     cursor: pointer;
     background-color: gold;
     transition: 0.5s;
-    
   }
 
 
