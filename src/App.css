@@ -40,17 +40,32 @@
 .header {
   width: 100vw;
   height: 75px;
+  position: fixed;
+}
+
+.headerBar {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.logo {
+  flex: .2;
+}
+
+.navBarWrap {
+  flex: 3;
 }
 
 .navBar {
-
+  padding-left: 40px;
+  padding-right: 40px;
   float: right;
 }
 
 .navLink {
   font-size: 25px;
   list-style-type: none;
-  margin: 10px;
+  margin: 15px;
   padding: 0;
   display: inline;
 }
@@ -72,6 +87,37 @@ a:active {
 .content {
   width: 100vw;
   display: block;
+  padding-top: 1000px;
 }
 
+
+/* Dropdown */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-link {
+  border: none;
+  outline: none;
+  margin: 0;
+  font-family: inherit;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  /* margin-left: 14px; */
+}
+
+.dropdown:hover .dropdown-content {
+  display: block; 
+  background-color: #f1f1f1;
+}
+.dropdown-content li:hover {
+  cursor: pointer;
+  background-color: hotpink;
+}
 

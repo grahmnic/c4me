@@ -1,5 +1,6 @@
 // LIBRARIES
 import React from "react";
+import Logo from "./logo.PNG";
 import './App.css';
 import {
   BrowserRouter as Router,
@@ -11,29 +12,53 @@ import {
 // COMPONENTS
 import Login from './components/login/login.js';
 import Home from './components/home/home.js';
+import { logDOM } from "@testing-library/react";
 
 export default function BasicExample() {
   return (
     <Router>
       <div>
         <div className="header">
-          <ul className="navBar">
-            <li className="navLink">
-              <Link to="/">Home</Link>
-            </li>
-            <li className="navLink">
-              <Link to="/">Resources</Link>
-            </li>
-            <li className="navLink">
-              <Link to="/">Student Services</Link>
-            </li>
-            <li className="navLink">
-              <Link to="/">Administration</Link>
-            </li>
-            <li className="navLink">
-              <Link to="/login">Login</Link>
-            </li>
-          </ul>
+
+          <div className="headerBar">
+            <img className="logo" src={Logo} alt="LOGO"></img>
+
+            <div className="navBarWrap">
+
+              <ul className="navBar">
+                <li className="navLink">
+                  <Link to="/">Home</Link>
+                </li>
+                <div className="navLink dropdown">
+                  <li>
+                    <Link to="/">Student Services</Link>
+                  </li>
+                  <div className="dropdown-content">
+                    <li>College Search</li>
+                    <li>Highschool Search</li>
+                    <li>Applications Tracker</li>
+                  </div>
+                </div>
+                
+
+                <div className="navLink dropdown">
+                  <li>
+                    <Link to="/">Administration</Link>
+                  </li>
+                  <div className="dropdown-content">
+                    <li>Import</li>
+                    <li>Scrape Data</li>
+                    <li>Review Decisions</li>
+                  </div>
+                </div>
+                <li className="navLink">
+                  <Link to="/login">Login</Link>
+                </li>
+              </ul>
+
+            </div>
+          </div>
+          
         </div>
 
         <div className="content">
