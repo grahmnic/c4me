@@ -12,6 +12,7 @@ import {
 // COMPONENTS
 import Login from './components/login/login.js';
 import Home from './components/home/home.js';
+import Profile from './components/profile/profile.js';
 import { logDOM } from "@testing-library/react";
 
 export default function BasicExample() {
@@ -77,7 +78,6 @@ export default function BasicExample() {
         </div>
 
         <div className="content">
-          <hr />
           <Switch>
             <Route exact path="/">
               <HomeComponent />
@@ -89,7 +89,7 @@ export default function BasicExample() {
         </div>
       </div>
     </Router>
-      
+      // <LoginComponent />
   );
 }
 
@@ -106,4 +106,10 @@ function LoginComponent() {
   return (
     <Login />
   );
+}
+
+function ProfileComponent() {
+  return (
+    <Profile />
+  )
 }
