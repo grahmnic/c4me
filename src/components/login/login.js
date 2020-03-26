@@ -63,18 +63,35 @@ class Login extends React.Component {
         if(this.state.new_password != this.state.confirm_password) {
             this.setState({signup_error: "Your passwords do not match."});
         } else {
+            this.props.createPopup({
+                title: "CREATING ACCOUNT",
+                content: "Our server is currently performing a first-time creation of your account."
+            });
             const requestOptions = {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
-                    username: this.state.new_username,
+                    username: this.state.new_username, 
                     password: this.state.new_password
                 })
             };
             fetch('https://chads4us.herokuapp.com/register', requestOptions)
-                .then(response => response.json())
                 .then(data => {
-                    alert(data);
+                    if(data.status != 200) {
+                        data.json().then(res => {
+                            this.setState({signup_error: res.error});
+                        });
+                    } else {
+                        this.setState({
+                            new_username: "",
+                            new_password: "",
+                            confirm_password: ""
+                        });
+                        this.props.createPopup({
+                            title: "ACCOUNT REGISTERED",
+                            content: "Success! Your account has been created."
+                        });
+                    }
                 });
         }
         event.preventDefault();
