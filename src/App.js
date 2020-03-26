@@ -13,21 +13,26 @@ import {
 import Login from './components/login/login.js';
 import Home from './components/home/home.js';
 import Profile from './components/profile/profile.js';
+import Collegesearch from './components/collegesearch/collegesearch.js';
 import { logDOM } from "@testing-library/react";
 
 export default function BasicExample() {
   return (
     <Router>
       <div>
+
+        {/*Navbar Header]*/}
+
         <div className="header">
 
           <div className="headerBar">
+
+            {/*Needs to be changed to actual logo*/}
             <img className="logo" src={Logo} alt="LOGO"></img>
 
             <div className="navBarWrap">
 
               <ul className="navBar">
-
                 <li className="navLink">
                   <Link to="/">Home</Link>
                 </li>
@@ -37,7 +42,9 @@ export default function BasicExample() {
                     <Link to="/">Student Services</Link>
                   </li>
                   <div className="dropdown-content">
-                    <li>College Search</li>
+                    <li>
+                      <Link to="/collegesearch">College Search</Link>
+                    </li>
                     <li>Highschool Search</li>
                     <li>Applications Tracker</li>
                   </div>
@@ -85,6 +92,9 @@ export default function BasicExample() {
             <Route path="/login">
               <LoginComponent />
             </Route>
+            <Route path="/collegesearch">
+              <CollegesearchComponent />
+            </Route>
           </Switch>
         </div>
       </div>
@@ -111,5 +121,11 @@ function LoginComponent() {
 function ProfileComponent() {
   return (
     <Profile />
+  )
+}
+
+function CollegesearchComponent() {
+  return (
+    <Collegesearch />
   )
 }
