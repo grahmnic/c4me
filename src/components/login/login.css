@@ -46,8 +46,15 @@
 }
 
 .showing {
-    flex: 5 !important;
+    flex: 8 !important;
     filter: brightness(100%) blur(0px) !important;
+}
+
+/*Avoid Chrome Display None Stutter */
+.showRight {
+    height: 45% !important;
+    width: 60% !important;
+    opacity: 1 !important;
 }
 
 .showingInfo {
@@ -87,7 +94,7 @@
     z-index: 2;
     filter: brightness(50%);
     font-family: 'Roboto Mono', monospace;
-    transition: flex filter 0.5s;
+    transition: all 0.5s;
 }
 
 .login-subtitle-1 {
@@ -177,7 +184,7 @@
 .sign-up-subtitle-top {
     font-size: calc(0.15vw + 10px);
     opacity: 0.8s;
-    top: calc(60% + 2.8vw);
+    top: calc(62% + 2vw);
     position: absolute;
     padding-left: 35px;
 }
@@ -185,7 +192,7 @@
 .sign-up-subtitle-bottom {
     font-size: calc(0.15vw + 10px);
     opacity: 0.8s;
-    top: calc(62% + 3vw);
+    top: calc(64% + 2vw);
     position: absolute;
     padding-left: 35px;
 }
@@ -193,18 +200,35 @@
 .sign-up-btn {
     padding: 8px 20px;
     font-size: calc(0.55vw + 12px);
-    top: calc(66% + 2vw);
+    top: calc(68% + 2vw);
     position: absolute;
     margin-left: 30px;
     margin-top: 10px;
     border: 2px solid #222;
     border-radius: 20px;
     font-weight: bold;
+    font-family: 'Roboto Mono', monospace;
     transition: background-color 0.25s;
     cursor: pointer;
+    background: transparent;
 }
 
-.sign-up-btn:hover {
+.sign-up-btn:disabled {
+    color: black;
+    opacity: 0.5;
+    cursor: not-allowed !important;
+}
+
+.signup-error {
+    font-size: 13px;
+    position: absolute;
+    top: calc(65% + 2vw);
+    margin-left: 35px;
+    margin-top: 15px;
+    color: red;
+}
+
+.sign-up-btn:hover:enabled {
     color: #D4E157;
     background: #222;
 }
@@ -430,17 +454,179 @@ img {
     transform: scale(1.5) rotate(-20deg);
 }
 
+.login-footer-wide-small {
+    font-size: 15px;
+    color: grey;
+}
+
 /* RIGHT PAGE CSS*/
 
 .login-right {
     flex: 1;
-    background: #4527a0;
+    background: url('../../assets/images/stardust.png');
+    background-position-x: -1000px;
     position: relative;
     z-index: 4;
     transition: flex 0.5s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
+.login-panel {
+    max-width: 650px;
+    background: #222;
+    font-family: 'Cabin Sketch', cursive;
+    display: flex;
+    position: absolute;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out 0.5;
+    overflow: hidden;
+    margin: 0;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgb(29, 29, 29);
+}
 
+.login-icon {
+    color: #4B49BB;
+    font-size: 25vw;
+    position: relative;
+}
+
+.login-banner {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    flex: 1;
+    height: 100%;
+    background: #D4E157;
+    position: relative;
+}
+
+.login-banner img {
+    width: 100%;
+}
+
+.login-banner-info {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.login-banner-info ul {
+    list-style: none;
+    padding: 10px;
+}
+
+.login-banner-info ul li {
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+.login-banner-info ul li:last-child {
+    font-size: 30px;
+}
+
+.login-logo {
+    padding-top: 30px;
+    width: 100%;
+    height: 35%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-title {
+    position: absolute;
+    font-size: 50px;
+    font-weight: bold;
+}
+
+.login-form {
+    text-align: right;
+    font-family: 'Roboto Mono', monospace;
+    flex: 1.25;
+    height: 100%;
+    padding: 20px 40px;
+}
+
+.login-form p {
+    margin-top: 10px;
+    margin-bottom: 2px;
+    font-size: 13px;
+    color: rgb(165, 175, 70);
+}
+
+.login-username {
+    border: 1px solid #D4E157;
+    text-align: right;
+    border-radius: 10px;
+    width: 80%;
+    background: transparent;
+    caret-color: #D4E157;
+    color: #D4E157;
+    font-size: 15px;
+    padding: 12px 15px;
+}
+
+.login-username:focus {
+    outline: none;
+    border-width: 3px;
+}
+
+.login-password {
+    border: 1px solid #D4E157;
+    text-align: right;
+    width: 80%;
+    border-radius: 10px;
+    background: transparent;
+    caret-color: #D4E157;
+    color: #D4E157;
+    font-size: 15px;
+    padding: 12px 15px;
+}
+
+.login-password:focus {
+    outline: none;
+    border-width: 3px;
+}
+
+.password-wrapper {
+    position: relative;
+}
+
+.password-wrapper i {
+    color: rgb(163, 173, 68);
+    position: absolute;
+    top: 30%;
+    transform: translateX(10px);
+}
+
+.login-form-title {
+    color: #D4E157;
+    font-size: 20px;
+    letter-spacing: 1px;
+    font-weight: bolder;
+    margin-bottom: 40px;
+}
+
+.login-form-btn {
+    padding: 8px 10px;
+    float: right;
+    margin-top: 25px;
+    width: fit-content;
+    cursor: pointer;
+    border: 1px solid #D4E157;
+    border-radius: 10px;
+    color: #D4E157;
+    font-weight: bold;
+    transition: all 0.2s;
+}
+
+.login-form-btn:hover {
+    transform: translateY(-5px);
+    -webkit-box-shadow: 
+    0px 3px #D4E157, /* gradient effects */
+    0px 4px #D4E157
+}
 
 /* SHIFT BUTTON CSS */
 
