@@ -8,92 +8,103 @@ class Collegesearch extends React.Component {
     }
 
     render() {
+
         return(
-            <div>
+            <div className="searchContent">
 
+                {/* Mobile Sidebar content*/}
                 <div className="mobileFilter">
-
+                    <div className="mbFilterWrap">
+                        <div className="showRsltsWrap">
+                            Showing results...
+                        </div>
+                        <div className="filterBtnWrap">
+                            <button className="filterBtn">Filter and Sort</button>
+                        </div>
+                    </div>
+                    
                 </div>
 
-                <div className="searchSideBar">
-                    
+                {/* Sidebar content*/}
+                <div className="searchSideBar">   
                     <div className="filterSB">
                         <div className="clear-all">
-                            Clear All
+                            <button>Clear All</button>
                         </div>
                         <div className="location">
                             <div className="headingSB">Location</div>
-                            <select>
-                                <option value="0">Select Region</option>
+                            <select className="selectSB">
+                                <option value="0">Any Region</option>
                                 <option value="West">West</option>
                                 <option value="Midwest">Midwest</option>
                                 <option value="Northeast">Northeast</option>
                                 <option value="South">South</option>
                             </select>
                             <div className="headingSB">State</div>
-                            <input list="states"></input>
-                            <datalist className="stateSelect" id="states">
-                                <option value="Alabama"></option>
-                                <option value="Alaska"></option>
-                                <option value="Arizona"></option>
-                                <option value="Arkansas"></option>
-                                <option value="California"></option>
-                                <option value="Colorado"></option>
-                                <option value="Connecticut"></option>
-                                <option value="Delaware"></option>
-                                <option value="Florida"></option>
-                                <option value="Georgia"></option>
-                                <option value="Hawaii"></option>
-                                <option value="Idaho"></option>
-                                <option value="Illinois"></option>
-                                <option value="Iowa"></option>
-                                <option value="Kansas"></option>
-                                <option value="Kentucky"></option>
-                                <option value="Louisiana"></option>
-                                <option value="Maine"></option>
-                                <option value="Maryland"></option>
-                                <option value="Massachusetts"></option>
-                                <option value="Michigan"></option>
-                                <option value="Minnesota"></option>
-                                <option value="Mississippi"></option>
-                                <option value="Missouri"></option>
-                                <option value="Montana"></option>
-                                <option value="Nebraska"></option>
-                                <option value="Nevada"></option>
-                                <option value="New Hampshire"></option>
-                                <option value="New Jersey"></option>
-                                <option value="New Mexico"></option>
-                                <option value="New York"></option>
-                                <option value="North Carolina"></option>
-                                <option value="North Dakota"></option>
-                                <option value="Ohio"></option>
-                                <option value="Oklahoma"></option>
-                                <option value="Oregon"></option>
-                                <option value="Pennsylvania"></option>
-                                <option value="Rhode Island"></option>
-                                <option value="South Carolina"></option>
-                                <option value="South Dakota"></option>
-                                <option value="Tennessee"></option>
-                                <option value="Texas"></option>
-                                <option value="Utah"></option>
-                                <option value="Vermont"></option>
-                                <option value="Virginia"></option>
-                                <option value="Washington"></option>
-                                <option value="West Virginia"></option>
-                                <option value="Wisconsin"></option>
-                                <option value="Wyoming"></option>
-                            </datalist>
-
+                            <select className="selectSB" id="stateSelect">
+                                <option value="">Any State</option>
+                                <option value="AL">Alabama</option>
+                                <option value="AK">Alaska</option>
+                                <option value="AZ">Arizona</option>
+                                <option value="AR">Arkansas</option>
+                                <option value="CA">California</option>
+                                <option value="CO">Colorado</option>
+                                <option value="CT">Connecticut</option>
+                                <option value="DE">Delaware</option>
+                                <option value="DC">Dist of Columbia</option>
+                                <option value="FL">Florida</option>
+                                <option value="GA">Georgia</option>
+                                <option value="HI">Hawaii</option>
+                                <option value="ID">Idaho</option>
+                                <option value="IL">Illinois</option>
+                                <option value="IN">Indiana</option>
+                                <option value="IA">Iowa</option>
+                                <option value="KS">Kansas</option>
+                                <option value="KY">Kentucky</option>
+                                <option value="LA">Louisiana</option>
+                                <option value="ME">Maine</option>
+                                <option value="MD">Maryland</option>
+                                <option value="MA">Massachusetts</option>
+                                <option value="MI">Michigan</option>
+                                <option value="MN">Minnesota</option>
+                                <option value="MS">Mississippi</option>
+                                <option value="MO">Missouri</option>
+                                <option value="MT">Montana</option>
+                                <option value="NE">Nebraska</option>
+                                <option value="NV">Nevada</option>
+                                <option value="NH">New Hampshire</option>
+                                <option value="NJ">New Jersey</option>
+                                <option value="NM">New Mexico</option>
+                                <option value="NY">New York</option>
+                                <option value="NC">North Carolina</option>
+                                <option value="ND">North Dakota</option>
+                                <option value="OH">Ohio</option>
+                                <option value="OK">Oklahoma</option>
+                                <option value="OR">Oregon</option>
+                                <option value="PA">Pennsylvania</option>
+                                <option value="RI">Rhode Island</option>
+                                <option value="SC">South Carolina</option>
+                                <option value="SD">South Dakota</option>
+                                <option value="TN">Tennessee</option>
+                                <option value="TX">Texas</option>
+                                <option value="UT">Utah</option>
+                                <option value="VT">Vermont</option>
+                                <option value="VA">Virginia</option>
+                                <option value="WA">Washington</option>
+                                <option value="WV">West Virginia</option>
+                                <option value="WI">Wisconsin</option>
+                                <option value="WY">Wyoming</option>
+                            </select>
                         </div>
                         <div className="institType">
                             <div className="headingSB">Institution Type</div>
                             <li className="check">
-                                <input type="checkbox" name="Public"></input>
-                                <label for="Public">Public</label>
+                                <input type="checkbox" id="Public" name="Public"></input>
+                                <label htmlFor="Public">Public</label>
                             </li>
                             <li className="check">
-                                <input type="checkbox" name="Private"></input>
-                                <label for="Private">Private</label>
+                                <input type="checkbox" id="Private" name="Private"></input>
+                                <label htmlFor="Private">Private</label>
                             </li>
                         </div>
                         <div className="cost">
@@ -102,6 +113,9 @@ class Collegesearch extends React.Component {
                         </div>
                         <div className="majors">
                             <div className="headingSB">Majors</div>
+                            <select>
+                                <option value="">Select Majors</option>
+                            </select>
                         </div>
                         <div className="selectivity">
                             <div className="headingSB">Admission Rate</div>
@@ -116,6 +130,14 @@ class Collegesearch extends React.Component {
                         </div>
                         <div className="testScores">
                             <div className="headingSB">Test Scores</div>
+                            <div>
+                                <p>SAT Composite</p>
+                                <input className="slider" type="range"></input>
+                            </div>
+                            <div>
+                                <p>ACT</p>
+                                <input className="slider" type="range"></input>
+                            </div>
                         </div>
                         <div className="population">
                             <div className="headingSB">Population</div>
@@ -131,8 +153,16 @@ class Collegesearch extends React.Component {
                     </div>
                 </div>
 
+                {/* Where college search results show up */}
                 <div className="searchMain">
-                    This is searchmain
+                    <div className="cardGrid">
+                        <div className="collegeCard">College 1</div>
+                        <div className="collegeCard">College 2</div>
+                        <div className="collegeCard">College 3</div>
+                        <div className="collegeCard">College 4</div>
+                        <div className="collegeCard">College 5</div>
+                        <div className="collegeCard">College 6</div>
+                    </div>
                 </div>
             </div>
         );

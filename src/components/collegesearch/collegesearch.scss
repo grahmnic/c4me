@@ -1,4 +1,9 @@
+.searchContent {
+    display: flex;
+}
+
 .searchSideBar {
+
     margin: 0;
     padding-top: 0px;
     padding-right: 1em;
@@ -9,27 +14,28 @@
     height: 75%;
 
     min-width: 20rem;
-    min-height: 800px;
+    min-height: 600px;
     
-    background-color: #d4e157;
-
-
 }
 
 .filterSB {
-
-    min-height: 800px;
+    background-color: #d4e157;
+    min-height: 600px;
     padding-top: 2em;
     padding-right: 3.5em;
     padding-bottom: 3.5em;
     padding-left: 3.5em;
 
+    border-bottom-right-radius: .75rem;
     box-shadow: 0 2px 0 rgba(48,50,100,.14), 0 1px 8px 0 rgba(48,50,100,.14), 0 4px 8px 0 rgba(48,50,100,.14)
 }
 
 .headingSB {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-weight: bold;
+    margin-top: 1rem;
+    cursor: default;
+    // margin-bottom: 1rem;
 }
 
 .stateSelect {
@@ -52,7 +58,7 @@
     border-radius: 10px;  
   }
 
-  .slider::-webkit-slider-thumb {
+.slider::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
     width: 25px;
@@ -60,5 +66,91 @@
     border-radius: 50%; 
     background: #4CAF50;
     cursor: pointer;
-  }
+}
 
+.searchMain {
+    width: 100%;
+}
+
+.cardGrid {
+    padding-left: 0;
+    padding-top: 2rem;
+    padding-right: 1rem;
+    display: grid;
+    gap: 1rem;
+
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.collegeCard {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #353535;
+    font-size: 3rem;
+    color: #fff;
+    box-shadow: rgba(3, 8, 20, 0.1) 0px 0.15rem 0.5rem, rgba(2, 8, 20, 0.1) 0px 0.075rem 0.175rem;
+    height: 100%;
+    width: 100%;
+    border-radius: 4px;
+    transition: all 500ms;
+    overflow: hidden;
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.collegeCard:hover {
+    box-shadow: rgba(2, 8, 20, 0.1) 0px 0.35em 1.175em, rgba(2, 8, 20, 0.08) 0px 0.175em 0.5em;
+    transform: translateY(-3px) scale(1.1);
+    cursor: default;
+ }
+
+@media (max-width: 999px) {
+    .searchContent {
+        flex-direction: column;
+    }
+    
+    .searchSideBar {
+        display: none;
+    }
+
+    .mobileFilter {
+        padding: 1rem;
+        background-color: #d4e157;
+    }
+
+    .mbFilterWrap {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .showRsltsWrap {
+        flex: 1;
+    }
+
+    .filterBtnWrap {
+        flex: 1;
+    }
+
+    .filterBtn {
+        float: right;
+    }
+    
+    .cardGrid {
+        padding-left: 1rem;
+    }
+}
+
+@media (min-width: 1000px) {
+    .searchContent {
+        flex-direction: row;
+    }
+
+    .mobileFilter {
+        display:none;
+    }
+}

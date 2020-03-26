@@ -112,8 +112,14 @@
   display: block; 
   background-color: #f1f1f1;
 }
+
 .dropdown-content li:hover {
   cursor: pointer;
+  background-color: rgb(55, 255, 160);
+  transition: 0.5s;
+}
+
+.dropdown-content a:hover {
   background-color: rgb(55, 255, 160);
   transition: 0.5s;
 }
