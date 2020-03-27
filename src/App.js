@@ -54,7 +54,7 @@ class App extends React.Component {
               popups: array
             });
             this.shiftPopup();
-        }.bind(this), 4000);
+        }.bind(this), 5000);
         localStorage.setItem("id", id.toString());
       } else {
         localStorage.setItem("shifting", "");
@@ -122,23 +122,25 @@ class App extends React.Component {
               </div>
               <Router>
                 {re}
-                <div className="root">
-                  <div className={`header ${localStorage.getItem("user") ? '' : 'notLoggedIn'}`}>
-                    <div className={`avatar-wrapper ${this.state.showMenu ? 'avatar-wrapper-menu' : ''}`} onClick={this.handleMenu}>
-                      <div className={`avatar ${this.state.showMenu ? 'avatar-menu' : ''}`}></div>
+                <div>
+                  <div className="root">
+                    <div className={`header ${localStorage.getItem("user") ? '' : 'notLoggedIn'}`}>
+                      <div className={`avatar-wrapper ${this.state.showMenu ? 'avatar-wrapper-menu' : ''}`} onClick={this.handleMenu}>
+                        <div className={`avatar ${this.state.showMenu ? 'avatar-menu' : ''}`}></div>
+                      </div>
+                        <Link to="/profile" className={`menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`}>
+                          <i class="far fa-user"></i>
+                        </Link>
+                        <Link to="/" className={`menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`}>
+                          <i class="fas fa-university"></i>
+                        </Link>
+                        <Link to="/login" className={`menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`}>
+                          <i class="fas fa-chalkboard"></i>
+                        </Link>
+                        <div onClick={this.handleSignout} className={`menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`}>
+                          <i class="fas fa-sign-out-alt"></i>
+                        </div>                 
                     </div>
-                      <Link to="/profile" className={`menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`}>
-                        <i class="far fa-user"></i>
-                      </Link>
-                      <Link to="/" className={`menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`}>
-                        <i class="fas fa-university"></i>
-                      </Link>
-                      <Link to="/login" className={`menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`}>
-                        <i class="fas fa-chalkboard"></i>
-                      </Link>
-                      <div onClick={this.handleSignout} className={`menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`}>
-                        <i class="fas fa-sign-out-alt"></i>
-                      </div>                 
                   </div>
 
                   <div className="content">

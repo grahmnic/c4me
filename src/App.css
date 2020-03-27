@@ -39,6 +39,11 @@
   }
 }
 
+.root {
+  top: 0;
+  position: sticky;
+}
+
 .header {
   position: absolute;
   z-index: 100;
@@ -158,9 +163,7 @@
 }
 
 .content {
-  width: 100vw;
-  display: block;
-  overflow: hidden;
+
 }
 
 
