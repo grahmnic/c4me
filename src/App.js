@@ -6,8 +6,12 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
+  Link,
+  Redirect
 } from "react-router-dom";
+
+// ASSETS
+import avatarImage from './assets/images/ralph.jpg';
 
 // COMPONENTS
 import Login from './components/login/login.js';
@@ -21,32 +25,58 @@ class App extends React.Component {
         super(props);
 
         this.state = {
-          popups: [] 
+          popups: [],
+          showMenu: false 
         }
 
-        localStorage.clear();
+        //localStorage.clear();
 
         this.createPopup = this.createPopup.bind(this);
         this.removePopup = this.removePopup.bind(this);
+        this.handleMenu = this.handleMenu.bind(this);
+        this.handleSignout = this.handleSignout.bind(this);
+        this.shiftPopup = this.shiftPopup.bind(this);
     }
 
     componentDidMount() {
-      setInterval(function() {
-        if(this.state.popups.length) {
-          var array = [...(localStorage.getItem("popups") ? JSON.parse(localStorage.getItem("popups")) : [])];
-          array.shift();
-          localStorage.setItem("popups", JSON.stringify(array))
-          this.setState({
-            popups: array
-          });
-        }
-      }.bind(this), 5000);
+
+    }
+
+    shiftPopup() {
+      if(localStorage.getItem("popups") != "[]") {
+        localStorage.setItem("shifting", "yes");
+        clearTimeout(parseInt(localStorage.getItem("id")));
+        const id = setTimeout(function() {
+            var array = [...(localStorage.getItem("popups") ? JSON.parse(localStorage.getItem("popups")) : [])];
+            array.shift();
+            localStorage.setItem("popups", JSON.stringify(array))
+            this.setState({
+              popups: array
+            });
+            this.shiftPopup();
+        }.bind(this), 4000);
+        localStorage.setItem("id", id.toString());
+      } else {
+        localStorage.setItem("shifting", "");
+      }
+    }
+
+    handleSignout() {
+      this.createPopup({
+        title: "SIGNING OUT",
+        content: "Come back soon!"
+      })
+      localStorage.setItem("user", "");
+      this.setState({showMenu: false});
     }
 
     createPopup(ops) {
       var array = [...(localStorage.getItem("popups") ? JSON.parse(localStorage.getItem("popups")) : [])];
       array.push(ops);
-      localStorage.setItem("popups", JSON.stringify(array))
+      localStorage.setItem("popups", JSON.stringify(array));
+      if (!localStorage.getItem("shifting")) {
+        this.shiftPopup();
+      }
       this.setState({popups: array});
     }
 
@@ -54,30 +84,78 @@ class App extends React.Component {
       this.setState({popups: this.state.popups.splice(key, 1)});
     }
 
+    handleMenu() {
+      this.setState({
+        showMenu: !this.state.showMenu
+      });
+    }
+
     render() {
-        var arr = [];
-        var pops = JSON.parse(localStorage.getItem("popups")) ? JSON.parse(localStorage.getItem("popups")) : [];
-        for(var i = 0; i < pops.length; i++) {
-          arr.push({
-            id: i,
-            value: pops[i]
-          })
-        }
-        const popups = arr.map((e) =>
-          <div key={e.id} className="popup">
-          <i class="popup-icon fas fa-times"></i>
-          <div className="popup-title">{e.value.title}</div>
-          <div className="popup-content">
-            {e.value.content}
-          </div>
-         </div> 
-        );
+      if(localStorage.getItem("popups")) {
+        this.shiftPopup();
+      }
+      var arr = [];
+      var pops = JSON.parse(localStorage.getItem("popups")) ? JSON.parse(localStorage.getItem("popups")) : [];
+      for(var i = 0; i < pops.length; i++) {
+        arr.push({
+          id: i,
+          value: pops[i]
+        })
+      }
+      const popups = arr.map((e) =>
+        <div key={e.id} className="popup">
+        <i class="popup-icon fas fa-times"></i>
+        <div className="popup-title">{e.value.title}</div>
+        <div className="popup-content">
+          {e.value.content}
+        </div>
+        </div> 
+      );
+      var re = '';
+      if(!localStorage.getItem("user")) {
+        re = <Redirect to="/login" />
+      }
         return(
             <div>
               <div className="popups">
                 {popups}
               </div>
-                <Login createPopup={this.createPopup} />
+              <Router>
+                {re}
+                <div className="root">
+                  <div className={`header ${localStorage.getItem("user") ? '' : 'notLoggedIn'}`}>
+                    <div className={`avatar-wrapper ${this.state.showMenu ? 'avatar-wrapper-menu' : ''}`} onClick={this.handleMenu}>
+                      <div className={`avatar ${this.state.showMenu ? 'avatar-menu' : ''}`}></div>
+                    </div>
+                      <Link to="/profile" className={`menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`}>
+                        <i class="far fa-user"></i>
+                      </Link>
+                      <Link to="/" className={`menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`}>
+                        <i class="fas fa-university"></i>
+                      </Link>
+                      <Link to="/login" className={`menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`}>
+                        <i class="fas fa-chalkboard"></i>
+                      </Link>
+                      <div onClick={this.handleSignout} className={`menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`}>
+                        <i class="fas fa-sign-out-alt"></i>
+                      </div>                 
+                  </div>
+
+                  <div className="content">
+                    <Switch>
+                      <Route exact path="/">
+                        <Home />
+                      </Route>
+                      <Route path="/login">
+                        <Login createPopup={this.createPopup}/>
+                      </Route>
+                      <Route path="/profile">
+                        <Profile createPopup={this.createPopup}/>
+                      </Route>
+                    </Switch>
+                  </div>
+                </div>
+              </Router>
             </div>
         );
     }
@@ -85,86 +163,6 @@ class App extends React.Component {
 
 export default App;
 
-// export default function BasicExample() {
-//   return (
-//     <div>
-//       <LoginComponent />
-//     </div>
-//     // <Router>
-//     //   <div>
-//     //     <div className="header">
-
-//     //       <div className="headerBar">
-//     //         <img className="logo" src={Logo} alt="LOGO"></img>
-
-//     //         <div className="navBarWrap">
-
-//     //           <ul className="navBar">
-
-//     //             <li className="navLink">
-//     //               <Link to="/">Home</Link>
-//     //             </li>
-
-//     //             <div className="navLink dropdown">
-//     //               <li>
-//     //                 <Link to="/">Student Services</Link>
-//     //               </li>
-//     //               <div className="dropdown-content">
-//     //                 <li>College Search</li>
-//     //                 <li>Highschool Search</li>
-//     //                 <li>Applications Tracker</li>
-//     //               </div>
-//     //             </div>
-                
-//     //             <div className="navLink dropdown">
-//     //               <li>
-//     //                 <Link to="/">Administration</Link>
-//     //               </li>
-//     //               <div className="dropdown-content">
-//     //                 <li>Import</li>
-//     //                 <li>Scrape Data</li>
-//     //                 <li>Review Decisions</li>
-//     //               </div>
-//     //             </div>
-
-//     // //             <li className="navLink">
-//     // //               <Link className="login" to="/login">Login</Link>
-//     // //             </li>
-//     // //           </ul>
-
-//     //           <div className="navLink responsive">
-//     //               <div className="navBar responsive">
-//     //                 <div className="respMenu">
-//     //                   <a>MENU</a>
-//     //                   <div className="respDropdown">
-//     //                     <li className="respLink">Student Services</li>
-//     //                     <li className="respLink">Administration</li>
-//     //                     <li className="respLink">Login</li>
-//     //                   </div>
-//     //                 </div>
-//     //               </div>
-//     //           </div>
-
-//     //         </div>
-//     //       </div>
-          
-//     // //     </div>
-
-//     // //     <div className="content">
-//     // //       <Switch>
-//     // //         <Route exact path="/">
-//     // //           <HomeComponent />
-//     // //         </Route>
-//     // //         <Route path="/login">
-//     // //           <LoginComponent />
-//     // //         </Route>
-//     // //       </Switch>
-//     // //     </div>
-//     // //   </div>
-//     // // </Router>
-
-//   );
-// }
 
 // You can think of these components as "pages"
 // in your app.

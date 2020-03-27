@@ -4,6 +4,7 @@ import LoginLogoTop from '../../assets/images/college.png';
 import LoginLogoBot from '../../assets/images/book.png';
 import HandLogo from '../../assets/images/women_hand.png';
 import AbstractLogo from '../../assets/images/abstrakt-design-03.png';
+import { Redirect } from 'react-router-dom';
 import Parallax from 'parallax-js';
 
 class Login extends React.Component {
@@ -17,13 +18,20 @@ class Login extends React.Component {
             new_username: '',
             new_password: '',
             confirm_password: '',
-            signup_error: ''
+            signup_error: '',
+            username: '',
+            password: '',
+            login_error: '',
+            loggedIn: false
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleNewUsername = this.handleNewUsername.bind(this);
         this.handleNewPassword = this.handleNewPassword.bind(this);
         this.handleConfirmPassword = this.handleConfirmPassword.bind(this);
+        this.handleUsername = this.handleUsername.bind(this);
+        this.handlePassword = this.handlePassword.bind(this);
+        this.handleLogin = this.handleLogin.bind(this);
     }
 
     componentDidMount() {
@@ -109,7 +117,58 @@ class Login extends React.Component {
         this.setState({confirm_password: event.target.value});
     }
 
+    handleLogin(event) {
+        this.props.createPopup({
+            title: "LOGGING IN",
+            content: "Contacting server to validate your credentials."
+        });
+        const requestOptions = {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                username: this.state.username, 
+                password: this.state.password
+            })
+        };
+        fetch('https://chads4us.herokuapp.com/login', requestOptions)
+            .then(data => {
+                if(data.status != 200) {
+                    data.json().then(res => {
+                        this.setState({login_error: res.error});
+                    });
+                } else {
+                    var user = this.state.username;
+                    this.setState({
+                        username: "",
+                        password: ""
+                    });
+                    this.props.createPopup({
+                        title: "LOGIN SUCCESSFUL",
+                        content: "You will be redirected to home page in a bit."
+                    });
+                    setTimeout(function() {
+                        localStorage.setItem("user", user);
+                        this.setState({
+                            loggedIn: true
+                        });
+                    }.bind(this), 3000);
+                }
+            });
+        event.preventDefault();
+    }
+
+    handleUsername(event) {
+        this.setState({username: event.target.value});
+    }
+
+    handlePassword(event) {
+        this.setState({password: event.target.value});
+    }
+
     render() {
+        if (localStorage.getItem("user") || this.state.loggedIn == true) {
+            return <Redirect to="/" />
+        }
         const showLeft = this.state.showLogin ? 'showing' : '';
         const showInfo = this.state.showLogin ? 'showingInfo' : '';
         const showStar1 = this.state.showLogin ? 'showingStar-1' : '';
@@ -231,17 +290,18 @@ class Login extends React.Component {
                                 </ul>
                             </div>
                         </div>
-                        <div className="login-form">
+                        <form onSubmit={this.handleLogin} className="login-form">
                             <h1 className="login-form-title">Login</h1>
                             <p>USERNAME</p>
-                            <input className="login-username" />
+                            <input className="login-username" type="text" onChange={this.handleUsername} value={this.state.username}/>
                             <p>PASSWORD</p>
                             <div className="password-wrapper">
                                 <i class="fas fa-eye"></i>
-                                <input className="login-password" type="password" />
+                                <input className="login-password" type="password" onChange={this.handlePassword} value={this.state.password}/>
                             </div>
-                            <div className="login-form-btn">LET'S GO</div>
-                        </div>
+                            <div className="login-form-err">{this.state.login_error}</div>
+                            <input disabled={this.state.username.trim() == '' || this.state.password.trim() == ''} className="login-form-btn" type="submit" value="LET'S GO"/>
+                        </form>
                     </div>
                 </div>
             </div>
