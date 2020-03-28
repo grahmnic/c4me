@@ -1,6 +1,5 @@
 // LIBRARIES
 import React from "react";
-import Logo from "./logo.PNG";
 import './App.css';
 import {
   BrowserRouter as Router,

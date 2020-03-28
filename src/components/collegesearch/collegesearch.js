@@ -4,6 +4,31 @@ import CollegeResult from '../collegeResult/collegeResult';
 
 class Collegesearch extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            collegeData: [
+                {
+                    name: "Harvard College",
+                    institution_type: "Private",
+                    ranking: "1",
+                    cost: "$60,000",
+                    admission_rate: "5%",
+                    population: "23,000",
+                    avgACT: "31",
+                    avgSAT: "1400",
+                    satMath: "770",
+                    satEBRW: "700",
+                    debt: "",
+                    location: "",
+                    city: "Cambridge",
+                    state: "MA",
+                    // majors: [],
+                }
+            ]
+        }
+    }
+
     componentDidMount() {
 
     }
@@ -31,6 +56,13 @@ class Collegesearch extends React.Component {
                     <div className="filterSB">
                         <div className="clear-all">
                             <button>Clear All</button>
+                        </div>
+                        <div className="nameFilter">
+                            <label className="headingSB">
+                                Name
+                                <input type="text" name="name"/>
+                            </label>
+                            
                         </div>
                         <div className="location">
                             <div className="headingSB">Location</div>
@@ -97,17 +129,6 @@ class Collegesearch extends React.Component {
                                 <option value="WY">Wyoming</option>
                             </select>
                         </div>
-                        <div className="institType">
-                            <div className="headingSB">Institution Type</div>
-                            <li className="check">
-                                <input type="checkbox" id="Public" name="Public"></input>
-                                <label htmlFor="Public">Public</label>
-                            </li>
-                            <li className="check">
-                                <input type="checkbox" id="Private" name="Private"></input>
-                                <label htmlFor="Private">Private</label>
-                            </li>
-                        </div>
                         <div className="cost">
                             <div className="headingSB">Cost</div>
                             <input className="slider" type="range" min="1000" max="60000"></input>
@@ -115,7 +136,10 @@ class Collegesearch extends React.Component {
                         <div className="majors">
                             <div className="headingSB">Majors</div>
                             <select>
-                                <option value="">Select Majors</option>
+                                <option value="">Select Major 1</option>
+                            </select>
+                            <select>
+                                <option value="">Select Major 2</option>
                             </select>
                         </div>
                         <div className="selectivity">
@@ -132,7 +156,11 @@ class Collegesearch extends React.Component {
                         <div className="testScores">
                             <div className="headingSB">Test Scores</div>
                             <div>
-                                <p>SAT Composite</p>
+                                <p>SAT Math</p>
+                                <input className="slider" type="range"></input>
+                            </div>
+                            <div>
+                                <p>SAT EBRW</p>
                                 <input className="slider" type="range"></input>
                             </div>
                             <div>
@@ -151,6 +179,7 @@ class Collegesearch extends React.Component {
                                 <option value=">30000"> 30,000+ </option>
                             </select>
                         </div>
+                        <button>Search</button>
                     </div>
                 </div>
 
@@ -158,15 +187,26 @@ class Collegesearch extends React.Component {
                 <div className="searchMain">
                     <div className="cardGrid">
                         <div className="collegeCard">
-                            <CollegeResult></CollegeResult>
+                            <CollegeResult data={this.state.collegeData[0]}/>
                         </div>
                         <div className="collegeCard">
-                            <CollegeResult></CollegeResult>
+                            <CollegeResult data={this.state.collegeData[0]}/>
                         </div>
-                        <div className="collegeCard"><CollegeResult></CollegeResult></div>
-                        <div className="collegeCard"><CollegeResult></CollegeResult></div>
-                        <div className="collegeCard"><CollegeResult></CollegeResult></div>
-                        <div className="collegeCard"><CollegeResult></CollegeResult></div>
+                        <div className="collegeCard">
+                            <CollegeResult data={this.state.collegeData[0]}/>
+                        </div>
+                        <div className="collegeCard">
+                            <CollegeResult data={this.state.collegeData[0]}/>
+                        </div>
+                        <div className="collegeCard">
+                            <CollegeResult data={this.state.collegeData[0]}/>
+                        </div>
+                        <div className="collegeCard">
+                            <CollegeResult data={this.state.collegeData[0]}/>
+                        </div>
+                        <div className="collegeCard">
+                            <CollegeResult data={this.state.collegeData[0]}/>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -6,24 +6,9 @@ import './collegeResult.scss';
 
 
 class CollegeResult extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            name: "Harvard College",
-            institution_type: "Private",
-            ranking: "1",
-            cost: "$60,000",
-            admission_rate: "5%",
-            population: "23,000",
-            avgACT: "31",
-            avgSAT: "1400",
-            satMath: "770",
-            satEBRW: "700",
-            debt: "",
-            location: "",
-            city: "Cambridge",
-            state: "MA",
-        }
+    constructor(props) {
+        super(props);
+        console.log(this.props);
     }
 
     componentDidMount() {
@@ -40,20 +25,20 @@ class CollegeResult extends React.Component {
                             <div className="collegeLogoWrap">
                                 <img className="collegeLogo" src={collegeLogo} alt="LOGO error"></img>
                             </div>
-                            <h2 className="collegeTitle">{this.state.name}</h2>
-                            <div>{this.state.city}, {this.state.state}</div>
+                            <h2 className="collegeTitle">{this.props.data.name}</h2>
+                            <div>{this.props.data.city}, {this.props.data.state}</div>
                         </div>                        
                     </div>
                         
                     <div className="collegeDetail">
                         <div className="collegeTypeRateWrap">
-                            <div className="collegeTypeRate">{this.state.institution_type} Institution | {this.state.admission_rate} Acceptance Rate</div>
+                            <div className="collegeTypeRate">{this.props.data.institution_type} Institution | {this.props.data.admission_rate} Acceptance Rate</div>
                         </div>
                         <div className="collegeDetailWrap">
                             <div className="collegeDetailText">
-                                <div>Ranking: {this.state.ranking}</div>
-                                <div>Cost: {this.state.cost}</div>
-                                <div>Student Population: {this.state.population}</div>
+                                <div>Ranking: {this.props.data.ranking}</div>
+                                <div>Cost: {this.props.data.cost}</div>
+                                <div>Student Population: {this.props.data.population}</div>
                             </div>
                             <div className="collegeDetailRank">
                                 <p className="collegeRecScore">5</p>

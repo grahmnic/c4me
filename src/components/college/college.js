@@ -7,13 +7,13 @@ class College extends React.Component {
     }
 
     componentDidMount() {
-
+        
     }
 
     render() {
         return(
             <div>
-                This is a college modal!
+                This is a college page!
             </div>
         );
     }
