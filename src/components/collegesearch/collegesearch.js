@@ -1,5 +1,6 @@
 import React from 'react';
 import './collegesearch.scss';
+import CollegeResult from '../collegeResult/collegeResult';
 
 class Collegesearch extends React.Component {
 
@@ -156,12 +157,16 @@ class Collegesearch extends React.Component {
                 {/* Where college search results show up */}
                 <div className="searchMain">
                     <div className="cardGrid">
-                        <div className="collegeCard">College 1</div>
-                        <div className="collegeCard">College 2</div>
-                        <div className="collegeCard">College 3</div>
-                        <div className="collegeCard">College 4</div>
-                        <div className="collegeCard">College 5</div>
-                        <div className="collegeCard">College 6</div>
+                        <div className="collegeCard">
+                            <CollegeResult></CollegeResult>
+                        </div>
+                        <div className="collegeCard">
+                            <CollegeResult></CollegeResult>
+                        </div>
+                        <div className="collegeCard"><CollegeResult></CollegeResult></div>
+                        <div className="collegeCard"><CollegeResult></CollegeResult></div>
+                        <div className="collegeCard"><CollegeResult></CollegeResult></div>
+                        <div className="collegeCard"><CollegeResult></CollegeResult></div>
                     </div>
                 </div>
             </div>
