@@ -1,6 +1,7 @@
 import React from 'react';
 import './profile.css';
 import { Redirect } from 'react-router-dom';
+import Progress from './progress/progress.js';
 import profileImage from '../../assets/images/ralph.jpg';
 
 class Profile extends React.Component {
@@ -8,8 +9,23 @@ class Profile extends React.Component {
         super(props);
 
         this.state = {
-            userInfo: {}
+            userInfo: {},
+            gpa_progress: 0,
+            satmath_progress: 0,
+            satebrw_progress: 0,
+            actcomposite_progress: 0
         }
+    }
+
+    componentDidUpdate() {
+        setTimeout(function() {
+            this.setState({
+                gpa_progress: ((this.state.userInfo.gpa / 4) * 100),
+                satmath_progress: ((this.state.userInfo.satmath / 800) * 100),
+                satebrw_progress: ((this.state.userInfo.satebrw / 800) * 100),
+                actcomposite_progress: ((this.state.userInfo.actcomposite / 36) * 100)
+            })
+        }.bind(this), 500);
     }
 
     componentDidMount() {
@@ -36,6 +52,10 @@ class Profile extends React.Component {
                 }
             });
         }
+    }
+
+    toggleEditMode() {
+        
     }
 
     render() {
@@ -94,6 +114,28 @@ class Profile extends React.Component {
                         </div>
                         
                         <div className="content-card">
+                            <div className="progress-stats">
+                                <div className="gpa">
+                                    <Progress radius={60} stroke={10} progress={this.state.gpa_progress} />
+                                    <div className="gpa-num">{this.state.userInfo.gpa}</div>
+                                    <div className="stat-title">GPA</div>
+                                </div>
+                                <div className="gpa">
+                                    <Progress radius={60} stroke={10} progress={this.state.satmath_progress} />
+                                    <div className="gpa-num">{this.state.userInfo.satmath}</div>
+                                    <div className="stat-title">SATMATH</div>
+                                </div>
+                                <div className="gpa">
+                                    <Progress radius={60} stroke={10} progress={this.state.satebrw_progress} />
+                                    <div className="gpa-num">{this.state.userInfo.satebrw}</div>
+                                    <div className="stat-title">SATEBRW</div>
+                                </div>
+                                <div className="gpa">
+                                    <Progress radius={60} stroke={10} progress={this.state.actcomposite_progress} />
+                                    <div className="gpa-num">{this.state.userInfo.actcomposite}</div>
+                                    <div className="stat-title">ACTCOMP</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

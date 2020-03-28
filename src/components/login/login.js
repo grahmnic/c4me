@@ -148,10 +148,11 @@ class Login extends React.Component {
                     });
                     setTimeout(function() {
                         localStorage.setItem("user", user);
+                        document.getElementsByClassName("header")[0].classList = "header";
                         this.setState({
                             loggedIn: true
                         });
-                    }.bind(this), 3000);
+                    }.bind(this), 2000);
                 }
             });
         event.preventDefault();
@@ -167,7 +168,7 @@ class Login extends React.Component {
 
     render() {
         if (localStorage.getItem("user") || this.state.loggedIn == true) {
-            return <Redirect to="/" />
+            return <Redirect to="/profile" />
         }
         const showLeft = this.state.showLogin ? 'showing' : '';
         const showInfo = this.state.showLogin ? 'showingInfo' : '';

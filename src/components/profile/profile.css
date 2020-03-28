@@ -7,6 +7,18 @@
     font-family: 'Roboto Mono', monospace;
 }
 
+@keyframes fadeInLeft {
+    0% {
+        opacity: 0;
+        transform: translateX(-600px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0px) !important;
+    }
+}
+
 .info-card {
     position: relative;
     flex: 1;
@@ -18,6 +30,7 @@
     min-width: 300px;
     background: white;
     border-radius: 10px;
+    animation: fadeInLeft 1.25s;
 }
 
 .info-card:hover {
@@ -119,9 +132,12 @@
 .content-card {
     flex: 5;
     background: white;
-    height: 1000px;
+    height: 1400px;
     margin: 10px 10px 0px 0px;
+    border-radius: 10px;
     box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.1607843137254902);
+    display: flex;
+    flex-direction: column;
 }
 
 .side-card {
@@ -132,6 +148,34 @@
 
 .menu-card {
     flex: 2;
+}
+
+.gpa-num {
+    font-size: 26px;
+    font-weight: bolder;
+    position: absolute;
+    animation: fadeIn 0.5s;
+}
+
+.progress-stats {
+    display: flex;
+}
+
+.gpa {
+    padding: 10px;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.stat-title {
+    position: absolute;
+    font-weight: bold;
+    color: rgb(167, 167, 167);
+    font-size: 24px;
+    transform: translateY(65px);
+    letter-spacing: 3px;
 }
 
 .waiting-card {

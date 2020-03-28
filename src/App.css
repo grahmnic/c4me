@@ -42,6 +42,7 @@
 .root {
   top: 0;
   position: sticky;
+  z-index: 1000;
 }
 
 .header {
@@ -81,11 +82,11 @@
   background-repeat: no-repeat;
   cursor: pointer;
   transition: all 0.45s cubic-bezier(.46, 1.48, .18, .81);
+  opacity: 0.5;
 }
 
 .avatar:hover {
-  filter: brightness(0.6);
-  color: white;
+  opacity: 1;
 }
 
 .avatar-wrapper-menu {
@@ -97,6 +98,7 @@
 .avatar-menu {
   width: 90px;
   height: 90px;
+  opacity: 1;
 }
 
 .menu-btn {
@@ -174,14 +176,25 @@
   to {opacity: 1;}
 }
 
-@keyframes fadeInLeft {
+@keyframes fadeInLeft2 {
   0% {
      opacity: 0;
      transform: translateX(-20px);
   }
-  100% {
+  10% {
      opacity: 1;
      transform: translateX(0);
+  }
+
+  90% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(-20px);
+    display: none;
   }
 } 
 
@@ -191,6 +204,7 @@
   top: 20px;
   display: flex;
   flex-direction: column;
+  z-index: 1000;
 }
 
 .popup {
@@ -209,8 +223,7 @@
   box-shadow: 0 1rem 1rem rgba(0,0,0,0.2);
   font-family: 'Roboto Mono', monospace;
   margin-bottom: 10px;
-  animation: fadeInLeft 0.5s;
-  transition: all 0.5s;
+  animation: fadeInLeft2 5s;
 }
 
 .popup-title {
@@ -238,8 +251,19 @@
   background: rgb(0, 167, 0);
 }
 
+@keyframes fadeOutLeft {
+  0% {
+     opacity: 1;
+     transform: translateX(0px);
+  }
+  100% {
+     opacity: 0;
+     transform: translateX(-20);
+  }
+} 
+
 .popup-exiting {
-  opacity: 0;
+  animation: fadeOutLeft 0.5s !important;
 }
 
 .popup-icon:hover {
