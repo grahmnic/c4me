@@ -93,7 +93,7 @@ class App extends React.Component {
     handleSignout() {
       this.createPopup({
         title: "SIGNING OUT",
-        content: "Come back soon!"
+        content: "Thank you for using C4ME. Come back soon!"
       })
       localStorage.setItem("user", "");
       this.setState({showMenu: false});

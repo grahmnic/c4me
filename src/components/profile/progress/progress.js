@@ -24,12 +24,11 @@ class Progress extends React.Component {
             >
                 <circle
                 className="circleFull"
-                stroke="whitesmoke"
+                stroke="white"
                 fill="transparent"
                 strokeWidth={ stroke }
                 strokeDasharray={ this.circumference + ' ' + this.circumference }
                 style={ { strokeDashoffset2 } }
-                stroke-width={ stroke }
                 r={ this.normalizedRadius }
                 cx={ radius }
                 cy={ radius }
@@ -41,7 +40,6 @@ class Progress extends React.Component {
                 strokeWidth={ stroke }
                 strokeDasharray={ this.circumference + ' ' + this.circumference }
                 style={ { strokeDashoffset } }
-                stroke-width={ stroke }
                 r={ this.normalizedRadius }
                 cx={ radius }
                 cy={ radius }
