@@ -1,6 +1,5 @@
 // LIBRARIES
 import React from "react";
-import Logo from "./logo.PNG";
 import './App.css';
 import {
   BrowserRouter as Router,
@@ -17,6 +16,7 @@ import avatarImage from './assets/images/ralph.jpg';
 import Login from './components/login/login.js';
 import Home from './components/home/home.js';
 import Profile from './components/profile/profile.js';
+import Collegesearch from './components/collegesearch/collegesearch.js';
 import keyIndex from 'react-key-index';
 import { logDOM } from "@testing-library/react";
 
@@ -170,7 +170,7 @@ class App extends React.Component {
                         <Link to="/" className={`menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`}>
                           <i class="fas fa-university"></i>
                         </Link>
-                        <Link to="/login" className={`menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`}>
+                        <Link to="/collegesearch" className={`menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`}>
                           <i class="fas fa-chalkboard"></i>
                         </Link>
                         <div onClick={this.handleSignout} className={`menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`}>
@@ -189,6 +189,9 @@ class App extends React.Component {
                       </Route>
                       <Route path="/profile">
                         <Profile createPopup={this.createPopup}/>
+                      </Route>
+                      <Route path="/collegesearch">
+                        <Collegesearch createPopup={this.createPopup}/>
                       </Route>
                     </Switch>
                   </div>
@@ -220,5 +223,11 @@ function LoginComponent(props) {
 function ProfileComponent() {
   return (
     <Profile />
+  )
+}
+
+function CollegesearchComponent() {
+  return (
+    <Collegesearch />
   )
 }
