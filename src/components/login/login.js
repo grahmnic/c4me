@@ -252,7 +252,7 @@ class Login extends React.Component {
                     </div>
                     <div className={`login-footer ${showInfo}`}>
                         <div className="login-footer-wide">
-                            <i className="far fa-copyright"></i> CHADS <span class="login-footer-wide-small">made with react</span>
+                            <i className="far fa-copyright"></i> CHADS <span className="login-footer-wide-small">made with react</span>
                         </div>
                         <div className="login-footer-thin">
                             <i className="fab fa-facebook-f"></i>
@@ -267,7 +267,7 @@ class Login extends React.Component {
                 </div>
                 <div className="login-shift">
                     <div className="shift-btn" onClick={this.shift}>
-                        <i class="shift-icon far fa-star"></i>
+                        <i className="shift-icon far fa-star"></i>
                     </div>
                 </div>
                 <div className={`login-right ${showRight}`}>
@@ -297,7 +297,7 @@ class Login extends React.Component {
                             <input className="login-username" type="text" onChange={this.handleUsername} value={this.state.username}/>
                             <p>PASSWORD</p>
                             <div className="password-wrapper">
-                                <i class="fas fa-eye"></i>
+                                <i className="fas fa-eye"></i>
                                 <input className="login-password" type="password" onChange={this.handlePassword} value={this.state.password}/>
                             </div>
                             <div className="login-form-err">{this.state.login_error}</div>

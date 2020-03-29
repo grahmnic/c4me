@@ -31,8 +31,9 @@ class Collegesearch extends React.Component {
                 data.json().then(resp => {
                     
                     this.setState({
-                        collegeData: resp
+                        collegeData: resp.slice(0, 4)
                     });
+
                 });
             }
         });
@@ -42,7 +43,7 @@ class Collegesearch extends React.Component {
     render() {
 
         var colleges = [];
-        for(var i = 0; i < 4; i++) {
+        for(var i = 0; i < this.state.collegeData.length; i++) {
             colleges.push({
                 id: i,
                 value: this.state.collegeData[i]

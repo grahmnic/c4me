@@ -19,6 +19,7 @@ import Profile from './components/profile/profile.js';
 import Collegesearch from './components/collegesearch/collegesearch.js';
 import keyIndex from 'react-key-index';
 import { logDOM } from "@testing-library/react";
+import Modal from './components/modal/modal.js';
 
 class App extends React.Component {
     constructor(props) {
@@ -26,7 +27,10 @@ class App extends React.Component {
 
         this.state = {
           popups: [],
-          showMenu: false 
+          showMenu: false,
+          showModal: false,
+          modalOps: null,
+          modalCallback: null
         }
 
         //localStorage.clear();
@@ -36,6 +40,13 @@ class App extends React.Component {
         this.handleMenu = this.handleMenu.bind(this);
         this.handleSignout = this.handleSignout.bind(this);
         this.shiftPopup = this.shiftPopup.bind(this);
+        this.showModal = this.showModal.bind(this);
+        this.closeModal = this.closeModal.bind(this);
+        this.handleScrapeRankings = this.handleScrapeRankings.bind(this);
+        this.handleImportProfiles = this.handleImportProfiles.bind(this);
+        this.handleImportScorecard = this.handleImportScorecard.bind(this);
+        this.handleDeleteProfiles = this.handleDeleteProfiles.bind(this);
+        this.handleScrapeData = this.handleScrapeData.bind(this);
     }
 
     componentDidMount() {
@@ -122,6 +133,153 @@ class App extends React.Component {
       });
     }
 
+    showModal(ops, callback) {
+      this.setState({
+        showModal: true,
+        modalOps: ops,
+        modalCallback: callback
+      });
+    }
+
+    closeModal() {
+      this.setState({
+        showModal: false
+      });
+    }
+
+    handleScrapeRankings() {
+      this.createPopup({
+          title: "SCRAPE COLLEGE RANKINGS",
+          content: "The request to scrape college rankings has been sent."
+      });
+      const requestOptions = {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'}
+      };
+      fetch('https://chads4us.herokuapp.com/scraperankings', requestOptions)
+      .then(data => {
+          if(data.status != 200) {
+              data.json().then(res => {
+                  this.props.createPopup({
+                      title: "ADMIN ERROR",
+                      content: "Error: " + res.error
+                  });
+              });
+          } else {
+              this.createPopup({
+                  title: "SCRAPED COLLEGE RANKINGS",
+                  content: "College rankings have ben scraped."
+              });
+          }
+      });
+    }
+
+    handleImportScorecard() {
+      const requestOptions = {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'}
+      };
+      fetch('https://chads4us.herokuapp.com/importscorecard', requestOptions)
+      .then(data => {
+          if(data.status != 200) {
+              data.json().then(res => {
+                  this.props.createPopup({
+                      title: "PROFILE ERROR",
+                      content: "No such user exists."
+                  });
+              });
+          } else {
+              data.json().then(res => {
+                  this.setState({
+                      userInfo: res,
+                      old_userInfo: res
+                  });
+              });
+          }
+      });
+    }
+
+    handleScrapeData() {
+      this.createPopup({
+          title: "SCRAPE COLLEGE DATA",
+          content: "The request to scrape college data has been sent."
+      });
+      const requestOptions = {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'}
+      };
+      fetch('https://chads4us.herokuapp.com/scrapecollegedata', requestOptions)
+      .then(data => {
+          if(data.status != 200) {
+              data.json().then(res => {
+                  this.props.createPopup({
+                      title: "ADMIN ERROR",
+                      content: "Error: " + res.error
+                  });
+              });
+          } else {
+            this.createPopup({
+                title: "SCRAPED COLLEGE DATA",
+                content: "The request to scrape college rankings has been sent."
+            });
+          }
+      });
+    }
+
+    handleDeleteProfiles() {
+      this.createPopup({
+          title: "DELETING PROFILES",
+          content: "The request for deleting profiles has been sent."
+      });
+      const requestOptions = {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'}
+      };
+      fetch('https://chads4us.herokuapp.com/deleteprofiles', requestOptions)
+      .then(data => {
+          if(data.status != 200) {
+              data.json().then(res => {
+                  this.props.createPopup({
+                      title: "ADMIN ERROR",
+                      content: "Error: " + res.error
+                  });
+              });
+          } else {
+            this.createPopup({
+                title: "DELETED PROFILES",
+                content: "All student profiles have been deleted."
+            });
+          }
+      });
+    }
+
+    handleImportProfiles() {
+      this.createPopup({
+          title: "IMPORT PROFILES",
+          content: "The request to import student profiles has been sent."
+      });
+      const requestOptions = {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'}
+      };
+      fetch('https://chads4us.herokuapp.com/importprofiles', requestOptions)
+      .then(data => {
+          if(data.status != 200) {
+              data.json().then(res => {
+                  this.props.createPopup({
+                      title: "ADMIN ERROR",
+                      content: "Error: " + res.error
+                  });
+              });
+          } else {
+            this.createPopup({
+                title: "IMPORTED PROFILES",
+                content: "All student profiles have been imported."
+            });
+          }
+      });
+    }
+
     componentWillUnmount() {
       clearInterval(this.interval);
     }
@@ -140,19 +298,52 @@ class App extends React.Component {
       }
       const popups = arr.map((e) =>
         <div key={e.id} className="popup">
-        <i class="popup-icon fas fa-times"></i>
+        <i className="popup-icon fas fa-times"></i>
         <div className="popup-title">{e.value.title}</div>
         <div className="popup-content">
           {e.value.content}
         </div>
         </div> 
       );
+      var adminPanel="";
+
+      if(true) {
+        adminPanel= [
+          <div key="1a" onClick={() => this.showModal({
+            title: "Confirm Admin Action",
+            content: "Are you sure you want to scrape the college rankings?"
+          }, this.handleScrapeRankings)} className={`menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`}>
+            <i className="fas fa-database"></i>
+          </div>,
+          <div key="1b" onClick={() => this.showModal({
+            title: "Confirm Admin Action",
+            content: "Are you sure you want to scrape the college data?"
+          }, this.handleScrapeData)} className={`menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`}>
+            <i className="fas fa-table"></i>
+          </div>,
+          <div key="1c" onClick={() => this.showModal({
+            title: "Confirm Admin Action",
+            content: "Are you sure you want to delete all student profiles?"
+          }, this.handleDeleteProfiles)} className={`menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`}>
+            <i className="fas fa-user-minus"></i>
+          </div>,
+          <div key="1d" onClick={() => this.showModal({
+            title: "Confirm Admin Action",
+            content: "Are you sure you want to import all student profiles?"
+          }, this.handleImportProfiles)} className={`menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`}>
+            <i className="fas fa-user-plus"></i>
+          </div>
+        ]
+        
+      }
+
       var re = '';
       if(!localStorage.getItem("user")) {
         re = <Redirect to="/login" />
       }
         return(
             <div>
+              <Modal onClose={this.closeModal} show={this.state.showModal} ops={this.state.modalOps} callback={this.state.modalCallback}/>
               <div className="popups">
                 {popups}
               </div>
@@ -165,17 +356,18 @@ class App extends React.Component {
                         <div className={`avatar ${this.state.showMenu ? 'avatar-menu' : ''}`}></div>
                       </div>
                         <Link to="/profile" className={`menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`}>
-                          <i class="far fa-user"></i>
+                          <i className="far fa-user"></i>
                         </Link>
                         <Link to="/" className={`menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`}>
-                          <i class="fas fa-university"></i>
+                          <i className="fas fa-university"></i>
                         </Link>
                         <Link to="/collegesearch" className={`menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`}>
-                          <i class="fas fa-chalkboard"></i>
+                          <i className="fas fa-chalkboard"></i>
                         </Link>
                         <div onClick={this.handleSignout} className={`menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`}>
-                          <i class="fas fa-sign-out-alt"></i>
-                        </div>                 
+                          <i className="fas fa-sign-out-alt"></i>
+                        </div>    
+                        {adminPanel}             
                     </div>
                   </div>
 

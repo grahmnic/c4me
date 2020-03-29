@@ -45,6 +45,10 @@ class Profile extends React.Component {
         this.handleSATCHEM = this.handleSATCHEM.bind(this);
         this.handleSATPHY = this.handleSATPHY.bind(this);
         this.handleAPS = this.handleAPS.bind(this);
+        this.handleGPA = this.handleGPA.bind(this);
+        this.handleSATMATH = this.handleSATMATH.bind(this);
+        this.handleSATEBRW = this.handleSATEBRW.bind(this);
+        this.handleACTCOMP = this.handleACTCOMP.bind(this);
     }
 
     componentDidUpdate() {
@@ -175,6 +179,10 @@ class Profile extends React.Component {
     handleSATCHEM(e) {this.setState({ userInfo: { ...this.state.userInfo, satchem: e.target.value}})}
     handleSATPHY(e) {this.setState({ userInfo: { ...this.state.userInfo, satphy: e.target.value}})}
     handleAPS(e) {this.setState({ userInfo: { ...this.state.userInfo, numpassedaps: e.target.value}})}
+    handleGPA(e) {this.setState({ userInfo: { ...this.state.userInfo, gpa: e.target.value}})}
+    handleSATMATH(e) {this.setState({ userInfo: { ...this.state.userInfo, satmath: e.target.value}})}
+    handleSATEBRW(e) {this.setState({ userInfo: { ...this.state.userInfo, satebrw: e.target.value}})}
+    handleACTCOMP(e) {this.setState({ userInfo: { ...this.state.userInfo, actcomposite: e.target.value}})}
 
     render() {
         if(!localStorage.getItem("user")) {
@@ -293,7 +301,7 @@ class Profile extends React.Component {
             </div>;
 
             var progressRow = 
-            <div>
+            <div className="progress-flex">
                 <div className="gpa">
                     <Progress radius={60} stroke={10} progress={this.state.gpa_progress} />
                     <div className="gpa-num">{this.state.userInfo.gpa}</div>
@@ -315,6 +323,7 @@ class Profile extends React.Component {
                     <div className="stat-title">ACTCOMP</div>
                 </div>
             </div>;
+
 
             if(this.state.editingStats) {
                 statRows = 
@@ -376,6 +385,30 @@ class Profile extends React.Component {
                     <input type="number" value={this.state.userInfo.numpassedaps} onChange={this.handleAPS}/>
                 </div>
             </div>;
+
+            progressRow =
+            <div className="progress-flex">
+                <div className="gpa">
+                    <Progress radius={60} stroke={10} progress={this.state.gpa_progress} />
+                    <input className="gpa-num" value={this.state.userInfo.gpa} onChange={this.handleGPA}/>
+                    <div className="stat-title">GPA</div>
+                </div>
+                <div className="gpa">
+                    <Progress radius={60} stroke={10} progress={this.state.satmath_progress} />
+                    <input className="gpa-num" value={this.state.userInfo.satmath} onChange={this.handleSATMATH}/>
+                    <div className="stat-title">SATMATH</div>
+                </div>
+                <div className="gpa">
+                    <Progress radius={60} stroke={10} progress={this.state.satebrw_progress} />
+                    <input className="gpa-num" value={this.state.userInfo.satebrw} onChange={this.handleSATEBRW}/>
+                    <div className="stat-title">SATEBRW</div>
+                </div>
+                <div className="gpa">
+                    <Progress radius={60} stroke={10} progress={this.state.actcomposite_progress} />
+                    <input className="gpa-num" value={this.state.userInfo.actcomposite} onChange={this.handleACTCOMP}/>
+                    <div className="stat-title">ACTCOMP</div>
+                </div>
+            </div>;
             }
 
             return(
@@ -385,7 +418,7 @@ class Profile extends React.Component {
                             <div className="info-card">
                                 <div className="info-banner">
                                     <div className="info-edit">
-                                        <i class="fas fa-user-edit" onClick={this.toggleEditMode}></i>
+                                        <i className="fas fa-user-edit" onClick={this.toggleEditMode}></i>
                                     </div>
                                 </div>
                                 <div className="info-img">
@@ -413,7 +446,7 @@ class Profile extends React.Component {
                                         
                                     </div>
                                     <div className="progress-title-content">
-                                        YOUR STATISTICS<i class="far fa-edit" onClick={this.toggleEditStats}></i>
+                                        YOUR STATISTICS<i className="far fa-edit" onClick={this.toggleEditStats}></i>
                                     </div>
                                 </div>
                                 <div className="progress-stats">

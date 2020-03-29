@@ -170,6 +170,16 @@
     animation: fadeIn 0.5s;
 }
 
+.gpa > input {
+    width: 45px;
+    text-align: center;
+    border: 1px dotted #222;
+}
+
+.gpa > input:focus {
+    outline: none;
+}
+
 .progress-stats {
     display: flex;
 }
@@ -216,6 +226,11 @@
 }
 .progress-title-content i:hover{
     color: #222;
+}
+
+.progress-flex {
+    display: flex;
+    width: 100%;
 }
 
 .gpa {
