@@ -7,33 +7,54 @@ class Collegesearch extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            collegeData: [
-                {
-                    name: "Harvard College",
-                    institution_type: "Private",
-                    ranking: "1",
-                    cost: "$60,000",
-                    admission_rate: "5%",
-                    population: "23,000",
-                    avgACT: "31",
-                    avgSAT: "1400",
-                    satMath: "770",
-                    satEBRW: "700",
-                    debt: "",
-                    location: "",
-                    city: "Cambridge",
-                    state: "MA",
-                    // majors: [],
-                }
-            ]
+            collegeData: []
         }
+        
     }
 
     componentDidMount() {
+        console.log("TEST");
+        const requestOptions = {
+            method: 'GET',
+            headers: {'Content-Type': 'application/json'}
+        };
+        
+        
+
+        fetch('https://chads4us.herokupp.com/getallcolleges', requestOptions)
+        .then(data => {
+            if(data.status !== 200) {
+                data.json().then(resp => {
+                    console.log("ERROR in retrieving all colleges");
+                });
+            } else {
+                data.json().then(resp => {
+                    
+                    this.setState({
+                        collegeData: resp
+                    });
+                });
+            }
+        });
 
     }
 
     render() {
+
+        var colleges = [];
+        for(var i = 0; i < 4; i++) {
+            colleges.push({
+                id: i,
+                value: this.state.collegeData[i]
+            })
+        }
+
+        const collegeList = colleges.map((e) =>
+            <div className="collegeCard" key={e.id}>
+                <CollegeResult data={e.value}/>
+            </div>
+        );
+
 
         return(
             <div className="searchContent">
@@ -186,27 +207,7 @@ class Collegesearch extends React.Component {
                 {/* Where college search results show up */}
                 <div className="searchMain">
                     <div className="cardGrid">
-                        <div className="collegeCard">
-                            <CollegeResult data={this.state.collegeData[0]}/>
-                        </div>
-                        <div className="collegeCard">
-                            <CollegeResult data={this.state.collegeData[0]}/>
-                        </div>
-                        <div className="collegeCard">
-                            <CollegeResult data={this.state.collegeData[0]}/>
-                        </div>
-                        <div className="collegeCard">
-                            <CollegeResult data={this.state.collegeData[0]}/>
-                        </div>
-                        <div className="collegeCard">
-                            <CollegeResult data={this.state.collegeData[0]}/>
-                        </div>
-                        <div className="collegeCard">
-                            <CollegeResult data={this.state.collegeData[0]}/>
-                        </div>
-                        <div className="collegeCard">
-                            <CollegeResult data={this.state.collegeData[0]}/>
-                        </div>
+                        {collegeList}
                     </div>
                 </div>
             </div>
