@@ -177,7 +177,7 @@ class Profile extends React.Component {
     handleSATECOB(e) {this.setState({ userInfo: { ...this.state.userInfo, satecobio: e.target.value}})}
     handleSATMOLB(e) {this.setState({ userInfo: { ...this.state.userInfo, satmolbio: e.target.value}})}
     handleSATCHEM(e) {this.setState({ userInfo: { ...this.state.userInfo, satchem: e.target.value}})}
-    handleSATPHY(e) {this.setState({ userInfo: { ...this.state.userInfo, satphy: e.target.value}})}
+    handleSATPHY(e) {this.setState({ userInfo: { ...this.state.userInfo, satphysics: e.target.value}})}
     handleAPS(e) {this.setState({ userInfo: { ...this.state.userInfo, numpassedaps: e.target.value}})}
     handleGPA(e) {this.setState({ userInfo: { ...this.state.userInfo, gpa: e.target.value}})}
     handleSATMATH(e) {this.setState({ userInfo: { ...this.state.userInfo, satmath: e.target.value}})}
