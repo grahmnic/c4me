@@ -269,3 +269,9 @@
 .popup-icon:hover {
   
 }
+
+.admin-btn {
+  background: red !important;
+  color: white;
+  text-shadow: none !important;
+}

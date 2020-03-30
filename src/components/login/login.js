@@ -137,22 +137,25 @@ class Login extends React.Component {
                         this.setState({login_error: res.error});
                     });
                 } else {
-                    var user = this.state.username;
-                    this.setState({
-                        username: "",
-                        password: ""
-                    });
-                    this.props.createPopup({
-                        title: "LOGIN SUCCESSFUL",
-                        content: "You will be redirected to home page in a bit."
-                    });
-                    setTimeout(function() {
-                        localStorage.setItem("user", user);
-                        document.getElementsByClassName("header")[0].classList = "header";
+                    data.json().then(res => {
+                        var user = this.state.username;
                         this.setState({
-                            loggedIn: true
+                            username: "",
+                            password: ""
                         });
-                    }.bind(this), 2000);
+                        this.props.createPopup({
+                            title: "LOGIN SUCCESSFUL",
+                            content: "You will be redirected to home page in a bit."
+                        });
+                        setTimeout(function() {
+                            localStorage.setItem("user", user);
+                            localStorage.setItem("isAdmin", res.isAdmin);
+                            document.getElementsByClassName("header")[0].classList = "header";
+                            this.setState({
+                                loggedIn: true
+                            });
+                        }.bind(this), 2000);
+                    });
                 }
             });
         event.preventDefault();

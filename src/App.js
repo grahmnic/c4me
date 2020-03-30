@@ -107,6 +107,7 @@ class App extends React.Component {
         content: "Thank you for using C4ME. Come back soon!"
       })
       localStorage.setItem("user", "");
+      localStorage.setItem("isAdmin", "");
       this.setState({showMenu: false});
     }
 
@@ -307,30 +308,30 @@ class App extends React.Component {
       );
       var adminPanel="";
 
-      if(true) {
+      if(localStorage.getItem("isAdmin") == "true") {
         adminPanel= [
           <div key="1a" onClick={() => this.showModal({
             title: "Confirm Admin Action",
             content: "Are you sure you want to scrape the college rankings?"
-          }, this.handleScrapeRankings)} className={`menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`}>
+          }, this.handleScrapeRankings)} className={`admin-btn menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`}>
             <i className="fas fa-database"></i>
           </div>,
           <div key="1b" onClick={() => this.showModal({
             title: "Confirm Admin Action",
             content: "Are you sure you want to scrape the college data?"
-          }, this.handleScrapeData)} className={`menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`}>
+          }, this.handleScrapeData)} className={`admin-btn menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`}>
             <i className="fas fa-table"></i>
           </div>,
           <div key="1c" onClick={() => this.showModal({
             title: "Confirm Admin Action",
             content: "Are you sure you want to delete all student profiles?"
-          }, this.handleDeleteProfiles)} className={`menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`}>
+          }, this.handleDeleteProfiles)} className={`admin-btn menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`}>
             <i className="fas fa-user-minus"></i>
           </div>,
           <div key="1d" onClick={() => this.showModal({
             title: "Confirm Admin Action",
             content: "Are you sure you want to import all student profiles?"
-          }, this.handleImportProfiles)} className={`menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`}>
+          }, this.handleImportProfiles)} className={`admin-btn menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`}>
             <i className="fas fa-user-plus"></i>
           </div>
         ]
