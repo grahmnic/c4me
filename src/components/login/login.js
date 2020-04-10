@@ -137,22 +137,25 @@ class Login extends React.Component {
                         this.setState({login_error: res.error});
                     });
                 } else {
-                    var user = this.state.username;
-                    this.setState({
-                        username: "",
-                        password: ""
-                    });
-                    this.props.createPopup({
-                        title: "LOGIN SUCCESSFUL",
-                        content: "You will be redirected to home page in a bit."
-                    });
-                    setTimeout(function() {
-                        localStorage.setItem("user", user);
-                        document.getElementsByClassName("header")[0].classList = "header";
+                    data.json().then(res => {
+                        var user = this.state.username;
                         this.setState({
-                            loggedIn: true
+                            username: "",
+                            password: ""
                         });
-                    }.bind(this), 2000);
+                        this.props.createPopup({
+                            title: "LOGIN SUCCESSFUL",
+                            content: "You will be redirected to home page in a bit."
+                        });
+                        setTimeout(function() {
+                            localStorage.setItem("user", user);
+                            localStorage.setItem("isAdmin", res.isAdmin);
+                            document.getElementsByClassName("header")[0].classList = "header";
+                            this.setState({
+                                loggedIn: true
+                            });
+                        }.bind(this), 2000);
+                    });
                 }
             });
         event.preventDefault();
@@ -252,7 +255,7 @@ class Login extends React.Component {
                     </div>
                     <div className={`login-footer ${showInfo}`}>
                         <div className="login-footer-wide">
-                            <i className="far fa-copyright"></i> CHADS <span class="login-footer-wide-small">made with react</span>
+                            <i className="far fa-copyright"></i> CHADS <span className="login-footer-wide-small">made with react</span>
                         </div>
                         <div className="login-footer-thin">
                             <i className="fab fa-facebook-f"></i>
@@ -267,7 +270,7 @@ class Login extends React.Component {
                 </div>
                 <div className="login-shift">
                     <div className="shift-btn" onClick={this.shift}>
-                        <i class="shift-icon far fa-star"></i>
+                        <i className="shift-icon far fa-star"></i>
                     </div>
                 </div>
                 <div className={`login-right ${showRight}`}>
@@ -297,7 +300,7 @@ class Login extends React.Component {
                             <input className="login-username" type="text" onChange={this.handleUsername} value={this.state.username}/>
                             <p>PASSWORD</p>
                             <div className="password-wrapper">
-                                <i class="fas fa-eye"></i>
+                                <i className="fas fa-eye"></i>
                                 <input className="login-password" type="password" onChange={this.handlePassword} value={this.state.password}/>
                             </div>
                             <div className="login-form-err">{this.state.login_error}</div>
