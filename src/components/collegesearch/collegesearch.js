@@ -6,7 +6,6 @@ class Collegesearch extends React.Component {
 
     constructor(props) {
         super(props);
-        this.mounted = true;
         this.state = {
             collegeData: [],
             isLoading: false,
@@ -16,9 +15,11 @@ class Collegesearch extends React.Component {
     }
 
     componentDidMount() {
-        this.setState({ isLoading: true });
-
-        fetch('https://chads4us.herokupp.com/getallcolleges')
+        const requestOptions = {
+            method: 'GET',
+            headers: {'Content-Type': 'application/json'}
+        };
+        fetch('https://chads4us.herokuapp.com/getallcolleges', requestOptions)
             .then(response => {
                 if (response.ok) {
                     return response.json();
@@ -39,12 +40,11 @@ class Collegesearch extends React.Component {
     }
 
     componentWillUnmount() {
-        this.mounted = false;
+        
     }
 
     render() {
 
-        console.log(this.state);
         var colleges = [];
         for(var i = 0; i < this.state.collegeData.length; i++) {
             colleges.push({
@@ -53,14 +53,11 @@ class Collegesearch extends React.Component {
             })
         }
 
-        console.log(colleges);
         let collegeList = colleges.map((e) =>
             <div className="collegeCard" key={e.id}>
                 <CollegeResult data={e.value}/>
             </div>
         );
-
-        console.log(collegeList);
 
         return(
             <div className="searchContent">
