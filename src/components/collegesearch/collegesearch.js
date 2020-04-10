@@ -6,41 +6,45 @@ class Collegesearch extends React.Component {
 
     constructor(props) {
         super(props);
+        this.mounted = true;
         this.state = {
-            collegeData: []
+            collegeData: [],
+            isLoading: false,
+            error: null,
         }
         
     }
 
     componentDidMount() {
-        console.log("TEST");
-        const requestOptions = {
-            method: 'GET',
-            headers: {'Content-Type': 'application/json'}
-        };
-        
-        
+        this.setState({ isLoading: true });
 
-        fetch('https://chads4us.herokupp.com/getallcolleges', requestOptions)
-        .then(data => {
-            if(data.status !== 200) {
-                data.json().then(resp => {
-                    console.log("ERROR in retrieving all colleges");
+        fetch('https://chads4us.herokupp.com/getallcolleges')
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Error in fetching data');
+                }
+            }).then(data => {
+                this.setState({
+                    collegeData: data,
+                    isLoading: false
                 });
-            } else {
-                data.json().then(resp => {
-                    
-                    this.setState({
-                        collegeData: resp
-                    });
+            }).catch(error => {
+                this.setState({
+                    error: error,
+                    loading: false
                 });
-            }
-        });
+            });
+    }
 
+    componentWillUnmount() {
+        this.mounted = false;
     }
 
     render() {
 
+        console.log(this.state);
         var colleges = [];
         for(var i = 0; i < 4; i++) {
             colleges.push({
@@ -49,12 +53,14 @@ class Collegesearch extends React.Component {
             })
         }
 
-        const collegeList = colleges.map((e) =>
+        console.log(colleges);
+        let collegeList = colleges.map((e) =>
             <div className="collegeCard" key={e.id}>
                 <CollegeResult data={e.value}/>
             </div>
         );
 
+        console.log(collegeList);
 
         return(
             <div className="searchContent">
