@@ -13,10 +13,7 @@ class ManageApplications extends React.Component {
 
     render() {
         return(
-            <div className="testCard">
-                <div>
-                    THIS IS MANAGE APPLICATIONS!
-                </div>
+            <div>
                 <div className="appStats">
                     <div className="appNums">
                         <div className="acceptReject">

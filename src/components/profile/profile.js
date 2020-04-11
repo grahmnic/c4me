@@ -3,6 +3,8 @@ import './profile.css';
 import { Redirect } from 'react-router-dom';
 import Progress from './progress/progress.js';
 import profileImage from '../../assets/images/ralph.jpg';
+import ManageApplications from '../manageApplications/manageApplications.js';
+
 
 class Profile extends React.Component {
     constructor(props) {
@@ -17,7 +19,9 @@ class Profile extends React.Component {
             actcomposite_progress: 0,
             editingInfo: false,
             editingStats: false,
-            new_password: null
+            new_password: null,
+            viewStats: false,
+            manageApps: true
         }
 
         this.handleCollegeClass = this.handleCollegeClass.bind(this);
@@ -49,6 +53,9 @@ class Profile extends React.Component {
         this.handleSATMATH = this.handleSATMATH.bind(this);
         this.handleSATEBRW = this.handleSATEBRW.bind(this);
         this.handleACTCOMP = this.handleACTCOMP.bind(this);
+
+        this.toggleViewStats = this.toggleViewStats.bind(this);
+        this.toggleManageApps = this.toggleManageApps.bind(this);
     }
 
     componentDidUpdate() {
@@ -137,6 +144,22 @@ class Profile extends React.Component {
         }
         this.setState({
             editingStats: !this.state.editingStats
+        });
+    }
+
+    toggleViewStats() {
+        console.log(this.state);
+        this.setState({
+            viewStats: true,
+            manageApps: false
+        });
+    }
+
+    toggleManageApps() {
+        console.log(this.state);
+        this.setState({
+            viewStats: false,
+            manageApps: true
         });
     }
 
@@ -410,6 +433,45 @@ class Profile extends React.Component {
                 </div>
             </div>;
             }
+
+            if (this.state.viewStats) {
+                var content = 
+                <div className="content-card">
+                    <div className="progress-section">
+                        <div className="progress-title">
+                            <div className="progress-bg">
+                                
+                            </div>
+                            <div className="progress-title-content">
+                                <div className="statsTab">
+                                    <div onClick={this.toggleViewStats}>YOUR STATISTICS</div>
+                                    <div><i className="far fa-edit" onClick={this.toggleEditStats}></i></div>
+                                </div>
+                                <div className="manageAppsTab" onClick={this.toggleManageApps}>MANAGE APPLICATIONS</div>
+                            </div>
+                        </div>
+                        <div className="progress-stats">
+                        {progressRow}
+                    </div>
+                    </div>
+                    <div className="divider"></div>
+                    <div className="stats">
+                        {statRows}
+                    </div>
+                </div>
+            } else if (this.state.manageApps) {
+                content =
+                <div className="content-card">
+                    <div className="progress-title-content">
+                        <div className="statsTab">
+                            <div onClick={this.toggleViewStats}>YOUR STATISTICS</div>
+                            <div><i className="far fa-edit" onClick={this.toggleEditStats}></i></div>
+                        </div>
+                        <div className="manageAppsTab" onClick={this.toggleManageApps}>MANAGE APPLICATIONS</div>
+                </div>
+                    <ManageApplications/>
+                </div>
+            }
             
             return(
                 <div className="profile">
@@ -439,26 +501,7 @@ class Profile extends React.Component {
                             </div>
                         </div>
                         
-                        <div className="content-card">
-                            <div className="progress-section">
-                                <div className="progress-title">
-                                    <div className="progress-bg">
-                                        
-                                    </div>
-                                    <div className="progress-title-content">
-                                        <div className="statsTab">YOUR STATISTICS<i className="far fa-edit" onClick={this.toggleEditStats}></i></div>
-                                        <div className="manageAppsTab">MANAGE APPLICATIONS</div>
-                                    </div>
-                                </div>
-                                <div className="progress-stats">
-                                {progressRow}
-                            </div>
-                            </div>
-                            <div className="divider"></div>
-                            <div className="stats">
-                                {statRows}
-                            </div>
-                        </div>
+                       {content}
                     </div>
                 </div>
             );
