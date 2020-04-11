@@ -53,11 +53,14 @@ class Collegesearch extends React.Component {
             })
         }
 
+        console.log(colleges);
+
         let collegeList = colleges.map((e) =>
             <div className="collegeCard" key={e.id}>
                 <CollegeResult data={e.value}/>
             </div>
         );
+
 
         return(
             <div className="searchContent">

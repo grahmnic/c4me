@@ -410,7 +410,7 @@ class Profile extends React.Component {
                 </div>
             </div>;
             }
-
+            
             return(
                 <div className="profile">
                     <div className="profile-content">
@@ -446,7 +446,8 @@ class Profile extends React.Component {
                                         
                                     </div>
                                     <div className="progress-title-content">
-                                        YOUR STATISTICS<i className="far fa-edit" onClick={this.toggleEditStats}></i>
+                                        <div className="statsTab">YOUR STATISTICS<i className="far fa-edit" onClick={this.toggleEditStats}></i></div>
+                                        <div className="manageAppsTab">MANAGE APPLICATIONS</div>
                                     </div>
                                 </div>
                                 <div className="progress-stats">

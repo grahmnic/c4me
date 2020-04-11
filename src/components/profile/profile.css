@@ -186,11 +186,15 @@
 
 .progress-section {
     background: url('../../assets/images/herringbone.png');
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
 }
 
 .progress-title {
     position: relative;
     overflow: hidden;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
 }
 
 .progress-bg {
@@ -209,6 +213,7 @@
 }
 
 .progress-title-content {
+    display: inline-block;
     font-size: 22px;
     font-weight: bold;
     padding: 10px 20px;
@@ -231,6 +236,30 @@
 .progress-flex {
     display: flex;
     width: 100%;
+}
+
+.statsTab {
+    cursor: pointer;
+    float: left;
+    margin-right: 1rem;
+    border-bottom: 2px solid transparent;
+}
+
+.statsTab:hover {
+    border-bottom: 2px solid gold;
+    overflow: hidden;
+}
+
+.manageAppsTab {
+    cursor: pointer;
+    float: left;
+    margin-right: 1rem;
+    border-bottom: 2px solid transparent;
+}
+
+.manageAppsTab:hover {
+    border-bottom: 2px solid gold;
+    overflow: hidden;
 }
 
 .gpa {

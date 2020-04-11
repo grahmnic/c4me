@@ -17,6 +17,7 @@ import Login from './components/login/login.js';
 import Home from './components/home/home.js';
 import Profile from './components/profile/profile.js';
 import Collegesearch from './components/collegesearch/collegesearch.js';
+import ManageApplications from './components/manageApplications/manageApplications.js';
 import keyIndex from 'react-key-index';
 import { logDOM } from "@testing-library/react";
 import Modal from './components/modal/modal.js';
@@ -385,6 +386,9 @@ class App extends React.Component {
                       </Route>
                       <Route path="/collegesearch">
                         <Collegesearch createPopup={this.createPopup}/>
+                      </Route>
+                      <Route path="/manageApplications">
+                        <ManageApplications />
                       </Route>
                     </Switch>
                   </div>

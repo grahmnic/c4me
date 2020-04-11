@@ -25,7 +25,7 @@ class CollegeResult extends React.Component {
                             <div className="collegeLogoWrap">
                                 <img className="collegeLogo" src={collegeLogo} alt="LOGO error"></img>
                             </div>
-                            <h2 className="collegeTitle">{this.props.data.name}</h2>
+                            <h2 className="collegeTitle">{this.props.data.collegename}</h2>
                             <div>{this.props.data.city}, {this.props.data.state}</div>
                         </div>                        
                     </div>
