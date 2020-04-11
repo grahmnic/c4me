@@ -20,8 +20,8 @@ class Profile extends React.Component {
             editingInfo: false,
             editingStats: false,
             new_password: null,
-            viewStats: false,
-            manageApps: true
+            viewStats: true,
+            manageApps: false
         }
 
         this.handleCollegeClass = this.handleCollegeClass.bind(this);
@@ -468,7 +468,7 @@ class Profile extends React.Component {
                             <div><i className="far fa-edit" onClick={this.toggleEditStats}></i></div>
                         </div>
                         <div className="manageAppsTab" onClick={this.toggleManageApps}>MANAGE APPLICATIONS</div>
-                </div>
+                    </div>
                     <ManageApplications/>
                 </div>
             }

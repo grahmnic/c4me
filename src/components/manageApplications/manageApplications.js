@@ -13,7 +13,7 @@ class ManageApplications extends React.Component {
 
     render() {
         return(
-            <div>
+            <div className="card">
                 <div className="appStats">
                     <div className="appNums">
                         <div className="acceptReject">
@@ -44,6 +44,14 @@ class ManageApplications extends React.Component {
                         </div>  
                         <div className="percentText">
                             ACCEPTANCE<br/>RATE
+                        </div>
+                    </div>
+                    <div className="newAppWrap">
+                        <div className="newApp">
+                            ENTER <br/>NEW APPLICATION
+                        </div>
+                        <div>
+
                         </div>
                     </div>
                     

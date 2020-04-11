@@ -1,3 +1,6 @@
+.card {
+    border-radius: 10px;
+}
 
 .appStats {
     background-color: rgb(171, 225, 247);
@@ -11,6 +14,7 @@
     margin: 1rem;
     display: flex;
     flex-direction: row;    
+    flex: 1;
 }
 
 .acceptReject {
@@ -29,6 +33,7 @@
 }
 
 .appPercent {
+    flex: 2;
     display: flex;
     flex-direction: column;
     margin: 1rem;
@@ -41,6 +46,18 @@
     height: 100%;
 }
 
+.newAppWrap {
+    margin: 1rem;
+    flex: 1;
+    display: flex;
+}
+
+.newApp {
+    font-size: 2rem;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
 
 .appsList {
     background-color: rgb(171, 225, 247);

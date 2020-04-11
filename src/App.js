@@ -387,9 +387,6 @@ class App extends React.Component {
                       <Route path="/collegesearch">
                         <Collegesearch createPopup={this.createPopup}/>
                       </Route>
-                      <Route path="/manageApplications">
-                        <ManageApplications />
-                      </Route>
                     </Switch>
                   </div>
                 </div>
