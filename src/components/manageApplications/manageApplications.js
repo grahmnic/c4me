@@ -5,15 +5,54 @@ import Application from '../application/application.js';
 class ManageApplications extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            newApp: false,
+            edittingApp: false
+        }
+
+        this.toggleNewApp = this.toggleNewApp.bind(this);
+        this.toggleNewApp = this.toggleEditApp.bind(this);
     }
 
     componentDidMount() {
 
     }
 
+    toggleNewApp() {
+        this.setState({
+            newApp: true,
+            edittingApp: false
+        });
+    }
+
+    toggleEditApp() {
+        this.setState({
+            newApp: false,
+            edittingApp: true
+        });
+    }
+
     render() {
+
+        var applicationModal;
+
+        if(this.state.newApp) {
+            applicationModal = 
+            <div className="newAppModal">
+                THIS IS A NEW APP MODAL
+            </div>
+        } else if (this.state.edittingApp) {
+            applicationModal = 
+            <div className="editAppModal">
+                THIS IS AN EDIT APP MODAL
+            </div>
+        } else {
+            applicationModal = <div></div>
+        }
+
         return(
             <div className="card">
+                {applicationModal}
                 <div className="appStats">
                     <div className="appNums">
                         <div className="acceptReject">
@@ -50,8 +89,8 @@ class ManageApplications extends React.Component {
                         <div className="newApp">
                             ENTER <br/>NEW APPLICATION
                         </div>
-                        <div>
-
+                        <div className="newAppBtn">
+                            <i className="far fa-plus-square" onClick={this.toggleNewApp}></i> 
                         </div>
                     </div>
                     
@@ -93,9 +132,10 @@ class ManageApplications extends React.Component {
                     <div className="application">
                         <Application/>
                     </div>
-
                 </div>
+
             </div>
+
         );
     }
 }

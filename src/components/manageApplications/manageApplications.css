@@ -48,8 +48,19 @@
 
 .newAppWrap {
     margin: 1rem;
+    margin-right: 1rem;
+    max-width: 33vw;
+    right: 10%;
     flex: 1;
     display: flex;
+    border: 2.5px solid black;
+    border-radius: 10px;
+}
+
+.newAppWrap:hover {
+    background-color: #D4E157;
+    transition: 0.5s;
+    cursor: pointer;
 }
 
 .newApp {
@@ -57,6 +68,29 @@
     position: relative;
     top: 50%;
     transform: translateY(-50%);
+    flex: 2;
+    text-align: justify;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-left: 10px;
+}
+
+.newAppBtn {
+    flex: 2;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+
+.newAppBtn i {
+    font-size: 3rem;
+    top: 50%;
+    transform: translateY(75%);
+}
+
+.newAppBtn i:hover{
+    color: rgb(201, 115, 252);
+    transition: 0.25s;
 }
 
 .appsList {
@@ -75,4 +109,23 @@
     margin: 1rem;
     border-radius: 10px;
     background-color: white;
+}
+
+.newAppModal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 5;
+    background-color: white;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    border-radius: 10px;
+
+}
+
+.editAppModal {
+    position: absolute;
+    z-index: 5;
+    background-color: white;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    border-radius: 10px;
 }
