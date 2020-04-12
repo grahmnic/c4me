@@ -1,58 +1,134 @@
 import React from 'react';
 import './manageApplications.css';
 import Application from '../application/application.js';
+import AppModal from '../appModal/appModal.js';
 
 class ManageApplications extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             newApp: false,
-            edittingApp: false
+            editApp: false,
+            showModal: false,
+            modalOps: null,
+            modalCallback: null
         }
 
-        this.toggleNewApp = this.toggleNewApp.bind(this);
-        this.toggleNewApp = this.toggleEditApp.bind(this);
+        this.showModal = this.showModal.bind(this);
+        this.closeModal = this.closeModal.bind(this);
+        this.updateApp = this.updateApp.bind(this);
+        this.showNewAppModal = this.showNewAppModal.bind(this);
+        this.showEditAppModal = this.showEditAppModal.bind(this);
     }
 
     componentDidMount() {
 
     }
 
-    toggleNewApp() {
+    updateApp() {
+        console.log("I AM UPDATING APPLICATION");
+        /* 
+            /editprofile/username and in body { collegename : "", status : "" }
+        */
+    }
+
+    showModal(ops, callback) {
         this.setState({
-            newApp: true,
-            edittingApp: false
+            showModal: true,
+            modalOps: ops,
+            modalCallback: callback
         });
     }
 
-    toggleEditApp() {
+    showNewAppModal(ops, callback) {
+        this.setState({
+            newApp: true,
+            editApp: false,
+            showModal: true,
+            modalOps: ops,
+            modalCallback: callback
+        });
+    }
+
+    showEditAppModal(ops, callback) {
         this.setState({
             newApp: false,
-            edittingApp: true
+            editApp: true,
+            showModal: true,
+            modalOps: ops,
+            modalCallback: callback
+        });
+    }
+
+    closeModal() {
+        this.setState({
+            newApp: false,
+            editApp: false,
+            showModal: false
         });
     }
 
     render() {
 
-        var applicationModal;
-
+        var appModalContent;
         if(this.state.newApp) {
-            applicationModal = 
-            <div className="newAppModal">
-                THIS IS A NEW APP MODAL
+            appModalContent = 
+            <div className="appModalForm">
+                <div className="newAppSchool">
+                    <div className="newAppSchoolText">
+                        SCHOOL:
+                    </div>
+                    <div className="newAppSchoolInput">
+                        <input type="text"></input>
+                    </div>
+                </div>
+                <div className="newAppStatus">
+                    <div className="newAppStatusText">
+                        STATUS:
+                    </div>
+                    <div className="newAppStatusSelect">
+                        <select>
+                            <option>ACCEPTED</option>
+                            <option>DENIED</option>
+                            <option>DEFERRED</option>
+                            <option>WAITING</option>
+                        </select>
+                    </div>
+                </div>
             </div>
-        } else if (this.state.edittingApp) {
-            applicationModal = 
-            <div className="editAppModal">
-                THIS IS AN EDIT APP MODAL
+            
+        } else if (this.state.editApp) {
+            appModalContent =
+            <div className="appModalForm">
+                <div className="newAppSchool">
+                    <div className="newAppSchoolText">
+                        SCHOOL:
+                    </div>
+                    <div className="newAppSchoolInput">
+                        <input type="text"></input>
+                    </div>
+                </div>
+                <div className="newAppStatus">
+                    <div className="newAppStatusText">
+                        STATUS:
+                    </div>
+                    <div className="newAppStatusSelect">
+                        <select>
+                            <option>ACCEPTED</option>
+                            <option>DENIED</option>
+                            <option>DEFERRED</option>
+                            <option>WAITING</option>
+                        </select>
+                    </div>
+                </div>
             </div>
         } else {
-            applicationModal = <div></div>
+            appModalContent = <div></div>
         }
 
         return(
             <div className="card">
-                {applicationModal}
+                <AppModal onClose={this.closeModal} show={this.state.showModal} ops={this.state.modalOps} callback={this.state.modalCallback}/>
                 <div className="appStats">
                     <div className="appNums">
                         <div className="acceptReject">
@@ -90,7 +166,15 @@ class ManageApplications extends React.Component {
                             ENTER <br/>NEW APPLICATION
                         </div>
                         <div className="newAppBtn">
-                            <i className="far fa-plus-square" onClick={this.toggleNewApp}></i> 
+                            <i className="far fa-plus-square" 
+                                onClick={() => this.showNewAppModal(
+                                    {
+                                        title: "NEW APPLICATION",
+                                        content: appModalContent
+                                    },
+                                    this.updateApp
+                                )}>
+                            </i> 
                         </div>
                     </div>
                     

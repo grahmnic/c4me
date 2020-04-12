@@ -1,5 +1,6 @@
 .card {
     border-radius: 10px;
+    position: relative;
 }
 
 .appStats {
@@ -111,21 +112,45 @@
     background-color: white;
 }
 
-.newAppModal {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    z-index: 5;
-    background-color: white;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-    border-radius: 10px;
-
+.appModalForm {
+    display: flex;
+    flex-direction: column;
 }
 
-.editAppModal {
-    position: absolute;
-    z-index: 5;
-    background-color: white;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-    border-radius: 10px;
+.newAppSchool {
+    display: flex;
+    flex-direction: row;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    margin-bottom: 10px;
+}
+
+.newAppSchoolText {
+    flex: 3;
+}
+
+.newAppSchoolInput {
+    flex: 3;
+    margin-right: 1rem;
+}
+
+.newAppSchoolInput input {
+    width: 100%;
+}
+
+.newAppStatus {
+    display: flex;
+    flex-direction: row;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    margin-bottom: 10px;
+}
+
+.newAppStatusText {
+    flex: 3;
+}
+
+.newAppStatusSelect {
+    flex: 1;
+    margin-right: 1rem;
 }
