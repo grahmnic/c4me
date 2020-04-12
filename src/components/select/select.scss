@@ -1,0 +1,50 @@
+.select {
+    display: flex;
+    flex-direction: column;
+    font-family: 'Roboto Condensed', monospace;
+    color: #222;
+    font-size: 16px;
+    width: 100%;
+    font-weight: 300;
+    position: relative;
+}
+
+.selector {
+    background: white;
+    padding: 7px;
+    cursor: pointer;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-bottom: 3px solid #fbff1e;
+    height: 1rem;
+    position: relative;
+}
+
+.selector:focus {
+}
+
+.options {
+    top: calc(2rem - 3px);
+    width: 100%;
+    position: absolute;
+    z-index: 1000;
+    transition: all 0.25s;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.selecting {
+    max-height: 12rem;
+}
+
+.option {
+    background: white;
+    border-top: 1px solid rgba(0, 0, 0, .05);
+    padding: 5px;
+    cursor: pointer;
+    transition: all 0.25s;
+}
+
+.option:hover {
+    background: rgb(202, 202, 202);
+}

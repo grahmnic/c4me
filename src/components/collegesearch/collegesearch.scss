@@ -1,46 +1,99 @@
 .searchContent {
     display: flex;
+    background: url('../../assets/images/bg2.png');
+    background-size: 800px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
 }
 
 .searchSideBar {
-
-    margin: 0;
-    padding-top: 0px;
-    padding-right: 1em;
-    padding-bottom: 0px;
-    padding-left: 0px;
-
-    width: 20rem;
-    height: 75%;
-
+    flex: 1;
     min-width: 20rem;
-    min-height: 600px;
-    
+    padding: 10px;
+    box-sizing: border-box;
+    font-family: 'Roboto Condensed', monospace;
 }
 
 .filterSB {
-    background-color: #d4e157;
-    min-height: 600px;
-    padding-top: 2em;
-    padding-right: 3.5em;
-    padding-bottom: 3.5em;
-    padding-left: 3.5em;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 5px 30px;
+    box-sizing: border-box;
+    background: rgba(0, 0, 0, 0.25);
+    
+}
 
-    border-bottom-right-radius: .75rem;
-    box-shadow: 0 2px 0 rgba(48,50,100,.14), 0 1px 8px 0 rgba(48,50,100,.14), 0 4px 8px 0 rgba(48,50,100,.14)
+.location {
+    display: flex;
+    width: 100%;
+}
+
+.locationWrapper {
+    flex: 10 !important;
+}
+
+.location div {
+    flex: 1;
 }
 
 .headingSB {
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    font-size: 1rem;
-    font-weight: bold;
+    display: flex;
+    width: 100%;
+    font-size: 1.25rem;
     margin-top: 1rem;
     cursor: default;
+    text-transform: uppercase;
+    color: rgb(255, 255, 255);
+    align-items: center;
     // margin-bottom: 1rem;
+}
+
+.titleSB {
+    color: white;
+    font-size: 28px;
+}
+
+.titleSB::first-letter {
+    color: #fbff1e;
+    font-size: 40px;
+}
+
+.titleSB::after {
+    content: " \f25c";
+    color: white;
+    font-size: 14px;
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
 }
 
 .nameFilter {
     margin-top: 1rem;
+}
+
+.nameInput {
+    font-family: 'Roboto Condensed', monospace;
+    padding: 5px;
+    box-sizing: border-box;
+    z-index: 2;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border: none;
+    border-bottom: 3px solid #fbff1e;
+    background: rgba(226, 226, 226, 0.25);
+    font-size: 18px;
+    color: #222;
+    width: 100%;
+}
+
+.nameInput::placeholder {
+    color: rgb(145, 145, 145);
+    font-size: 18px;
+}
+
+.nameInput:focus {
+    outline: none;
 }
 
 .stateSelect {
@@ -74,46 +127,70 @@
 }
 
 .searchMain {
-    width: 100%;
+    flex: 2.5;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    min-width: 700px;
 }
 
 .cardGrid {
-    padding-left: 0;
-    padding-top: 2rem;
-    padding-right: 1rem;
-    display: grid;
-    gap: 1rem;
+    flex: 12;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    box-shadow: inset 0 0 40px rgba(0,0,0, 0.25);
+    height: 100%;
+    overflow: auto;
+}
 
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+.paginationWrapper {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.pagination {
+    width: 50%;
+    max-width: 700px;
+    min-width: 500px;
+    margin: 10px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+@keyframes fadeInLeft3 {
+    100% {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+
+    0% {
+        opacity: 1;
+        transform: translateX(0px);
+    }
 }
 
 .collegeCard {
-    min-width: 400px;
-    max-width: 500px;
+    flex: 1;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background: #353535;
+    background: rgb(255, 252, 76);
     font-size: 3rem;
-    color: #fff;
+    color: #222;
     box-shadow: rgba(3, 8, 20, 0.1) 0px 0.15rem 0.5rem, rgba(2, 8, 20, 0.1) 0px 0.075rem 0.175rem;
-    height: 100%;
-    width: 100%;
+    width: 95%;
+    margin: 10px;
+    min-height: 200px;
     border-radius: 1rem;
-    transition: all 500ms;
     overflow: hidden;
-
+    font-family: 'Roboto Mono', monospace;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    animation: fadeInLeft 1s;
+    animation-fill-mode: both;
 }
-
-.collegeCard:hover {
-    box-shadow: rgba(2, 8, 20, 0.1) 0px 0.35em 1.175em, rgba(2, 8, 20, 0.08) 0px 0.175em 0.5em;
-    transform: translateY(-3px) scale(1.05);
-    cursor: default;
- }
 
 @media (max-width: 999px) {
     .searchContent {
@@ -148,7 +225,7 @@
     }
     
     .cardGrid {
-        padding-left: 1rem;
+        
     }
 }
 
@@ -160,4 +237,110 @@
     .mobileFilter {
         display:none;
     }
+}
+
+.pagination div div {
+    cursor: pointer;
+    border-radius: 3px;
+    font-size: 1.25rem;
+    font-weight: bolder;
+    transition: all 0.5s;
+    background: rgba(226, 226, 226, 0.2);
+    box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.25);
+    font-family: 'Roboto Condensed', monospace;
+}
+
+.pagination div div:hover {
+    transform: translateY(-3px);
+}
+
+//PAGINATION BLOCKS
+.end {
+    flex: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.end i {
+    font-size: 3rem;
+    color: black;
+    transition: color 0.5s;
+    cursor: pointer;
+}
+
+.end i:hover {
+    color: rgb(70, 70, 70);
+}
+
+.end {
+    flex: 0.5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.middle {
+    flex: 0.5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.first {
+    flex: 0.5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.first div {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.middle div {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.fade {
+    flex: 0.5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+}
+
+.active div {
+    background: #fbff1e !important;
+}
+
+.last {
+    flex: 0.5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.last div {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+// RANGE SLIDERS
+.rates {
+    flex: 1;
+    color: #fbff1e;
+    font-size: 15px;
+    text-align: right;
 }
