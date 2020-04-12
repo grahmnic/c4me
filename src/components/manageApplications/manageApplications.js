@@ -7,8 +7,6 @@ class ManageApplications extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            newApp: false,
-            editApp: false,
             showModal: false,
             modalOps: null,
             modalCallback: null
@@ -17,8 +15,6 @@ class ManageApplications extends React.Component {
         this.showModal = this.showModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
         this.updateApp = this.updateApp.bind(this);
-        this.showNewAppModal = this.showNewAppModal.bind(this);
-        this.showEditAppModal = this.showEditAppModal.bind(this);
     }
 
     componentDidMount() {
@@ -40,91 +36,63 @@ class ManageApplications extends React.Component {
         });
     }
 
-    showNewAppModal(ops, callback) {
-        this.setState({
-            newApp: true,
-            editApp: false,
-            showModal: true,
-            modalOps: ops,
-            modalCallback: callback
-        });
-    }
-
-    showEditAppModal(ops, callback) {
-        this.setState({
-            newApp: false,
-            editApp: true,
-            showModal: true,
-            modalOps: ops,
-            modalCallback: callback
-        });
-    }
-
     closeModal() {
         this.setState({
-            newApp: false,
-            editApp: false,
             showModal: false
         });
     }
 
     render() {
 
-        var appModalContent;
-        if(this.state.newApp) {
-            appModalContent = 
-            <div className="appModalForm">
-                <div className="newAppSchool">
-                    <div className="newAppSchoolText">
-                        SCHOOL:
-                    </div>
-                    <div className="newAppSchoolInput">
-                        <input type="text"></input>
-                    </div>
+        const newModalContent = 
+        <div className="appModalForm">
+            <div className="newAppSchool">
+                <div className="newAppSchoolText">
+                    SCHOOL:
                 </div>
-                <div className="newAppStatus">
-                    <div className="newAppStatusText">
-                        STATUS:
-                    </div>
-                    <div className="newAppStatusSelect">
-                        <select>
-                            <option>ACCEPTED</option>
-                            <option>DENIED</option>
-                            <option>DEFERRED</option>
-                            <option>WAITING</option>
-                        </select>
-                    </div>
+                <div className="newAppSchoolInput">
+                    <input type="text"></input>
                 </div>
             </div>
+            <div className="newAppStatus">
+                <div className="newAppStatusText">
+                    STATUS:
+                </div>
+                <div className="newAppStatusSelect">
+                    <select>
+                        <option>ACCEPTED</option>
+                        <option>DENIED</option>
+                        <option>DEFERRED</option>
+                        <option>WAITING</option>
+                    </select>
+                </div>
+            </div>
+        </div>
             
-        } else if (this.state.editApp) {
-            appModalContent =
-            <div className="appModalForm">
-                <div className="newAppSchool">
-                    <div className="newAppSchoolText">
-                        SCHOOL:
-                    </div>
-                    <div className="newAppSchoolInput">
-                        <input type="text"></input>
-                    </div>
+        const editModalContent =
+        <div className="appModalForm">
+            <div className="newAppSchool">
+                <div className="newAppSchoolText">
+                    SCHOOL:
                 </div>
-                <div className="newAppStatus">
-                    <div className="newAppStatusText">
-                        STATUS:
-                    </div>
-                    <div className="newAppStatusSelect">
-                        <select>
-                            <option>ACCEPTED</option>
-                            <option>DENIED</option>
-                            <option>DEFERRED</option>
-                            <option>WAITING</option>
-                        </select>
-                    </div>
+                <div className="newAppSchoolInput">
+                    <input type="text"></input>
                 </div>
             </div>
-        } else {
-            appModalContent = <div></div>
-        }
+            <div className="newAppStatus">
+                <div className="newAppStatusText">
+                    STATUS:
+                </div>
+                <div className="newAppStatusSelect">
+                    <select>
+                        <option>ACCEPTED</option>
+                        <option>DENIED</option>
+                        <option>DEFERRED</option>
+                        <option>WAITING</option>
+                    </select>
+                </div>
+            </div>
+        </div>
 
         return(
             <div className="card">
@@ -167,10 +135,10 @@ class ManageApplications extends React.Component {
                         </div>
                         <div className="newAppBtn">
                             <i className="far fa-plus-square" 
-                                onClick={() => this.showNewAppModal(
+                                onClick={() => this.showModal(
                                     {
                                         title: "NEW APPLICATION",
-                                        content: appModalContent
+                                        content: newModalContent
                                     },
                                     this.updateApp
                                 )}>
