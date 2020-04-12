@@ -9,7 +9,9 @@ class ManageApplications extends React.Component {
         this.state = {
             showModal: false,
             modalOps: null,
-            modalCallback: null
+            modalCallback: null,
+            newAppDataSchool: null,
+            newAppDataStatus: null
         }
 
         this.showModal = this.showModal.bind(this);
@@ -17,15 +19,76 @@ class ManageApplications extends React.Component {
         this.updateApp = this.updateApp.bind(this);
     }
 
-    componentDidMount() {
-
+    handleNewAppDataSchool = (e) => {
+        this.setState({
+            newAppDataSchool: e.target.value
+        })
     }
 
-    updateApp() {
-        console.log("I AM UPDATING APPLICATION");
-        /* 
-            /editprofile/username and in body { collegename : "", status : "" }
-        */
+    handleNewAppDataStatus = (e) => {
+        this.setState({
+            newAppDataStatus: e.target.value
+        })
+    }
+
+    componentDidMount() {
+        const requestOptions = {
+            method: 'GET',
+            headers: {'Content-Type': 'application/json'}
+        };
+        fetch('https://chads4us.herokuapp.com/getapplications/' + localStorage.getItem("user"), requestOptions)
+        .then(data => {
+            if(data.status != 200) {
+                data.json().then(res => {
+                    this.props.createPopup({
+                        title: "APPLICATION ERROR",
+                        content: "Error: " + res.error
+                    });
+                });
+            } else {
+                
+            }
+        });    
+    }
+
+    createApp() {
+        this.props.createPopup({
+            title: "REQUEST SENT",
+            content: "The system is processing your application request."
+        });
+        const requestOptions = {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                collegename: this.state.newAppDataSchool,
+                status: this.state.newAppDataStatus
+            })
+        };
+        fetch('https://chads4us.herokuapp.com/editapplication/' + localStorage.getItem("user"), requestOptions)
+        .then(data => {
+            if(data.status != 200) {
+                data.json().then(res => {
+                    this.props.createPopup({
+                        title: "APPLICATION ERROR",
+                        content: "Error: " + res.error
+                    });
+                });
+            } else {
+                data.json().then(res => {
+                    if(res.isNew) {
+                        this.props.createPopup({
+                            title: "APPLICATION CREATED",
+                            content: "Your application has been successfully created."
+                        });
+                    } else {
+                        this.props.createPopup({
+                            title: "APPLICATION UPDATED",
+                            content: "Your applcation has been successfully updated."
+                        });
+                    }
+                })
+            }
+        });        
     }
 
     showModal(ops, callback) {
@@ -51,7 +114,7 @@ class ManageApplications extends React.Component {
                     SCHOOL:
                 </div>
                 <div className="newAppSchoolInput">
-                    <input type="text"></input>
+                    <input type="text" onChange={this.handleNewAppDataSchool} value={this.state.newAppDataSchool}></input>
                 </div>
             </div>
             <div className="newAppStatus">
@@ -59,11 +122,13 @@ class ManageApplications extends React.Component {
                     STATUS:
                 </div>
                 <div className="newAppStatusSelect">
-                    <select>
-                        <option>ACCEPTED</option>
-                        <option>DENIED</option>
-                        <option>DEFERRED</option>
-                        <option>WAITING</option>
+                    <select onChange={this.handleNewAppDataStatus} value={this.state.newAppDataStatus}>
+                        <option value="accepted">ACCEPTED</option>
+                        <option value="denied">DENIED</option>
+                        <option value="pending">PENDING</option>
+                        <option value="deferred">DEFERRED</option>
+                        <option value="withdrawn">WITHDRAWN</option>
+                        <option value="wait-listed">WAITLISTED</option>
                     </select>
                 </div>
             </div>

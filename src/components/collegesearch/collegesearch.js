@@ -7,6 +7,7 @@ import {Slider, Handles, Tracks} from 'react-compound-slider';
 import {Scrollbars} from 'react-custom-scrollbars';
 import RangeSlider from '../slider/slider';
 import { thisTypeAnnotation } from '@babel/types';
+import { white } from 'color-name';
 
 class Collegesearch extends React.Component {
 
@@ -107,6 +108,13 @@ class Collegesearch extends React.Component {
                     loading: false
                 });
             });
+    }
+
+    renderThumb = () => {
+        return (
+            <div
+                style={{ backgroundColor: `rgba(256,256,256,0.4)` }}/>
+        );
     }
 
     componentWillUnmount() {
@@ -358,7 +366,7 @@ class Collegesearch extends React.Component {
 
                 {/* Where college search results show up */}
                 <div className="searchMain">
-                    <Scrollbars className="cardGrid">
+                    <Scrollbars renderThumbVertical={this.renderThumb} className="cardGrid">
                         {collegeList}
                     </Scrollbars>
                     <div className="paginationWrapper">

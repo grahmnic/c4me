@@ -21,9 +21,9 @@
     height: 100%;
     padding: 5px 30px;
     box-sizing: border-box;
-    background: rgba(0, 0, 0, 0.25);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
 }
 
 .location {
@@ -142,9 +142,10 @@
     flex-direction: column;
     box-shadow: inset 0 0 40px rgba(0,0,0, 0.25);
     height: 100%;
+    background: rgba(0, 0, 0, 0.75);
     overflow: auto;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
 }
 
 .paginationWrapper {
@@ -178,9 +179,9 @@
 .collegeCard {
     flex: 1;
     display: flex;
-    background: rgb(255, 252, 76);
+    background: #222;
     font-size: 3rem;
-    color: #222;
+    color: rgb(255, 252, 76);
     box-shadow: rgba(3, 8, 20, 0.1) 0px 0.15rem 0.5rem, rgba(2, 8, 20, 0.1) 0px 0.075rem 0.175rem;
     width: 95%;
     margin: 10px;

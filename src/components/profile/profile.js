@@ -469,7 +469,7 @@ class Profile extends React.Component {
                         </div>
                         <div className="manageAppsTab" onClick={this.toggleManageApps}>MANAGE APPLICATIONS</div>
                     </div>
-                    <ManageApplications/>
+                    <ManageApplications createPopup={this.props.createPopup}/>
                 </div>
             }
             
