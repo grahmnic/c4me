@@ -149,10 +149,8 @@ class Collegesearch extends React.Component {
             colleges.push({
                 id: i,
                 value: this.state.collegeData[i]
-            })
+            });
         }
-
-        console.log(colleges);
 
         let collegeList = colleges.map((e) =>
             <div className="collegeCard" key={e.id} style={{ animationDelay: ((e.id % 10) * 0.1).toString() + "s"}}>
