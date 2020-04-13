@@ -46,6 +46,10 @@
     font-size: 2rem;
 }
 
+.fa-check-square {
+    font-size: 5rem;
+}
+
 .editAppLogo i:hover {
     color: orange;
     cursor: pointer;

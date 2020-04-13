@@ -18,7 +18,7 @@ class ManageApplications extends React.Component {
         this.showModal = this.showModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
         this.createApp = this.createApp.bind(this);
-        this.editApp = this.editApp.bind(this);
+        this.fetchApp = this.fetchApp.bind(this);
     }
 
     handleNewAppDataSchool = (e) => {
@@ -30,14 +30,10 @@ class ManageApplications extends React.Component {
     handleNewAppDataStatus = (e) => {
         this.setState({
             newAppDataStatus: e.target.value
-        })
+        });
     }
 
-    editApp(schoolname, status) {
-        console.log("edit app success");
-    }
-
-    componentDidMount() {
+    fetchApp() {
         const requestOptions = {
             method: 'GET',
             headers: {'Content-Type': 'application/json'}
@@ -58,7 +54,11 @@ class ManageApplications extends React.Component {
                     });
                 });
             }
-        });    
+        });
+    }
+
+    componentDidMount() {
+        this.fetchApp()
     }
 
     createApp() {
@@ -76,7 +76,7 @@ class ManageApplications extends React.Component {
         };
         fetch('https://chads4us.herokuapp.com/editapplication/' + localStorage.getItem("user"), requestOptions)
         .then(data => {
-            if(data.status != 200) {
+            if(data.status !== 200) {
                 data.json().then(res => {
                     this.props.createPopup({
                         title: "APPLICATION ERROR",
@@ -102,11 +102,13 @@ class ManageApplications extends React.Component {
                         this.setState({
                             newAppDataSchool: null,
                             newAppDataStatus: null
-                        })
+                        });
                     }
                 });
             }
         });        
+
+        this.fetchApp();
     }
 
     showModal(ops, callback) {
@@ -152,7 +154,7 @@ class ManageApplications extends React.Component {
 
         let appList = applications.map((e) =>
             <div className="application" key={e.id} style={{ animationDelay: ((e.id % 10) * 0.1).toString() + "s" }}>
-                <Application data={e.value} callback={this.editApp}/>
+                <Application data={e.value} callback={this.fetchApp} createPopup={this.props.createPopup}/>
             </div>
             
         );
@@ -174,38 +176,13 @@ class ManageApplications extends React.Component {
                 </div>
                 <div className="newAppStatusSelect">
                     <select onChange={this.handleNewAppDataStatus} value={this.state.newAppDataStatus}>
-                        <option value="null">CHOOSE A STATUS</option>
+                        <option value="">CHOOSE A STATUS</option>
                         <option value="accepted">ACCEPTED</option>
                         <option value="denied">DENIED</option>
                         <option value="pending">PENDING</option>
                         <option value="deferred">DEFERRED</option>
                         <option value="withdrawn">WITHDRAWN</option>
                         <option value="wait-listed">WAITLISTED</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-            
-        const editModalContent =
-        <div className="appModalForm">
-            <div className="newAppSchool">
-                <div className="newAppSchoolText">
-                    SCHOOL:
-                </div>
-                <div className="newAppSchoolInput">
-                    <input type="text"></input>
-                </div>
-            </div>
-            <div className="newAppStatus">
-                <div className="newAppStatusText">
-                    STATUS:
-                </div>
-                <div className="newAppStatusSelect">
-                    <select>
-                        <option>ACCEPTED</option>
-                        <option>DENIED</option>
-                        <option>DEFERRED</option>
-                        <option>WAITING</option>
                     </select>
                 </div>
             </div>
