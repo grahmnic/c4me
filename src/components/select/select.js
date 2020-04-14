@@ -32,6 +32,9 @@ class Select extends React.Component {
             selectedKey: key,
             selectedValue: val
         });
+        if(this.props.changeCallback) {
+            this.props.changeCallback(val);
+        }
     }
 
     getValue() {

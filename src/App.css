@@ -1,6 +1,7 @@
 .App {
   text-align: center;
-  height: 100vw;
+  height: 100vh;
+  box-sizing: border-box;
   min-width: 500px;
 }
 
@@ -56,8 +57,23 @@
   align-items: center;
   overflow: hidden;
   width: 100px;
+  flex-wrap: wrap;
   padding-left: 25px;
   padding-bottom: 5px;
+}
+
+.menuClose {
+  width: 80px;
+  height: 80px;
+  flex-direction: row !important;
+}
+
+.menuClose .avatar-wrapper{
+
+}
+
+.menuClose .avatar-wrapper .avatar {
+
 }
 
 .avatar-wrapper {
@@ -133,31 +149,7 @@
   box-shadow: inset 0px 0px 5px #c1c1c1;
 }
 
-.menu-btn:nth-child(1) {
-  transition-delay: 0.55s;
-}
-.menu-btn:nth-child(2) {
-  transition-delay: 0.4s;
-}
-.menu-btn:nth-child(3) {
-  transition-delay: 0.25s;
-}
-.menu-btn:nth-child(4) {
-  transition-delay: 0.1s;
-}
 
-.menu-btn-active:nth-child(1) {
-  transition-delay: 0.1s;
-}
-.menu-btn-active:nth-child(2) {
-  transition-delay: 0.25s;
-}
-.menu-btn-active:nth-child(3) {
-  transition-delay: 0.4s;
-}
-.menu-btn-active:nth-child(4) {
-  transition-delay: 0.55s;
-}
 
 .menu-btn-active {
   transform: translate(0px);

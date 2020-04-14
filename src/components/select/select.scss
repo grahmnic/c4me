@@ -2,22 +2,28 @@
     display: flex;
     flex-direction: column;
     font-family: 'Roboto Condensed', monospace;
-    color: #222;
-    font-size: 16px;
+    color: white;
+    font-size: 14px;
     width: 100%;
+    height: fit-content;
     font-weight: 300;
     position: relative;
 }
 
 .selector {
-    background: white;
-    padding: 7px;
+    background: rgba(226, 226, 226, 0.25);
+    padding: 4px;
     cursor: pointer;
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
     border-bottom: 3px solid #fbff1e;
     height: 1rem;
     position: relative;
+    transition: all 0.25s;
+}
+
+.selector:hover {
+    background: rgba(172, 172, 172, 0.25);
 }
 
 .selector:focus {
@@ -31,6 +37,7 @@
     transition: all 0.25s;
     overflow-y: scroll;
     overflow-x: hidden;
+    color: #222;
 }
 
 .selecting {

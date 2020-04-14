@@ -120,7 +120,7 @@ class App extends React.Component {
         this.shiftPopup();
       }
       var timestamps = [...(localStorage.getItem("popups_timestamps") ? JSON.parse(localStorage.getItem("popups_timestamps")) : [])];
-      timestamps.push(5000);
+      timestamps.push(3000);
       localStorage.setItem("popups_timestamps", JSON.stringify(timestamps));
       this.setState({showMenu: this.state.showMenu});
     }
@@ -353,7 +353,7 @@ class App extends React.Component {
                 {re}
                 <div>
                   <div className="root">
-                    <div className={`header ${localStorage.getItem("user") ? '' : 'notLoggedIn'}`}>
+                    <div className={`header ${localStorage.getItem("user") ? '' : 'notLoggedIn'} ${this.state.showMenu ? '' : 'menuClose'}`}>
                       <div className={`avatar-wrapper ${this.state.showMenu ? 'avatar-wrapper-menu' : ''}`} onClick={this.handleMenu}>
                         <div className={`avatar ${this.state.showMenu ? 'avatar-menu' : ''}`}></div>
                       </div>

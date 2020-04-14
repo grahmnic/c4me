@@ -22,9 +22,24 @@ class Collegesearch extends React.Component {
             admissionsRange: [25, 75],
             satmRange: [400, 600],
             sateRange: [400, 600],
-            actRange: [400, 600],
+            actRange: [26, 32],
             costRange: [16000,48000],
-            rankingRange: [50, 250]
+            rankingRange: [50, 250],
+            popRange: [6000, 14000],
+            strict: false,
+            sorting: 'ranking',
+            isAscending: false,
+            collegename: null,
+            major1: null,
+            major2: null,
+            toggleAdmissionsRange: false,
+            toggleSatmRange: false,
+            toggleSateRange: false,
+            toggleActRange: false,
+            toggleCostRange: false,
+            toggleRankingRange: false,
+            togglePopRange: false,
+            toggleScoreSort: false
         }
         
         this.handlePage = this.handlePage.bind(this);
@@ -33,9 +48,27 @@ class Collegesearch extends React.Component {
 
         this.locationInput = React.createRef();
         this.stateInput = React.createRef();
-        this.admissionRange = React.createRef();
+        this.sortInput = React.createRef();
         this.handleLocationInput = this.handleLocationInput.bind(this);
         this.handleAdmissionRange = this.handleAdmissionRange.bind(this);
+    }
+
+    handleCollegeName = (e) => {
+        this.setState({
+            collegename: e.target.value
+        });
+    }
+
+    handleMajor1 = (e) => {
+        this.setState({
+            major1: e.target.value
+        });
+    }
+
+    handleMajor2 = (e) => {
+        this.setState({
+            major2: e.target.value
+        })
     }
 
     handleLocationInput() {
@@ -43,9 +76,22 @@ class Collegesearch extends React.Component {
         alert(this.stateInput.current.getValue());
     }
 
+    sortList = (val) => {
+        this.setState({
+            collegeData: this.sortCollegeData(val, this.state.isAscending),
+            sorting: val
+        });
+    }
+
     handleAdmissionRange(update) {
         this.setState({
             admissionsRange: update
+        })
+    }
+
+    toggleAdmissionRange = ()  => {
+        this.setState({
+            toggleAdmissionsRange: !this.state.toggleAdmissionsRange
         })
     }
 
@@ -55,9 +101,22 @@ class Collegesearch extends React.Component {
         })
     }
 
+    toggleCostRange = ()  => {
+        this.setState({
+            toggleCostRange: !this.state.toggleCostRange
+        })
+    }
+    
+
     handleSATMRange = (update) => {
         this.setState({
             satmRange: update
+        })
+    }
+
+    toggleSatmRange = ()  => {
+        this.setState({
+            toggleSatmRange: !this.state.toggleSatmRange
         })
     }
 
@@ -67,21 +126,45 @@ class Collegesearch extends React.Component {
         })
     }
 
+    toggleSateRange = ()  => {
+        this.setState({
+            toggleSateRange: !this.state.toggleSateRange
+        })
+    }
+
     handleACTRange = (update) => {
         this.setState({
             actRange: update
         })
     }
 
-    handleCostRange = (update) => {
+    toggleActRange = ()  => {
         this.setState({
-            costRange: update
+            toggleActRange: !this.state.toggleActRange
         })
     }
 
     handleRankingRange = (update) => {
         this.setState({
             rankingRange: update
+        })
+    }
+
+    toggleRankingRange = ()  => {
+        this.setState({
+            toggleRankingRange: !this.state.toggleRankingRange
+        })
+    }
+
+    handlePopRange = (update) => {
+        this.setState({
+            popRange: update
+        })
+    }
+
+    togglePopRange = ()  => {
+        this.setState({
+            togglePopRange: !this.state.togglePopRange
         })
     }
 
@@ -110,6 +193,102 @@ class Collegesearch extends React.Component {
             });
     }
 
+    calculateScore = () => {
+        this.props.createPopup({
+            title: "CALCULATING SCORES",
+            content: "Calculating college recommendation scores for current college search."
+        });
+        const requestOptions = {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'}
+        }
+        fetch('https://chads4us.herokuapp.com/collegerecommender/' + localStorage.getItem("user"), requestOptions)
+        .then(data => {
+            if(data.status != 200) {
+                data.json().then(res => {
+                    this.props.createPopup({
+                        title: "SCORE ERROR",
+                        content: "Error: " + res.error
+                    });
+                });
+            } else {
+                data.json().then(data => {
+                    this.props.createPopup({
+                        title: "SCORES APPLIED",
+                        content: "College recommendation scores have been calculated."
+                    });
+                    let collegeList = this.state.collegeData
+                    for(let x = 0; x < collegeList.length; x++) {
+                        collegeList[x].score = data[collegeList[x].collegename];
+                    }
+                    this.setState({
+                        collegeData: collegeList,
+                        toggleScoreSort: true
+                    });
+                    console.log(this.state.collegeData);
+                })
+            }
+        });
+    }
+
+    searchColleges = () => {
+        this.props.createPopup({
+            title: "INITIATING SEARCH",
+            content: "Fetching results for your search."
+        });
+        const requestOptions = {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                isStrict: this.state.strict,
+                collegename: this.state.collegename,
+                lowadmissionrate: this.state.toggleAdmissionsRange ? this.state.admissionsRange[0] : null,
+                highadmissionrate: this.state.toggleAdmissionsRange ? this.state.admissionsRange[1] : null,
+                region: this.locationInput.current.getValue(),
+                major1: this.state.major1,
+                major2: this.state.major2,
+                lowranking: this.state.toggleRankingRange ? this.state.rankingRange[1] : null,
+                highranking: this.state.toggleRankingRange ? this.state.rankingRange[0] : null,
+                lowsize: this.state.togglePopRange ? this.state.popRange[0] : null,
+                highsize: this.state.togglePopRange ? this.state.popRange[1] : null,
+                lowsatmath: this.state.toggleSatmRange ? this.state.satmRange[0] : null,
+                highsatmath: this.state.toggleSatmRange ? this.state.satmRange[1] : null,
+                lowsatebrw: this.state.toggleSateRange ? this.state.sateRange[0] : null,
+                highsatebrw: this.state.toggleSateRange ? this.state.sateRange[1] : null,
+                lowactcomposite: this.state.toggleActRange ? this.state.actRange[0] : null,
+                highactcomposite: this.state.toggleActRange ? this.state.actRange[1] : null
+            })
+        };
+        fetch('https://chads4us.herokuapp.com/searchcolleges', requestOptions)
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    this.props.createPopup({
+                        title: "SEARCH ERROR",
+                        content: "Error: " + response.error
+                    })
+                }
+            }).then(data => {
+                this.handleRef();
+                this.setState({
+                    collegeData: data,
+                    page: 1,
+                    toggleScoreSort: false,
+                    isLoading: false
+                });
+            }).catch(error => {
+                this.props.createPopup({
+                    title: "SEARCH ERROR",
+                    content: "Error: " + error
+                })
+                this.setState({
+                    error: error,
+                    loading: false
+                });
+            });
+    }
+
     renderThumb = () => {
         return (
             <div
@@ -121,23 +300,63 @@ class Collegesearch extends React.Component {
         
     }
 
+    componentDidUpdate() {
+        
+    }
+
+    toggleSorting = () => {
+        this.setState({
+            collegeData: this.sortCollegeData(this.state.sorting, !this.state.isAscending),
+            isAscending: !this.state.isAscending
+        });
+    }
+
+    sortCollegeData = (category, isAscending) => {
+        let collegeData = this.state.collegeData;
+        if(isAscending) {
+            collegeData.sort((a,b) => a[category] > b[category] ? 1 : -1);
+        } else {
+            collegeData.sort((a,b) => a[category] < b[category] ? 1 : -1);
+        }
+        return collegeData;
+    }
+
+    handleStrict = (e) => {
+        this.setState({
+            strict: e.target.checked
+        });
+    }
+
+    handleRef = () => {
+        if(this.state.collegeData.length > 0) {
+            let e = document.getElementById("top");
+            e.scrollIntoView({
+                behavior: "smooth"
+            });
+        }
+    }
+
     nextPage() {
+        this.handleRef();
         if(this.state.page * this.state.pageLimit < this.state.collegeData.length) {
-            this.setState({page: this.state.page++});
+            this.setState({page: this.state.page + 1});
         }
     }
 
     prevPage() {
+        this.handleRef();
         if(this.state.page > 1) {
-            this.setState({page: this.state.page--});
+            this.setState({page: this.state.page - 1});
         }
     }
 
-    increasePageLimit(e) {
+    changePageLimit(e) {
+        this.handleRef();
         this.setState({pageLimit: e.target.value})
     }
 
     handlePage(page) {
+        this.handleRef();
         this.setState({page: page});
     }
 
@@ -152,23 +371,52 @@ class Collegesearch extends React.Component {
             })
         }
 
-        console.log(colleges);
-
         let collegeList = colleges.map((e) =>
-            <div className="collegeCard" key={e.id} style={{ animationDelay: ((e.id % 10) * 0.1).toString() + "s"}}>
+            <div id={!(e.id % 10) ? "top" : null} className="collegeCard" key={e.id} style={{ animationDelay: ((e.id % 10) * 0.1).toString() + "s"}}>
                 <CollegeResult data={e.value}/>
             </div>
         );
 
         let pageView = [];
-        if(this.state.page < 3) {
-            pageView = [1,2,3,4,5]
-        } else if (this.state.page + 2 >= Math.ceil(this.state.collegeData.length/this.state.pageLimit)) {
-            let limit = Math.ceil(this.state.collegeData.length/this.state.pageLimit);
-            pageView = [limit-4, limit-3, limit-2, limit-1, limit];
+        if (collegeList.length == 0) {
+            pageView = [1];
+            collegeList = <div className="emptySearch">We were unable to find any matching colleges for your search. ;(</div>;
         } else {
-            let curr = this.state.page;
-            pageView = [curr-2, curr-1, curr, curr+1, curr+2];
+            if(this.state.page < 3 || Math.ceil(this.state.collegeData.length/this.state.pageLimit) < 6) {
+                pageView = [1,2,3,4,5]
+                pageView = pageView.slice(0, Math.ceil(this.state.collegeData.length/this.state.pageLimit));
+            } else if (this.state.page + 2 >= Math.ceil(this.state.collegeData.length/this.state.pageLimit)) {
+                let limit = Math.ceil(this.state.collegeData.length/this.state.pageLimit);
+                pageView = [limit-4, limit-3, limit-2, limit-1, limit];
+            } else {
+                let curr = this.state.page;
+                pageView = [curr-2, curr-1, curr, curr+1, curr+2];
+            }
+        }
+
+        let renderMiddle1 = <div className="middle"></div>  ;
+        if(pageView.length >= 0) {
+            renderMiddle1 = <div onClick={() => this.handlePage(pageView[0])} className={`middle ${pageView[0] == this.state.page ? 'active': ''}`}><div>{pageView[0]}</div></div>;
+        }
+
+        let renderMiddle2 = <div className="middle"></div>;
+        if (pageView.length > 1) {
+            renderMiddle2 = <div onClick={() => this.handlePage(pageView[1])} className={`middle ${pageView[1] == this.state.page ? 'active': ''}`}><div>{pageView[1]}</div></div>;
+        }
+
+        let renderMiddle3 = <div className="middle"></div>;
+        if (pageView.length > 2) {
+            renderMiddle3 = <div onClick={() => this.handlePage(pageView[2])} className={`middle ${pageView[2] == this.state.page ? 'active': ''}`}><div>{pageView[2]}</div></div>
+        }
+
+        let renderMiddle4 = <div className="middle"></div>;
+        if (pageView.length > 3) {
+            renderMiddle4 = <div onClick={() => this.handlePage(pageView[3])} className={`middle ${pageView[3] == this.state.page ? 'active': ''}`}><div>{pageView[3]}</div></div>
+        }
+
+        let renderMiddle5 = <div className="middle"></div>;
+        if (pageView.length > 4) {
+            renderMiddle5 = <div onClick={() => this.handlePage(pageView[4])} className={`middle ${pageView[4] == this.state.page ? 'active': ''}`}><div>{pageView[4]}</div></div>;
         }
 
         let renderFirstFade = null;
@@ -254,6 +502,14 @@ class Collegesearch extends React.Component {
             {key: "Wyoming", value: "WY"}
         ];
 
+        const sortingOptions = [
+            {key:"Name", value: "collegename"},
+            {key:"Out of State Cost", value: "costofattendanceoutofstate"},
+            {key:"Ranking", value: "ranking"},
+            {key:"Admission Rate", value: "admissionrate"},
+            {key:"Recommendation Score", value: "score"}
+        ]
+
         return(
             <div className="searchContent">
 
@@ -264,7 +520,7 @@ class Collegesearch extends React.Component {
                             Showing results...
                         </div>
                         <div className="filterBtnWrap">
-                            <button className="filterBtn">Filter and Sort</button>
+                            <button className="filterBtn" onClick={this.searchColleges}>Refresh Search</button>
                         </div>
                     </div>
                     
@@ -273,9 +529,28 @@ class Collegesearch extends React.Component {
                 {/* Sidebar content*/}
                 <div className="searchSideBar">   
                     <div className="filterSB">
-                        <div className="titleSB">College Search</div>
+                        <div className="filterHeader">
+                            <div className="titleSB">College Search</div>
+                            <div className="toggleWrapper">
+                                <div>STRICT MODE</div>
+                                <label class="switch strictSwitch">'
+                                    <input type="checkbox"  defaultChecked={this.state.strict}  onChange={this.handleStrict}/>
+                                    <span class="toggle round"></span>
+                                </label>
+                            </div>
+
+                        </div>
+                        <div className="headingSep">SORT BY</div>
+                        <div className="sorting">
+                            <Select ref={this.sortInput} changeCallback={this.sortList} options={sortingOptions} />
+                            <div className="sortingOp" onClick={this.toggleSorting}>
+                                <i class={`fas fa-sort-up ${this.state.isAscending ? "sortToggle" : ""}`}></i>
+                                <i class={`fas fa-sort-down ${!this.state.isAscending ? "sortToggle" : ""}`}></i>
+                            </div>
+                        </div>
+                        <div className="hr"></div>
                         <div className="nameFilter">
-                                <input className="nameInput" type="text" name="name" placeholder="Name"/>
+                                <input className="nameInput" type="text" value={this.state.collegename} onChange={this.handleCollegeName} placeholder="Name"/>
                         </div>
                         <div className="location">
                             <div className="locationWrapper">
@@ -289,78 +564,126 @@ class Collegesearch extends React.Component {
                             </div>
 
                         </div>
-                        <div className="headingSB">COST <span className="rates">{this.state.costRange[0]}$ - {this.state.costRange[1]}$</span></div>
-                        <RangeSlider onUpdate={this.handleCostRange} ops={{
-                            defaultValues: [16000,48000],
-                            min: 0,
-                            max: 100000,
-                            mode: 2,
-                            step: 1000,
-                            ticks: 5
-                        }}/>
-                        <div className="headingSB">Ranking<span className="rates">{this.state.rankingRange[0]} - {this.state.rankingRange[1]}</span></div>
-                        <RangeSlider onUpdate={this.handleRankingRange} ops={{
-                            defaultValues: [50,250],
-                            min: 0,
-                            max: 601,
-                            mode: 2,
-                            step: 1,
-                            ticks: 6
-                        }}/>
+
+                        <div className={`range ${this.state.toggleCostRange ? "" : "disabledRange"}`}>
+                            <div className={`rangeInput ${this.state.toggleCostRange ? "" : "disabledRangeInput"}`}>
+                                <div className="headingSB">COST <span className="rates">{this.state.costRange[0]}$ - {this.state.costRange[1]}$</span></div>
+                                <RangeSlider onUpdate={this.handleCostRange} ops={{
+                                    defaultValues: [16000,48000],
+                                    min: 0,
+                                    max: 100000,
+                                    mode: 2,
+                                    step: 1000,
+                                    ticks: 5
+                                }}/>
+                            </div>
+                            <div className="toggleRange"><i class="fas fa-check" onClick={this.toggleCostRange}></i></div>
+                        </div>
+
+                        <div className={`range ${this.state.toggleRankingRange ? "" : "disabledRange"}`}>
+                            <div className={`rangeInput ${this.state.toggleRankingRange ? "" : "disabledRangeInput"}`}>
+                                <div className="headingSB">Ranking<span className="rates">{this.state.rankingRange[0]} - {this.state.rankingRange[1]}</span></div>
+                                <RangeSlider onUpdate={this.handleRankingRange} ops={{
+                                    defaultValues: [50,250],
+                                    min: 1,
+                                    max: 601,
+                                    mode: 2,
+                                    step: 1,
+                                    ticks: 6
+                                }}/>
+                            </div>
+                            <div className="toggleRange"><i class="fas fa-check" onClick={this.toggleRankingRange}></i></div>
+                        </div>
+
                         <div className="nameFilter">
-                                <input className="nameInput" type="text" placeholder="Major 1"/>
+                                <input className="nameInput" type="text" value={this.state.major1} onChange={this.handleMajor1} placeholder="Major 1"/>
                         </div>
                         <div className="nameFilter">
-                                <input className="nameInput" type="text" placeholder="Major 2"/>
+                                <input className="nameInput" type="text" value={this.state.major2} onChange={this.handleMajor2} placeholder="Major 2"/>
                         </div>
-                        <div className="headingSB">Admission Rate<span className="rates">{this.state.admissionsRange[0]}% - {this.state.admissionsRange[1]}%</span></div>
-                        <RangeSlider onUpdate={this.handleAdmissionRange} ops={{
-                            defaultValues: [25,75],
-                            min: 0,
-                            max: 100,
-                            mode: 2,
-                            step: 5,
-                            ticks: 10
-                        }}/>
-                        <div className="headingSB">SAT MATH<span className="rates">{this.state.satmRange[0]} - {this.state.satmRange[1]}</span></div>
-                        <RangeSlider onUpdate={this.handleSATMRange} ops={{
-                            defaultValues: [400,600],
-                            min: 0,
-                            max: 800,
-                            mode: 2,
-                            step: 25,
-                            ticks: 10
-                        }}/>
-                        <div className="headingSB">SAT EBRW<span className="rates">{this.state.sateRange[0]} - {this.state.sateRange[1]}</span></div>
-                        <RangeSlider onUpdate={this.handleSATERange} ops={{
-                            defaultValues: [400,600],
-                            min: 0,
-                            max: 800,
-                            mode: 2,
-                            step: 25,
-                            ticks: 10
-                        }}/>
-                        <div className="headingSB">ACT COMPOSITE <span className="rates">{this.state.actRange[0]} - {this.state.actRange[1]}</span></div>
-                        <RangeSlider onUpdate={this.handleACTRange} ops={{
-                            defaultValues: [400,600],
-                            min: 0,
-                            max: 800,
-                            mode: 2,
-                            step: 25,
-                            ticks: 10
-                        }}/>
-                        <div className="population">
-                            <div className="headingSB">Population</div>
-                            <select className="dropdown">
-                                <option value="">Select a Range</option>
-                                <option value="<2000">	&#60; 2,000 </option>
-                                <option> 2,000 - 6,000</option>
-                                <option> 6,000 - 15,000</option>
-                                <option> 15,000 - 30,000</option>
-                                <option value=">30000"> 30,000+ </option>
-                            </select>
+
+                        <div className={`range ${this.state.toggleAdmissionsRange ? "" : "disabledRange"}`}>
+                            <div className={`rangeInput ${this.state.toggleAdmissionsRange ? "" : "disabledRangeInput"}`}>
+                                <div className="headingSB">Admission Rate<span className="rates">{this.state.admissionsRange[0]}% - {this.state.admissionsRange[1]}%</span></div>
+                                <RangeSlider onUpdate={this.handleAdmissionRange} ops={{
+                                    defaultValues: [25,75],
+                                    min: 1,
+                                    max: 100,
+                                    mode: 2,
+                                    step: 5,
+                                    ticks: 10
+                                }}/>
+                            </div>
+                            <div className="toggleRange"><i class="fas fa-check" onClick={this.toggleAdmissionRange}></i></div>
                         </div>
-                        <button>Search</button>
+
+
+                        <div className={`range ${this.state.toggleSatmRange ? "" : "disabledRange"}`}>
+                            <div className={`rangeInput ${this.state.toggleSatmRange ? "" : "disabledRangeInput"}`}>
+                                <div className="headingSB">SAT MATH<span className="rates">{this.state.satmRange[0]} - {this.state.satmRange[1]}</span></div>
+                                <RangeSlider onUpdate={this.handleSATMRange} ops={{
+                                    defaultValues: [400,600],
+                                    min: 100,
+                                    max: 800,
+                                    mode: 2,
+                                    step: 25,
+                                    ticks: 5
+                                }}/>
+                            </div>
+                            <div className="toggleRange"><i class="fas fa-check" onClick={this.toggleSatmRange}></i></div>
+                        </div>
+
+                        
+                        <div className={`range ${this.state.toggleSateRange ? "" : "disabledRange"}`}>
+                            <div className={`rangeInput ${this.state.toggleSateRange ? "" : "disabledRangeInput"}`}>
+                                <div className="headingSB">SAT EBRW<span className="rates">{this.state.sateRange[0]} - {this.state.sateRange[1]}</span></div>
+                                <RangeSlider onUpdate={this.handleSATERange} ops={{
+                                    defaultValues: [400,600],
+                                    min: 100,
+                                    max: 800,
+                                    mode: 2,
+                                    step: 25,
+                                    ticks: 5
+                                }}/>
+                            </div>
+                            <div className="toggleRange"><i class="fas fa-check" onClick={this.toggleSateRange}></i></div>
+                        </div>
+                        <div className={`range ${this.state.toggleActRange ? "" : "disabledRange"}`}>
+                            <div className={`rangeInput ${this.state.toggleActRange ? "" : "disabledRangeInput"}`}>
+                                <div className="headingSB">ACT COMPOSITE <span className="rates">{this.state.actRange[0]} - {this.state.actRange[1]}</span></div>
+                                <RangeSlider onUpdate={this.handleACTRange} ops={{
+                                    defaultValues: [26,32],
+                                    min: 5,
+                                    max: 36,
+                                    mode: 2,
+                                    step: 1,
+                                    ticks: 9
+                                }}/>
+                            </div>
+                            <div className="toggleRange"><i class="fas fa-check" onClick={this.toggleActRange}></i></div>
+                        </div>
+
+                        <div className={`range ${this.state.togglePopRange ? "" : "disabledRange"}`}>
+                            <div className={`rangeInput ${this.state.togglePopRange ? "" : "disabledRangeInput"}`}>
+                                <div className="headingSB">POPULATION <span className="rates">{this.state.popRange[0]} - {this.state.popRange[1]}</span></div>
+                                <RangeSlider onUpdate={this.handlePopRange} ops={{
+                                    defaultValues: [6000,14000],
+                                    min: 100,
+                                    max: 80000,
+                                    mode: 2,
+                                    step: 1000,
+                                    ticks: 10
+                                }}/>
+                            </div>
+                            <div className="toggleRange"><i class="fas fa-check" onClick={this.togglePopRange}></i></div>
+                        </div>
+
+                        <div className="filterBtns">
+                            <button className="searchBtn" onClick={this.searchColleges}>Search</button>
+                            <div className="filterSep"></div>
+                            <button className="searchBtn" onClick={this.calculateScore}>Recommendations</button>
+                        </div>
+                        
                     </div>
                 </div>
 
@@ -374,11 +697,14 @@ class Collegesearch extends React.Component {
                             <div className="end"><i className="fas fa-caret-left" onClick={this.prevPage}></i></div>
                             {renderFirst}
                             {renderFirstFade}
-                            <div onClick={() => this.handlePage(pageView[0])} className={`middle ${pageView[0] == this.state.page ? 'active': ''}`}><div>{pageView[0]}</div></div>
-                            <div onClick={() => this.handlePage(pageView[1])} className={`middle ${pageView[1] == this.state.page ? 'active': ''}`}><div>{pageView[1]}</div></div>
-                            <div onClick={() => this.handlePage(pageView[2])} className={`middle ${pageView[2] == this.state.page ? 'active': ''}`}><div>{pageView[2]}</div></div>
-                            <div onClick={() => this.handlePage(pageView[3])} className={`middle ${pageView[3] == this.state.page ? 'active': ''}`}><div>{pageView[3]}</div></div>
-                            <div onClick={() => this.handlePage(pageView[4])} className={`middle ${pageView[4] == this.state.page ? 'active': ''}`}><div>{pageView[4]}</div></div>
+                            {() => {
+                                
+                            }}
+                            {renderMiddle1}
+                            {renderMiddle2}
+                            {renderMiddle3}
+                            {renderMiddle4}
+                            {renderMiddle5}
                             {renderLastFade}
                             {renderLast}
                             <div className="end"><i className="fas fa-caret-right" onClick={this.nextPage}></i></div>

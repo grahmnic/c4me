@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Progress from '../profile/progress/progress.js';
 import './collegeResult.scss';
 
 
@@ -14,6 +15,12 @@ class CollegeResult extends React.Component {
     }
 
     render() {
+        const score = this.props.data.score ?                          
+        <div className="collegeDetailRank">
+            <Progress radius={50} stroke={5} strokeColor="white" colorScale={true} progress={this.props.data.score} />
+            <div className="collegeRecScore">{this.props.data.score}</div>
+        </div> : null;
+
         return(
             <div className="collegeResult">
                 <div className="collegeResultWrap">
@@ -30,20 +37,18 @@ class CollegeResult extends React.Component {
                         <h2 className="collegeTitle">{this.props.data.collegename}</h2>
                         {this.props.data.city ? <div>{this.props.data.city}, {this.props.data.state}</div> : null}
                         <div className="collegeTypeRateWrap">
-                            <div className="collegeTypeRate">{this.props.data.institutiontype ? this.props.data.institutiontype + "Institution" : null}
+                            <div className="collegeTypeRate"><strong>Institution Type:</strong> {this.props.data.institutiontype ? this.props.data.institutiontype : "n/a"}
                             </div>
-                            <div>{this.props.data.admission_rate ? this.props.data.admission_rate + " Acceptance Rate" : null}</div>
+                            <div><strong>Admission Rate:</strong> {this.props.data.admissionrate ? (this.props.data.admissionrate * 100) + "%" : "n/a"}</div>
                         </div>
                         <div className="collegeDetailWrap">
                             <div className="collegeDetailText">
-                                <div>Ranking: {this.props.data.ranking}</div>
-                                <div>Cost: {this.props.data.costofattendanceinstate}$</div>
-                                <div>Student Population: {this.props.data.population ? this.props.data.population : 'n/a'}</div>
+                                <div><strong>Ranking:</strong> {this.props.data.ranking}</div>
+                                <div><strong>Cost:</strong> {this.props.data.costofattendanceinstate}$</div>
+                                <div><strong>Student Population:</strong> {this.props.data.population ? this.props.data.population : 'n/a'}</div>
                                 <a className="popoutLink">>> More info </a> 
                             </div>
-                            <div className="collegeDetailRank">
-                                <p className="collegeRecScore">50</p>
-                            </div>
+                            {score}
                         </div>   
                     </div>                   
                 </div>

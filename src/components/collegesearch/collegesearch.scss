@@ -9,8 +9,8 @@
 
 .searchSideBar {
     flex: 1;
-    min-width: 20rem;
-    padding: 10px;
+    min-width: 25rem;
+    padding: 10px 5px;
     box-sizing: border-box;
     font-family: 'Roboto Condensed', monospace;
 }
@@ -19,11 +19,30 @@
     display: flex;
     flex-direction: column;
     height: 100%;
-    padding: 5px 30px;
+    padding: 5px 25px;
     box-sizing: border-box;
     background: rgba(0, 0, 0, 0.75);
     backdrop-filter: blur(3px);
     -webkit-backdrop-filter: blur(3px);
+}
+
+.filterHeader {
+    display: flex;
+    padding: 10px 0px;
+}
+
+.toggleWrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.toggleWrapper div:nth-child(1) {
+    color: white;
+    font-size: 12px;
+}
+
+.strictSwitch input{
+
 }
 
 .location {
@@ -39,11 +58,144 @@
     flex: 1;
 }
 
+.sortingOp {
+    flex: 1;
+    color: rgb(51, 51, 51);
+    cursor: pointer;
+    font-size: 26px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.headingSep {
+    color: white;
+    font-size: 18px;
+}
+
+.sortingOp i {
+    flex: 1;
+    transition: color 0.5s;
+}
+
+.sortingOp i:nth-child(2) {
+    position: absolute;
+}
+
+.sorting div:nth-child(1) {
+    flex: 5;
+}
+
+.sorting {
+    display: flex;
+}
+
+.sortToggle {
+    color: #fbff1e;
+}
+
+.range {
+    display: flex;
+}
+
+.disabledRange {
+    
+}
+
+.disabledRangeInput {
+    filter: brightness(0.2);
+    pointer-events: none;
+}
+
+.disabledRangeInput + .toggleRange {
+    color: rgb(138, 138, 138);
+}
+
+.disabledRangeInput + .toggleRange i {
+    border-color: rgb(138, 138, 138);
+}
+
+.rangeInput {
+    flex: 7;
+}
+
+.toggleRange {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    color: #fbff1e;
+    position: relative;
+}
+
+.toggleRange i{
+    border-radius: 2px;
+    position: absolute;
+    right: 0;
+    bottom: 1.5rem;
+    border: 1px solid #fbff1e;
+    cursor: pointer;
+    transition: background-color 0.25s;
+    padding: 6px;
+    font-size: 0.75rem;
+}
+
+.toggleRange i:hover {
+    background-color: rgba(172, 172, 172, 0.25);
+}
+
+.toggleRange i:active {
+    filter: brightness(0.6);
+}
+
+.searchBtn {
+    background: transparent;
+    border-radius: 3px;
+    color: #D4E157;
+    font-family: 'Roboto Condensed', monospace;
+    text-transform: uppercase;
+    padding: 10px;
+    max-width: 200px;
+    border: 1px solid #D4E157;
+    transition: all 0.25s;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 1rem;
+    flex: 1;
+}
+
+.filterSep {
+    flex: 0.25;
+}
+
+.filterBtns {
+    display: flex;
+
+}
+
+.searchBtn:hover {
+    transform: translateY(-3px);
+    -webkit-box-shadow: 
+    0px 3px #D4E157, /* gradient effects */
+    0px 4px #D4E157
+}
+
+.searchBtn:focus {
+    outline: none;
+}
+
+.searchBtn:active {
+    transform: translateY(-1px);
+    -webkit-box-shadow: 
+    0px 1px #D4E157, /* gradient effects */
+    0px 2px #D4E157
+}
+
 .headingSB {
     display: flex;
     width: 100%;
-    font-size: 1.25rem;
-    margin-top: 1rem;
+    font-size: 1rem;
+    margin-top: 0.75rem;
     cursor: default;
     text-transform: uppercase;
     color: rgb(255, 255, 255);
@@ -52,8 +204,10 @@
 }
 
 .titleSB {
+    flex: 5;
     color: white;
     font-size: 28px;
+    letter-spacing: 2px;
 }
 
 .titleSB::first-letter {
@@ -75,7 +229,7 @@
 
 .nameInput {
     font-family: 'Roboto Condensed', monospace;
-    padding: 5px;
+    padding: 4px;
     box-sizing: border-box;
     z-index: 2;
     border-top-left-radius: 3px;
@@ -83,14 +237,19 @@
     border: none;
     border-bottom: 3px solid #fbff1e;
     background: rgba(226, 226, 226, 0.25);
-    font-size: 18px;
-    color: #222;
+    font-size: 15px;
+    color: white;
     width: 100%;
+    caret-color: white;
 }
 
 .nameInput::placeholder {
     color: rgb(145, 145, 145);
-    font-size: 18px;
+    font-size: 16px;
+}
+
+.nameInput:hover {
+    background: rgba(172, 172, 172, 0.25);
 }
 
 .nameInput:focus {
@@ -132,11 +291,10 @@
     margin: 10px;
     display: flex;
     flex-direction: column;
-    min-width: 700px;
 }
 
 .cardGrid {
-    flex: 12;
+    flex: 15;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -147,6 +305,79 @@
     backdrop-filter: blur(3px);
     -webkit-backdrop-filter: blur(3px);
 }
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 3.75rem;
+    height: 1.5rem;
+  }
+  
+  .switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .toggle {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #222;
+    -webkit-transition: .4s;
+    transition: .4s;
+    display: flex;
+    align-items: center;
+    padding: 0px 5px;
+  }
+
+  .toggle::after {
+      content: "OFF";
+      color: white;
+      width: 100%;
+      text-align: right;
+  }
+
+  input:checked + .toggle::after  {
+      content: "ON";
+      text-align: left;
+    color: white;
+}
+  
+  .toggle:before {
+    position: absolute;
+    content: "";
+    height: 1.25rem;
+    width: 1.25rem;
+    left: 0.3rem;
+    bottom: 0.1rem;
+    background-color: #fbff1e;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  input:checked + .toggle {
+    background-color: #6d7240;
+  }
+  
+  input:focus + .toggle {
+    box-shadow: 0 0 1px #d4e157;
+  }
+  
+  input:checked + .toggle:before {
+    -webkit-transform: translateX(2rem);
+    -ms-transform: translateX(2rem);
+    transform: translateX(2rem);
+  }
+  
+  /* Rounded sliders */
+  
+  .toggle.round:before {
+    border-radius: 10%;
+  }
 
 .paginationWrapper {
     flex: 1;
@@ -207,7 +438,13 @@
 
     .mobileFilter {
         padding: 1rem;
-        background-color: #d4e157;
+        background: rgba(0, 0, 0, 0.75);
+        backdrop-filter: blur(3px);
+        -webkit-backdrop-filter: blur(3px);
+        color: white;
+        font-family: 'Roboto Condensed', monospace;
+        font-size: 1.25rem;
+        text-transform: uppercase;
     }
 
     .mbFilterWrap {
@@ -218,6 +455,7 @@
 
     .showRsltsWrap {
         flex: 1;
+        align-self: center;
     }
 
     .filterBtnWrap {
@@ -226,6 +464,36 @@
 
     .filterBtn {
         float: right;
+        background: transparent;
+        border-radius: 3px;
+        color: #D4E157;
+        font-family: 'Roboto Condensed', monospace;
+        text-transform: uppercase;
+        padding: 5px;
+        width: 40%;
+        max-width: 200px;
+        border: 1px solid #D4E157;
+        transition: all 0.25s;
+        cursor: pointer;
+        font-size: 20px;
+    }
+    
+    .filterBtn:hover {
+        transform: translateY(-3px);
+        -webkit-box-shadow: 
+        0px 3px #D4E157, /* gradient effects */
+        0px 4px #D4E157
+    }
+    
+    .filterBtn:focus {
+        outline: none;
+    }
+    
+    .filterBtn:active {
+        transform: translateY(-1px);
+        -webkit-box-shadow: 
+        0px 1px #D4E157, /* gradient effects */
+        0px 2px #D4E157
     }
     
     .cardGrid {
@@ -347,4 +615,12 @@
     color: #fbff1e;
     font-size: 15px;
     text-align: right;
+}
+
+.emptySearch {
+    width: 60%;
+    font-size: 1.5rem;
+    font-family: 'Roboto Condensed', monospace;
+    padding: 40px;
+    color: rgba(255, 255, 255, 0.75);
 }
