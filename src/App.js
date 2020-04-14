@@ -52,7 +52,7 @@ class App extends React.Component {
 
     componentDidMount() {
       this.interval = setInterval(function() {
-        if(localStorage.getItem("popups") != "[]" && localStorage.getItem("popups")) {
+        if(localStorage.getItem("popups") !== "[]" && localStorage.getItem("popups")) {
           var popups = JSON.parse(localStorage.getItem("popups"));
           var timestamps = JSON.parse(localStorage.getItem("popups_timestamps"));
           for (var x = 0; x < popups.length; x++) {
@@ -160,7 +160,7 @@ class App extends React.Component {
       };
       fetch('https://chads4us.herokuapp.com/scraperankings', requestOptions)
       .then(data => {
-          if(data.status != 200) {
+          if(data.status !== 200) {
               data.json().then(res => {
                   this.props.createPopup({
                       title: "ADMIN ERROR",
@@ -183,7 +183,7 @@ class App extends React.Component {
       };
       fetch('https://chads4us.herokuapp.com/importscorecard', requestOptions)
       .then(data => {
-          if(data.status != 200) {
+          if(data.status !== 200) {
               data.json().then(res => {
                   this.props.createPopup({
                       title: "PROFILE ERROR",
@@ -212,7 +212,7 @@ class App extends React.Component {
       };
       fetch('https://chads4us.herokuapp.com/scrapecollegedata', requestOptions)
       .then(data => {
-          if(data.status != 200) {
+          if(data.status !== 200) {
               data.json().then(res => {
                   this.props.createPopup({
                       title: "ADMIN ERROR",
@@ -239,7 +239,7 @@ class App extends React.Component {
       };
       fetch('https://chads4us.herokuapp.com/deleteprofiles', requestOptions)
       .then(data => {
-          if(data.status != 200) {
+          if(data.status !== 200) {
               data.json().then(res => {
                   this.props.createPopup({
                       title: "ADMIN ERROR",
@@ -266,7 +266,7 @@ class App extends React.Component {
       };
       fetch('https://chads4us.herokuapp.com/importprofiles', requestOptions)
       .then(data => {
-          if(data.status != 200) {
+          if(data.status !== 200) {
               data.json().then(res => {
                   this.props.createPopup({
                       title: "ADMIN ERROR",
@@ -309,7 +309,7 @@ class App extends React.Component {
       );
       var adminPanel="";
 
-      if(localStorage.getItem("isAdmin") == "true") {
+      if(localStorage.getItem("isAdmin") === "true") {
         adminPanel= [
           <div key="1a" onClick={() => this.showModal({
             title: "Confirm Admin Action",

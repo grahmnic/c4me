@@ -77,7 +77,7 @@ class Profile extends React.Component {
             };
             fetch('https://chads4us.herokuapp.com/profile/' + localStorage.getItem("user"), requestOptions)
             .then(data => {
-                if(data.status != 200) {
+                if(data.status !== 200) {
                     data.json().then(res => {
                         this.props.createPopup({
                             title: "PROFILE ERROR",
@@ -112,7 +112,7 @@ class Profile extends React.Component {
             console.log(requestOptions);
             fetch('https://chads4us.herokuapp.com/editprofile/' + localStorage.getItem("user"), requestOptions)
             .then(data => {
-                if(data.status != 200) {
+                if(data.status !== 200) {
                     data.json().then(res => {
                         this.props.createPopup({
                             title: "PROFILE ERROR",
