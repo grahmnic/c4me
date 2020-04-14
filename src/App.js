@@ -21,6 +21,7 @@ import ManageApplications from './components/manageApplications/manageApplicatio
 import keyIndex from 'react-key-index';
 import { logDOM } from "@testing-library/react";
 import Modal from './components/modal/modal.js';
+import Review from './components/reviewquestionabledecisions/review.js';
 
 class App extends React.Component {
     constructor(props) {
@@ -311,6 +312,7 @@ class App extends React.Component {
 
       if(localStorage.getItem("isAdmin") === "true") {
         adminPanel= [
+          <Link to="/review-questionable-decisions" className={`menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`} key="p1"><i class="fas fa-question"></i></Link>,
           <div key="1a" onClick={() => this.showModal({
             title: "Confirm Admin Action",
             content: "Are you sure you want to scrape the college rankings?"
@@ -386,6 +388,9 @@ class App extends React.Component {
                       </Route>
                       <Route path="/collegesearch">
                         <Collegesearch createPopup={this.createPopup}/>
+                      </Route>
+                      <Route path="/review-questionable-decisions">
+                        <Review createPopup={this.createPopup} />
                       </Route>
                     </Switch>
                   </div>

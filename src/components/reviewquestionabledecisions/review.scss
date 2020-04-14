@@ -1,0 +1,53 @@
+.application {
+    display: table-row;
+    transition: all 0.25s;
+    cursor: pointer;
+    background: white;
+}
+
+.application:hover {
+    background: #DDDDDD;
+}
+
+.application div {
+    display: table-cell;
+    padding: 10px;
+}
+
+.application button {
+    display: table-cell;
+    cursor: pointer;
+    padding: 5px 15px;
+    margin-left: 10px;
+}
+
+.reviewPanel {
+    height: 100%;
+    font-family: 'Roboto Mono', monospace;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.applicationsPanel {
+    display: table;
+}
+
+.applicationsWrapper {
+    width: fit-content;
+    box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.1607843137254902);
+}
+
+.applicationHeader {
+    display: table-row;
+}
+
+.applicationHeader div {
+    display: table-cell;
+    padding: 10px;
+    font-weight: bold;
+}
+
+.profilePanel {
+
+}
