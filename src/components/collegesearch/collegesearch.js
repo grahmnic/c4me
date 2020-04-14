@@ -247,8 +247,8 @@ class Collegesearch extends React.Component {
                 region: this.locationInput.current.getValue(),
                 major1: this.state.major1,
                 major2: this.state.major2,
-                lowranking: this.state.toggleRankingRange ? this.state.rankingRange[1] : null,
-                highranking: this.state.toggleRankingRange ? this.state.rankingRange[0] : null,
+                lowranking: this.state.toggleRankingRange ? this.state.rankingRange[0] : null,
+                highranking: this.state.toggleRankingRange ? this.state.rankingRange[1] : null,
                 lowsize: this.state.togglePopRange ? this.state.popRange[0] : null,
                 highsize: this.state.togglePopRange ? this.state.popRange[1] : null,
                 lowsatmath: this.state.toggleSatmRange ? this.state.satmRange[0] : null,
@@ -533,9 +533,9 @@ class Collegesearch extends React.Component {
                             <div className="titleSB">College Search</div>
                             <div className="toggleWrapper">
                                 <div>STRICT MODE</div>
-                                <label class="switch strictSwitch">'
+                                <label className="switch strictSwitch">'
                                     <input type="checkbox"  defaultChecked={this.state.strict}  onChange={this.handleStrict}/>
-                                    <span class="toggle round"></span>
+                                    <span className="toggle round"></span>
                                 </label>
                             </div>
 
@@ -544,8 +544,8 @@ class Collegesearch extends React.Component {
                         <div className="sorting">
                             <Select ref={this.sortInput} changeCallback={this.sortList} options={sortingOptions} />
                             <div className="sortingOp" onClick={this.toggleSorting}>
-                                <i class={`fas fa-sort-up ${this.state.isAscending ? "sortToggle" : ""}`}></i>
-                                <i class={`fas fa-sort-down ${!this.state.isAscending ? "sortToggle" : ""}`}></i>
+                                <i className={`fas fa-sort-up ${this.state.isAscending ? "sortToggle" : ""}`}></i>
+                                <i className={`fas fa-sort-down ${!this.state.isAscending ? "sortToggle" : ""}`}></i>
                             </div>
                         </div>
                         <div className="hr"></div>
@@ -577,7 +577,7 @@ class Collegesearch extends React.Component {
                                     ticks: 5
                                 }}/>
                             </div>
-                            <div className="toggleRange"><i class="fas fa-check" onClick={this.toggleCostRange}></i></div>
+                            <div className="toggleRange"><i className="fas fa-check" onClick={this.toggleCostRange}></i></div>
                         </div>
 
                         <div className={`range ${this.state.toggleRankingRange ? "" : "disabledRange"}`}>
@@ -592,7 +592,7 @@ class Collegesearch extends React.Component {
                                     ticks: 6
                                 }}/>
                             </div>
-                            <div className="toggleRange"><i class="fas fa-check" onClick={this.toggleRankingRange}></i></div>
+                            <div className="toggleRange"><i className="fas fa-check" onClick={this.toggleRankingRange}></i></div>
                         </div>
 
                         <div className="nameFilter">
@@ -614,7 +614,7 @@ class Collegesearch extends React.Component {
                                     ticks: 10
                                 }}/>
                             </div>
-                            <div className="toggleRange"><i class="fas fa-check" onClick={this.toggleAdmissionRange}></i></div>
+                            <div className="toggleRange"><i className="fas fa-check" onClick={this.toggleAdmissionRange}></i></div>
                         </div>
 
 
@@ -630,7 +630,7 @@ class Collegesearch extends React.Component {
                                     ticks: 5
                                 }}/>
                             </div>
-                            <div className="toggleRange"><i class="fas fa-check" onClick={this.toggleSatmRange}></i></div>
+                            <div className="toggleRange"><i className="fas fa-check" onClick={this.toggleSatmRange}></i></div>
                         </div>
 
                         
@@ -646,7 +646,7 @@ class Collegesearch extends React.Component {
                                     ticks: 5
                                 }}/>
                             </div>
-                            <div className="toggleRange"><i class="fas fa-check" onClick={this.toggleSateRange}></i></div>
+                            <div className="toggleRange"><i className="fas fa-check" onClick={this.toggleSateRange}></i></div>
                         </div>
                         <div className={`range ${this.state.toggleActRange ? "" : "disabledRange"}`}>
                             <div className={`rangeInput ${this.state.toggleActRange ? "" : "disabledRangeInput"}`}>
@@ -660,7 +660,7 @@ class Collegesearch extends React.Component {
                                     ticks: 9
                                 }}/>
                             </div>
-                            <div className="toggleRange"><i class="fas fa-check" onClick={this.toggleActRange}></i></div>
+                            <div className="toggleRange"><i className="fas fa-check" onClick={this.toggleActRange}></i></div>
                         </div>
 
                         <div className={`range ${this.state.togglePopRange ? "" : "disabledRange"}`}>
@@ -675,7 +675,7 @@ class Collegesearch extends React.Component {
                                     ticks: 10
                                 }}/>
                             </div>
-                            <div className="toggleRange"><i class="fas fa-check" onClick={this.togglePopRange}></i></div>
+                            <div className="toggleRange"><i className="fas fa-check" onClick={this.togglePopRange}></i></div>
                         </div>
 
                         <div className="filterBtns">
@@ -697,9 +697,6 @@ class Collegesearch extends React.Component {
                             <div className="end"><i className="fas fa-caret-left" onClick={this.prevPage}></i></div>
                             {renderFirst}
                             {renderFirstFade}
-                            {() => {
-                                
-                            }}
                             {renderMiddle1}
                             {renderMiddle2}
                             {renderMiddle3}
