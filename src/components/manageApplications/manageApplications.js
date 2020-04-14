@@ -11,12 +11,14 @@ class ManageApplications extends React.Component {
             modalOps: null,
             modalCallback: null,
             newAppDataSchool: null,
-            newAppDataStatus: null
+            newAppDataStatus: null,
+            applicationsList: [],
         }
 
         this.showModal = this.showModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
-        this.updateApp = this.updateApp.bind(this);
+        this.createApp = this.createApp.bind(this);
+        this.fetchApp = this.fetchApp.bind(this);
     }
 
     handleNewAppDataSchool = (e) => {
@@ -28,17 +30,17 @@ class ManageApplications extends React.Component {
     handleNewAppDataStatus = (e) => {
         this.setState({
             newAppDataStatus: e.target.value
-        })
+        });
     }
 
-    componentDidMount() {
+    fetchApp() {
         const requestOptions = {
             method: 'GET',
             headers: {'Content-Type': 'application/json'}
         };
-        fetch('https://chads4us.herokuapp.com/getapplications/' + localStorage.getItem("user"), requestOptions)
+        fetch('https://chads4us.herokuapp.com/getallapplications/' + localStorage.getItem("user"), requestOptions)
         .then(data => {
-            if(data.status != 200) {
+            if(data.status !== 200) {
                 data.json().then(res => {
                     this.props.createPopup({
                         title: "APPLICATION ERROR",
@@ -46,9 +48,17 @@ class ManageApplications extends React.Component {
                     });
                 });
             } else {
-                
+                data.json().then(res => {
+                    this.setState({
+                        applicationsList: res
+                    });
+                });
             }
-        });    
+        });
+    }
+
+    componentDidMount() {
+        this.fetchApp()
     }
 
     createApp() {
@@ -66,7 +76,7 @@ class ManageApplications extends React.Component {
         };
         fetch('https://chads4us.herokuapp.com/editapplication/' + localStorage.getItem("user"), requestOptions)
         .then(data => {
-            if(data.status != 200) {
+            if(data.status !== 200) {
                 data.json().then(res => {
                     this.props.createPopup({
                         title: "APPLICATION ERROR",
@@ -80,15 +90,25 @@ class ManageApplications extends React.Component {
                             title: "APPLICATION CREATED",
                             content: "Your application has been successfully created."
                         });
+                        this.setState({
+                            newAppDataSchool: null,
+                            newAppDataStatus: null
+                        });
                     } else {
                         this.props.createPopup({
                             title: "APPLICATION UPDATED",
                             content: "Your applcation has been successfully updated."
                         });
+                        this.setState({
+                            newAppDataSchool: null,
+                            newAppDataStatus: null
+                        });
                     }
-                })
+                });
             }
         });        
+
+        this.fetchApp();
     }
 
     showModal(ops, callback) {
@@ -107,6 +127,39 @@ class ManageApplications extends React.Component {
 
     render() {
 
+        // unique keys for applications
+        let applications = [];
+        let numAccepted = 0;
+        let numRejected = 0;
+        let numDeferred = 0;
+        let numWaiting = 0;
+
+        for (var i = 0; i < this.state.applicationsList.length; i++) {
+            applications.push({
+                id: i,
+                value: this.state.applicationsList[i]
+            });
+            if (this.state.applicationsList[i].status === "accepted") {
+                numAccepted++;
+            } else if (this.state.applicationsList[i].status === 'denied') {
+                numRejected++;
+            } else if (this.state.applicationsList[i].status === 'pending' || this.state.applicationsList[i].status === 'wait-listed')  {
+                numWaiting++;
+            } else if (this.state.applicationsList[i].status === 'deferred') {
+                numDeferred++;
+            }
+        }
+
+        let acceptanceRate = Math.floor(( numAccepted / applications.length ) * 100);
+
+        let appList = applications.map((e) =>
+            <div className="application" key={e.id} style={{ animationDelay: ((e.id % 10) * 0.1).toString() + "s" }}>
+                <Application data={e.value} callback={this.fetchApp} createPopup={this.props.createPopup}/>
+            </div>
+            
+        );
+
+
         const newModalContent = 
         <div className="appModalForm">
             <div className="newAppSchool">
@@ -123,37 +176,13 @@ class ManageApplications extends React.Component {
                 </div>
                 <div className="newAppStatusSelect">
                     <select onChange={this.handleNewAppDataStatus} value={this.state.newAppDataStatus}>
+                        <option value="">CHOOSE A STATUS</option>
                         <option value="accepted">ACCEPTED</option>
                         <option value="denied">DENIED</option>
                         <option value="pending">PENDING</option>
                         <option value="deferred">DEFERRED</option>
                         <option value="withdrawn">WITHDRAWN</option>
                         <option value="wait-listed">WAITLISTED</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-            
-        const editModalContent =
-        <div className="appModalForm">
-            <div className="newAppSchool">
-                <div className="newAppSchoolText">
-                    SCHOOL:
-                </div>
-                <div className="newAppSchoolInput">
-                    <input type="text"></input>
-                </div>
-            </div>
-            <div className="newAppStatus">
-                <div className="newAppStatusText">
-                    STATUS:
-                </div>
-                <div className="newAppStatusSelect">
-                    <select>
-                        <option>ACCEPTED</option>
-                        <option>DENIED</option>
-                        <option>DEFERRED</option>
-                        <option>WAITING</option>
                     </select>
                 </div>
             </div>
@@ -166,21 +195,21 @@ class ManageApplications extends React.Component {
                     <div className="appNums">
                         <div className="acceptReject">
                             <div className="innerNums">
-                                <div>#</div>
+                                <div>{numAccepted}</div>
                                 <div>ACCEPTED</div>
                             </div>
                             <div className="innerNums">
-                                <div>#</div>
+                                <div>{numRejected}</div>
                                 <div>REJECTED</div>
                             </div>
                         </div>
                         <div className="deferWait">
                            <div className="innerNums">
-                               <div>#</div> 
+                               <div>{numDeferred}</div> 
                                <div>DEFERRED</div>
                             </div> 
                             <div className="innerNums">
-                                <div>#</div>
+                                <div>{numWaiting}</div>
                                 <div>WAITING</div> 
                             </div>
                         </div>
@@ -188,7 +217,7 @@ class ManageApplications extends React.Component {
                     </div>
                     <div className="appPercent">
                         <div className="innerPercent">
-                            24%
+                            {acceptanceRate}%
                         </div>  
                         <div className="percentText">
                             ACCEPTANCE<br/>RATE
@@ -205,7 +234,7 @@ class ManageApplications extends React.Component {
                                         title: "NEW APPLICATION",
                                         content: newModalContent
                                     },
-                                    this.updateApp
+                                    this.createApp
                                 )}>
                             </i> 
                         </div>
@@ -213,42 +242,7 @@ class ManageApplications extends React.Component {
                     
                 </div>
                 <div className="appsList">
-                    <div className="application">
-                        <Application/>
-                    </div>
-                    <div className="application">
-                        <Application/>
-                    </div>
-                    <div className="application">
-                        <Application/>
-                    </div>
-                    <div className="application">
-                        <Application/>
-                    </div>
-                    <div className="application">
-                        <Application/>
-                    </div>
-                    <div className="application">
-                        <Application/>
-                    </div>
-                    <div className="application">
-                        <Application/>
-                    </div>
-                    <div className="application">
-                        <Application/>
-                    </div>
-                    <div className="application">
-                        <Application/>
-                    </div>
-                    <div className="application">
-                        <Application/>
-                    </div>
-                    <div className="application">
-                        <Application/>
-                    </div>
-                    <div className="application">
-                        <Application/>
-                    </div>
+                    {appList}
                 </div>
 
             </div>

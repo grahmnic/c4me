@@ -368,7 +368,7 @@ class Collegesearch extends React.Component {
             colleges.push({
                 id: i,
                 value: this.state.collegeData[i]
-            })
+            });
         }
 
         let collegeList = colleges.map((e) =>

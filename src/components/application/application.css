@@ -1,31 +1,58 @@
 .applicationWrap {
     padding: 1rem;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
 }
 
-.applicationHeader {
+.applicationLogo {
+    margin-left: 1rem;
+    flex: 1;
+    background: url(../../assets/images/schoolAppLogo.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.appNameStatusWrap {
+    flex: 2;
+}
+
+.appSchoolName {
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+}
+
+.appStatusWrap {
     display: flex;
     flex-direction: row;
 }
 
-.collegeName {
-    flex: 2;
+.appStatus {
+    font-size: 1rem;
+    flex: 1;
 }
 
-.editApplication {
-    flex: 2;
+.appStatusFlag {
+    font-size: 1rem;
+    flex: 3;
 }
 
-.applicationStatus {
-    display: flex;
-    flex-direction: row;
+.editAppLogo {
+    flex: 1;
 }
 
-.applicationStatus {
-    flex: 2;
+.editAppLogo i {
+    float: right;
+    margin-right: 10%;
+    font-size: 2rem;
 }
 
-.appCollegeInfo {
-    flex: 2;
+.fa-check-square {
+    font-size: 5rem;
 }
+
+.editAppLogo i:hover {
+    color: orange;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
