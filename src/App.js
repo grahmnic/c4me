@@ -45,6 +45,7 @@ class App extends React.Component {
         this.showModal = this.showModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
         this.handleScrapeRankings = this.handleScrapeRankings.bind(this);
+        this.handleScrapeScorecard = this.handleScrapeScorecard.bind(this);
         this.handleImportProfiles = this.handleImportProfiles.bind(this);
         this.handleImportScorecard = this.handleImportScorecard.bind(this);
         this.handleDeleteProfiles = this.handleDeleteProfiles.bind(this);
@@ -229,6 +230,33 @@ class App extends React.Component {
       });
     }
 
+    handleScrapeScorecard() {
+      this.createPopup({
+        title: "SCRAPE COLLEGE SCORECARD",
+        content: "The request to scrape college scorecard has been sent."
+      });
+      const requestOptions = {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'}
+      };
+      fetch('https://chads4us.herokupapp.com/importscorecard', requestOptions)
+      .then(data => {
+        if (data.status !== 200) {
+          data.json().then(res => {
+            this.props.createPopup({
+              title: "ADMIN ERROR",
+              content: "Error: " + res.error
+            });
+          });
+        } else {
+          this.createPopup({
+            title: "SCRAPED COLLEGE DATA",
+            content: "The request to scrape college scorecard has been sent."
+          });
+        }
+      });
+    }
+
     handleDeleteProfiles() {
       this.createPopup({
           title: "DELETING PROFILES",
@@ -323,6 +351,12 @@ class App extends React.Component {
             title: "Confirm Admin Action",
             content: "Are you sure you want to scrape the college data?"
           }, this.handleScrapeData)} className={`admin-btn menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`}>
+            <i className="fas fa-table"></i>
+          </div>,
+          <div key="1e" onClick={() => this.showModal({
+            title: "Confirm Admin Action",
+            content: "Are you sure you want to scrape the college scorecard?"
+          }, this.handleScrapeScorecard)} className={`admin-btn menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`}>
             <i className="fas fa-table"></i>
           </div>,
           <div key="1c" onClick={() => this.showModal({
