@@ -34,7 +34,15 @@
 .appStatusFlag {
     font-size: 1rem;
     flex: 3;
+    display: flex;
+    flex-direction: row;
 }
+
+.appStatusFlag i {
+    color: rgba(255,0,0, 0.5);
+}
+
+
 
 .editAppLogo {
     flex: 1;
@@ -54,5 +62,11 @@
     color: orange;
     cursor: pointer;
     transition: 0.5s;
+}
+
+.tooltip {
+    margin-left: 1rem;
+    font-style: italic;
+    color: rgba(255, 0, 0, 0.5);
 }
 

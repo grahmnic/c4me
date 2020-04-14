@@ -8,11 +8,13 @@ class Application extends React.Component {
         this.state = {
             editApp: false,
             editAppSchool: null,
-            editAppStatus: null
+            editAppStatus: null,
+            hoverTooltip: false,
         }
 
         this.toggleSubmit = this.toggleSubmit.bind(this);
         this.toggleEditMode = this.toggleEditMode.bind(this);
+        this.toggleHoverTooltip = this.toggleHoverTooltip.bind(this);
 
     }
 
@@ -21,6 +23,12 @@ class Application extends React.Component {
         this.setState({
             editAppStatus: this.props.data.status
         })
+    }
+
+    toggleHoverTooltip() {
+        this.setState({
+            hoverTooltip: !this.state.hoverTooltip
+        });
     }
 
     stringColorString(status) {
@@ -105,13 +113,22 @@ class Application extends React.Component {
         let flag;
 
         if (this.props.data.questionable) {
-            flag = <i className="fas fa-flag"></i>
+            flag = <i className="fas fa-flag" onMouseEnter={this.toggleHoverTooltip} onMouseLeave={this.toggleHoverTooltip}></i>
         } else {
             flag = <div></div>
         }
 
         let editAppWrap;
         let editOrSubmit;
+        let tooltip;
+
+        if (this.state.hoverTooltip) {
+            tooltip =
+            <div className="tooltip">Must be reviewed by admin</div>
+        } else {
+            tooltip = <div></div>
+        }
+
 
         if (!this.state.editApp) {
             editAppWrap = 
@@ -123,6 +140,7 @@ class Application extends React.Component {
                         </div>
                         <div className="appStatusFlag">
                             {flag}
+                            {tooltip}
                         </div>
                     </div>
                 </div>
@@ -153,6 +171,8 @@ class Application extends React.Component {
                     <i className="far fa-check-square" onClick={this.toggleSubmit}></i>
                 </div>
         }
+
+        
 
         return(
             <div className="applicationWrap">

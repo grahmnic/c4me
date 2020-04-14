@@ -204,7 +204,7 @@ class Collegesearch extends React.Component {
         }
         fetch('https://chads4us.herokuapp.com/collegerecommender/' + localStorage.getItem("user"), requestOptions)
         .then(data => {
-            if(data.status != 200) {
+            if(data.status !== 200) {
                 data.json().then(res => {
                     this.props.createPopup({
                         title: "SCORE ERROR",
@@ -378,7 +378,7 @@ class Collegesearch extends React.Component {
         );
 
         let pageView = [];
-        if (collegeList.length == 0) {
+        if (collegeList.length === 0) {
             pageView = [1];
             collegeList = <div className="emptySearch">We were unable to find any matching colleges for your search. ;(</div>;
         } else {
@@ -396,27 +396,27 @@ class Collegesearch extends React.Component {
 
         let renderMiddle1 = <div className="middle"></div>  ;
         if(pageView.length >= 0) {
-            renderMiddle1 = <div onClick={() => this.handlePage(pageView[0])} className={`middle ${pageView[0] == this.state.page ? 'active': ''}`}><div>{pageView[0]}</div></div>;
+            renderMiddle1 = <div onClick={() => this.handlePage(pageView[0])} className={`middle ${pageView[0] === this.state.page ? 'active': ''}`}><div>{pageView[0]}</div></div>;
         }
 
         let renderMiddle2 = <div className="middle"></div>;
         if (pageView.length > 1) {
-            renderMiddle2 = <div onClick={() => this.handlePage(pageView[1])} className={`middle ${pageView[1] == this.state.page ? 'active': ''}`}><div>{pageView[1]}</div></div>;
+            renderMiddle2 = <div onClick={() => this.handlePage(pageView[1])} className={`middle ${pageView[1] === this.state.page ? 'active': ''}`}><div>{pageView[1]}</div></div>;
         }
 
         let renderMiddle3 = <div className="middle"></div>;
         if (pageView.length > 2) {
-            renderMiddle3 = <div onClick={() => this.handlePage(pageView[2])} className={`middle ${pageView[2] == this.state.page ? 'active': ''}`}><div>{pageView[2]}</div></div>
+            renderMiddle3 = <div onClick={() => this.handlePage(pageView[2])} className={`middle ${pageView[2] === this.state.page ? 'active': ''}`}><div>{pageView[2]}</div></div>
         }
 
         let renderMiddle4 = <div className="middle"></div>;
         if (pageView.length > 3) {
-            renderMiddle4 = <div onClick={() => this.handlePage(pageView[3])} className={`middle ${pageView[3] == this.state.page ? 'active': ''}`}><div>{pageView[3]}</div></div>
+            renderMiddle4 = <div onClick={() => this.handlePage(pageView[3])} className={`middle ${pageView[3] === this.state.page ? 'active': ''}`}><div>{pageView[3]}</div></div>
         }
 
         let renderMiddle5 = <div className="middle"></div>;
         if (pageView.length > 4) {
-            renderMiddle5 = <div onClick={() => this.handlePage(pageView[4])} className={`middle ${pageView[4] == this.state.page ? 'active': ''}`}><div>{pageView[4]}</div></div>;
+            renderMiddle5 = <div onClick={() => this.handlePage(pageView[4])} className={`middle ${pageView[4] === this.state.page ? 'active': ''}`}><div>{pageView[4]}</div></div>;
         }
 
         let renderFirstFade = null;

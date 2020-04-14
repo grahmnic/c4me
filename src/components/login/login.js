@@ -68,7 +68,7 @@ class Login extends React.Component {
     // FORM LOGIC
 
     handleSubmit(event) {
-        if(this.state.new_password != this.state.confirm_password) {
+        if(this.state.new_password !== this.state.confirm_password) {
             this.setState({signup_error: "Your passwords do not match."});
         } else {
             this.props.createPopup({
@@ -85,7 +85,7 @@ class Login extends React.Component {
             };
             fetch('https://chads4us.herokuapp.com/register', requestOptions)
                 .then(data => {
-                    if(data.status != 200) {
+                    if(data.status !== 200) {
                         data.json().then(res => {
                             this.setState({signup_error: res.error});
                         });
@@ -132,7 +132,7 @@ class Login extends React.Component {
         };
         fetch('https://chads4us.herokuapp.com/login', requestOptions)
             .then(data => {
-                if(data.status != 200) {
+                if(data.status !== 200) {
                     data.json().then(res => {
                         this.setState({login_error: res.error});
                     });
