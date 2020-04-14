@@ -245,6 +245,7 @@ class Collegesearch extends React.Component {
                 lowadmissionrate: this.state.toggleAdmissionsRange ? this.state.admissionsRange[0] : null,
                 highadmissionrate: this.state.toggleAdmissionsRange ? this.state.admissionsRange[1] : null,
                 region: this.locationInput.current.getValue(),
+                state: this.stateInput.current.getValue(),
                 major1: this.state.major1,
                 major2: this.state.major2,
                 lowranking: this.state.toggleRankingRange ? this.state.rankingRange[1] : null,
@@ -259,6 +260,7 @@ class Collegesearch extends React.Component {
                 highactcomposite: this.state.toggleActRange ? this.state.actRange[1] : null
             })
         };
+
         fetch('https://chads4us.herokuapp.com/searchcolleges', requestOptions)
             .then(response => {
                 if (response.ok) {
