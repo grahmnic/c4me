@@ -39,7 +39,7 @@ class RangeSlider extends Component {
     } = this
 
     return (
-      <div style={{ height: 150, width: '100%' }}>
+      <div style={{ height: '3rem', width: '100%' }}>
         {/* <button onClick={() => this.setDomain([100, 400])}>
           SET DOMAIN [100, 400]
         </button>
