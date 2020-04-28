@@ -55,6 +55,8 @@ class CollegeResult extends React.Component {
                                 <div><strong>Ranking:</strong> {this.props.data.ranking}</div>
                                 <div><strong>Cost:</strong> {this.props.data.costofattendanceinstate}$</div>
                                 <div><strong>Student Population:</strong> {this.props.data.population ? this.props.data.population : 'n/a'}</div>
+                                <div><strong>Cost in-state:</strong> {this.props.data.costofattendanceinstate ? this.props.data.costofattendanceinstate : 'n/a'}</div>
+                                <div><strong>Cost out-of-state:</strong> {this.props.data.costofattendanceoutofstate ? this.props.data.costofattendanceoutofstate : 'n/a'}</div>
                                 <div className="popoutLink" onClick={this.handleCallback}>>> More info </div> 
                             </div>
                             {score}

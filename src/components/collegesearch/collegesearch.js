@@ -52,7 +52,6 @@ class Collegesearch extends React.Component {
         this.prevPage = this.prevPage.bind(this);
 
         this.locationInput = React.createRef();
-        this.stateInput = React.createRef();
         this.sortInput = React.createRef();
         this.handleLocationInput = this.handleLocationInput.bind(this);
         this.handleAdmissionRange = this.handleAdmissionRange.bind(this);
@@ -82,7 +81,6 @@ class Collegesearch extends React.Component {
 
     handleLocationInput() {
         alert(this.locationInput.current.getValue());
-        alert(this.stateInput.current.getValue());
     }
 
     sortList = (val) => {
@@ -276,12 +274,13 @@ class Collegesearch extends React.Component {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
+                username: localStorage.getItem("user"),
                 isStrict: this.state.strict,
                 collegename: this.state.collegename,
                 lowadmissionrate: this.state.toggleAdmissionsRange ? this.state.admissionsRange[0] : null,
                 highadmissionrate: this.state.toggleAdmissionsRange ? this.state.admissionsRange[1] : null,
+                costofattendance: this.state.toggleCostRange ? this.state.costRange[1] : null,
                 region: this.locationInput.current.getValue(),
-                state: this.stateInput.current.getValue(),
                 major1: this.state.major1,
                 major2: this.state.major2,
                 lowranking: this.state.toggleRankingRange ? this.state.rankingRange[0] : null,
@@ -296,7 +295,7 @@ class Collegesearch extends React.Component {
                 highactcomposite: this.state.toggleActRange ? this.state.actRange[1] : null
             })
         };
-
+        console.log(requestOptions.body)
         fetch('https://chads4us.herokuapp.com/searchcolleges', requestOptions)
             .then(response => {
                 if (response.ok) {
@@ -308,6 +307,7 @@ class Collegesearch extends React.Component {
                     })
                 }
             }).then(data => {
+                console.log(data)
                 this.handleRef();
                 this.setState({
                     collegeData: data,
@@ -485,64 +485,9 @@ class Collegesearch extends React.Component {
             {key: "South", value: "South"}
         ];
 
-        const states = [
-            {key: "Any State", value: ""},
-            {key: "Alabama", value: "AL"},
-            {key: "Alaska", value: "AK"},
-            {key: "Arizona", value: "AZ"},
-            {key: "Arkansas", value: "AR"},
-            {key: "California", value: "CA"},
-            {key: "Colorado", value: "CO"},
-            {key: "Connecticut", value: "CT"},
-            {key: "Delaware", value: "DE"},
-            {key: "Dist of Columbia", value: "DC"},
-            {key: "Florida", value: "FL"},
-            {key: "Georgia", value: "GA"},
-            {key: "Hawaii", value: "HI"},
-            {key: "Idaho", value: "ID"},
-            {key: "Illinois", value: "IL"},
-            {key: "Indiana", value: "IN"},
-            {key: "Iowa", value: "IA"},
-            {key: "Kansas", value: "KA"},
-            {key: "Kentucky", value: "KY"},
-            {key: "Louisiana", value: "LA"},
-            {key: "Maine", value: "ME"},
-            {key: "Maryland", value: "MD"},
-            {key: "Massachusetts", value: "MA"},
-            {key: "Michigan", value: "MI"},
-            {key: "Minnesota", value: "MN"},
-            {key: "Mississippi", value: "MS"},
-            {key: "Missouri", value: "MO"},
-            {key: "Montana", value: "MT"},
-            {key: "Nebraska", value: "NE"},
-            {key: "Nevada", value: "NV"},
-            {key: "New Hampshire", value: "NH"},
-            {key: "New Jersey", value: "NJ"},
-            {key: "New Mexico", value: "NM"},
-            {key: "New York", value: "NY"},
-            {key: "North Carolina", value: "NC"},
-            {key: "North Dakota", value: "ND"},
-            {key: "Ohio", value: "OH"},
-            {key: "Oklahoma", value: "OK"},
-            {key: "Oregon", value: "OR"},
-            {key: "Pennsylvania", value: "PA"},
-            {key: "Rhode Island", value: "RI"},
-            {key: "South Carolina", value: "SC"},
-            {key: "South Dakota", value: "SD"},
-            {key: "Tennessee", value: "TN"},
-            {key: "Texas", value: "TX"},
-            {key: "Utah", value: "UT"},
-            {key: "Vermont", value: "VT"},
-            {key: "Virginia", value: "VA"},
-            {key: "Washington", value: "WA"},
-            {key: "West Virginia", value: "WV"},
-            {key: "Wisconsin", value: "WI"},
-            {key: "Wyoming", value: "WY"}
-        ];
-
         const sortingOptions = [
             {key:"Name", value: "collegename"},
-            {key:"Out of State Cost", value: "costofattendanceoutofstate"},
+            {key:"Cost of Attendance", value: "costofattendance"},
             {key:"Ranking", value: "ranking"},
             {key:"Admission Rate", value: "admissionrate"},
             {key:"Recommendation Score", value: "score"}
@@ -600,11 +545,6 @@ class Collegesearch extends React.Component {
                                 <div className="headingSB">Region</div>
                                 <Select ref={this.locationInput} options={regions} />
                             </div>
-                            <div></div>
-                            <div className="locationWrapper">
-                                <div className="headingSB">State</div>
-                                <Select ref={this.stateInput} options={states} />
-                            </div>
 
                         </div>
 
@@ -612,7 +552,7 @@ class Collegesearch extends React.Component {
                             <div className={`rangeInput ${this.state.toggleCostRange ? "" : "disabledRangeInput"}`}>
                                 <div className="headingSB">COST <span className="rates">{this.state.costRange[0]}$ - {this.state.costRange[1]}$</span></div>
                                 <RangeSlider onUpdate={this.handleCostRange} ops={{
-                                    defaultValues: [16000,48000],
+                                    defaultValues: [0,48000],
                                     min: 0,
                                     max: 100000,
                                     mode: 2,
