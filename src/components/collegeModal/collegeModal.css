@@ -1,0 +1,80 @@
+.collegemodal-background {
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    opacity: 0.8;
+    background: #222;
+}
+
+.collegemodal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1500;
+}
+
+.collegemodal-panel {
+    font-family: 'Roboto Condensed', monospace;
+    background: #222;
+    color: #D4E157;
+    width: 40%;
+    max-width: 500px;
+    min-width: 300px;
+    flex: 1;
+    padding: 10px;
+}
+
+.collegemodal-content {
+    width: 100%;
+    font-size: calc(0.3vw + 12px);
+    padding: 10px;
+}
+
+.collegemodal-confirm {
+    margin-right: 10px;
+}
+
+.collegemodal-btns {
+    float: right;
+    display: flex;
+    padding: 10px;
+}
+
+.collegemodal-btns > div {
+    border-radius: 5px;
+    flex: 1;
+    border: 1px solid #D4E157;
+    padding: 3px 10px;
+    text-align: center;
+    transition: all 0.25s;
+    cursor: pointer;
+}
+
+.collegemodal-btns > div:hover {
+    transform: translateY(-5px);
+    -webkit-box-shadow: 
+    0px 3px #D4E157, /* gradient effects */
+    0px 4px #D4E157
+}
+
+.collegemodal-title {
+    text-transform: uppercase;
+    font-weight: bold;
+    width: 100%;
+    height: 20%;
+    padding: 10px;
+    font-size: calc(0.75vw + 22px);
+}
+
+.collegemodal-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}

@@ -3,18 +3,27 @@ import React from 'react';
 import Progress from '../profile/progress/progress.js';
 import './collegeResult.scss';
 
-
 class CollegeResult extends React.Component {
     constructor(props) {
         super(props);
-        // console.log(this.props);
+        // console.log(this.props.callback);
+        this.handleCallback = this.handleCallback.bind(this);
     }
 
     componentDidMount() {
 
     }
 
+    handleCallback() {
+        console.log("THIS WOKRS");
+        this.props.callback(this.props.data);
+    }
+
+    
+
+
     render() {
+        
         const score = this.props.data.score ?                          
         <div className="collegeDetailRank">
             <Progress radius={50} stroke={5} strokeColor="white" colorScale={true} progress={this.props.data.score} />
@@ -46,7 +55,7 @@ class CollegeResult extends React.Component {
                                 <div><strong>Ranking:</strong> {this.props.data.ranking}</div>
                                 <div><strong>Cost:</strong> {this.props.data.costofattendanceinstate}$</div>
                                 <div><strong>Student Population:</strong> {this.props.data.population ? this.props.data.population : 'n/a'}</div>
-                                <a className="popoutLink">>> More info </a> 
+                                <div className="popoutLink" onClick={this.handleCallback}>>> More info </div> 
                             </div>
                             {score}
                         </div>   

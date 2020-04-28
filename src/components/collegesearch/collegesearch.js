@@ -1,6 +1,7 @@
 import React from 'react';
 import './collegesearch.scss';
 import CollegeResult from '../collegeResult/collegeResult';
+import CollegeModal from '../collegeModal/collegeModal.js';
 import Select from '../select/select.js';
 
 import {Slider, Handles, Tracks} from 'react-compound-slider';
@@ -39,7 +40,11 @@ class Collegesearch extends React.Component {
             toggleCostRange: false,
             toggleRankingRange: false,
             togglePopRange: false,
-            toggleScoreSort: false
+            toggleScoreSort: false,
+
+            showModal: false,
+            modalOps: null,
+            modalCallback: null
         }
         
         this.handlePage = this.handlePage.bind(this);
@@ -51,6 +56,10 @@ class Collegesearch extends React.Component {
         this.sortInput = React.createRef();
         this.handleLocationInput = this.handleLocationInput.bind(this);
         this.handleAdmissionRange = this.handleAdmissionRange.bind(this);
+        this.handleMoreInfo = this.handleMoreInfo.bind(this);
+
+        this.showModal = this.showModal.bind(this);
+        this.closeModal = this.closeModal.bind(this);
     }
 
     handleCollegeName = (e) => {
@@ -166,6 +175,33 @@ class Collegesearch extends React.Component {
         this.setState({
             togglePopRange: !this.state.togglePopRange
         })
+    }
+
+    //get college info from individual result and display modal
+
+    handleMoreInfo(collegeinfo) {
+        console.log("THIS IS MORE COLLEGE INFO POPUP");
+
+        //props from collegeResult gave back college info
+        console.log(collegeinfo);
+
+        //display modal
+        this.showModal();
+
+    }
+
+    showModal(ops, callback) {
+        this.setState({
+            showModal: true,
+            modalOps: ops,
+            modalCallback: callback
+        });
+    }
+
+    closeModal() {
+        this.setState({
+            showModal: false
+        });
     }
 
     componentDidMount() {
@@ -375,7 +411,7 @@ class Collegesearch extends React.Component {
 
         let collegeList = colleges.map((e) =>
             <div id={!(e.id % 10) ? "top" : null} className="collegeCard" key={e.id} style={{ animationDelay: ((e.id % 10) * 0.1).toString() + "s"}}>
-                <CollegeResult data={e.value}/>
+                <CollegeResult data={e.value} callback={this.handleMoreInfo}/>
             </div>
         );
 
@@ -512,9 +548,14 @@ class Collegesearch extends React.Component {
             {key:"Recommendation Score", value: "score"}
         ]
 
-        return(
-            <div className="searchContent">
+        
 
+        return(
+            
+            <div className="searchContent">
+                <div>
+                    <CollegeModal onClose={this.closeModal} show={this.state.showModal} ops={this.state.modalOps} callback={this.state.modalCallback}/>
+                </div>
                 {/* Mobile Sidebar content*/}
                 <div className="mobileFilter">
                     <div className="mbFilterWrap">
