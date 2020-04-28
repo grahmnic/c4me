@@ -55,6 +55,11 @@ class ManageApplications extends React.Component {
                 });
             }
         });
+
+        this.setState({
+            newAppDataSchool: null,
+            newAppDataStatus: null
+        });
     }
 
     componentDidMount() {
@@ -82,6 +87,10 @@ class ManageApplications extends React.Component {
                         title: "APPLICATION ERROR",
                         content: "Error: " + res.error
                     });
+                    this.setState({
+                        newAppDataSchool: null,
+                        newAppDataStatus: null
+                    });
                 });
             } else {
                 data.json().then(res => {
@@ -90,21 +99,19 @@ class ManageApplications extends React.Component {
                             title: "APPLICATION CREATED",
                             content: "Your application has been successfully created."
                         });
-                        this.setState({
-                            newAppDataSchool: null,
-                            newAppDataStatus: null
-                        });
+                        
                     } else {
                         this.props.createPopup({
                             title: "APPLICATION UPDATED",
                             content: "Your applcation has been successfully updated."
                         });
-                        this.setState({
-                            newAppDataSchool: null,
-                            newAppDataStatus: null
-                        });
                     }
                 });
+                this.setState({
+                    newAppDataSchool: null,
+                    newAppDataStatus: null
+                });
+                // this.fetchApp();
             }
         });        
 
