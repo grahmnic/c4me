@@ -1,7 +1,7 @@
 import React from 'react';
 import './collegesearch.scss';
 import CollegeResult from '../collegeResult/collegeResult';
-import CollegeModal from '../collegeModal/collegeModal.js';
+import '../collegeModal/collegeModal.css';
 import Select from '../select/select.js';
 
 import {Slider, Handles, Tracks} from 'react-compound-slider';
@@ -42,9 +42,11 @@ class Collegesearch extends React.Component {
             togglePopRange: false,
             toggleScoreSort: false,
 
+            readyModal: false,
             showModal: false,
             modalOps: null,
-            modalCallback: null
+            modalCallback: null,
+            indivCollegeInfo: null
         }
         
         this.handlePage = this.handlePage.bind(this);
@@ -56,8 +58,7 @@ class Collegesearch extends React.Component {
         this.handleLocationInput = this.handleLocationInput.bind(this);
         this.handleAdmissionRange = this.handleAdmissionRange.bind(this);
         this.handleMoreInfo = this.handleMoreInfo.bind(this);
-
-        this.showModal = this.showModal.bind(this);
+        
         this.closeModal = this.closeModal.bind(this);
     }
 
@@ -178,21 +179,9 @@ class Collegesearch extends React.Component {
     //get college info from individual result and display modal
 
     handleMoreInfo(collegeinfo) {
-        console.log("THIS IS MORE COLLEGE INFO POPUP");
-
-        //props from collegeResult gave back college info
-        console.log(collegeinfo);
-
-        //display modal
-        this.showModal();
-
-    }
-
-    showModal(ops, callback) {
         this.setState({
             showModal: true,
-            modalOps: ops,
-            modalCallback: callback
+            indivCollegeInfo: collegeinfo
         });
     }
 
@@ -493,14 +482,59 @@ class Collegesearch extends React.Component {
             {key:"Recommendation Score", value: "score"}
         ]
 
-        
+        let modal;
+        if(this.state.showModal) {
+            modal = 
+            <div>
+                <div className="collegemodal">
+                    <div className="collegemodal-background">
+                    </div>
+                    <div className="collegemodal-wrapper">
 
+                        <div className="collegemodal-panel">
+                            <div className="collegemodal-title">
+                                {this.state.indivCollegeInfo.collegename}
+                            </div>
+                            <div className="collegemodal-content">
+                                
+                                Rank: {this.state.indivCollegeInfo.ranking} <br/>
+                                Institution Type: {this.state.indivCollegeInfo.institutiontype} <br/>
+                                Cost In-State: {this.state.indivCollegeInfo.costofattendanceinstate} <br/>
+                                Cost Out-State: {this.state.indivCollegeInfo.costofattendanceoutstate} <br/>
+                                Population: {this.state.indivCollegeInfo.size} <br/>
+                                Region: {this.state.indivCollegeInfo.region} <br/>
+                                State: {this.state.indivCollegeInfo.state} <br/>
+                                Admission Rate: {this.state.indivCollegeInfo.admissionrate * 100}% <br/>
+                                Completion Rate: {this.state.indivCollegeInfo.completionrate}% <br/>
+                                Supported Majors:  <br/>
+
+                                Average Scores: <br/>
+                                GPA: {this.state.indivCollegeInfo.gpa} <br/>
+
+                                SAT EBRW: {this.state.indivCollegeInfo.satebrw} <br/>
+                                SAT MATH: {this.state.indivCollegeInfo.satmath} <br/>
+                                ACT COMPOSITE: {this.state.indivCollegeInfo.actcomposite}
+                                
+                            </div>
+                            <div className="collegemodal-btns">
+                                <div className="collegemodal-cancel" onClick={this.closeModal}>
+                                    X
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        } 
+            
+        
+    
         return(
             
             <div className="searchContent">
-                <div>
-                    <CollegeModal onClose={this.closeModal} show={this.state.showModal} ops={this.state.modalOps} callback={this.state.modalCallback}/>
-                </div>
+                
+                {modal}
+
                 {/* Mobile Sidebar content*/}
                 <div className="mobileFilter">
                     <div className="mbFilterWrap">
