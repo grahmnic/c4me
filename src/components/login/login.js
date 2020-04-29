@@ -170,7 +170,7 @@ class Login extends React.Component {
     }
 
     render() {
-        if (localStorage.getItem("user") || this.state.loggedIn == true) {
+        if (localStorage.getItem("user") || this.state.loggedIn === true) {
             return <Redirect to="/profile" />
         }
         const showLeft = this.state.showLogin ? 'showing' : '';
@@ -244,7 +244,7 @@ class Login extends React.Component {
                             <i className="fas fa-angle-right"></i>
                         </div>
                         <div className="signup-error">{this.state.signup_error}</div>
-                        <input disabled={this.state.new_username.trim() == '' || this.state.new_password.trim() == '' || this.state.confirm_password.trim() == ''} className="sign-up-btn" type="submit" value="SIGN UP" />
+                        <input disabled={this.state.new_username.trim() === '' || this.state.new_password.trim() === '' || this.state.confirm_password.trim() === ''} className="sign-up-btn" type="submit" value="SIGN UP" />
                     </form>
                     <div className="login-logo">
                         <img className={`login-logo-img-top ${showLogo}`} alt="login" src={LoginLogoTop} />
@@ -304,7 +304,7 @@ class Login extends React.Component {
                                 <input className="login-password" type="password" onChange={this.handlePassword} value={this.state.password}/>
                             </div>
                             <div className="login-form-err">{this.state.login_error}</div>
-                            <input disabled={this.state.username.trim() == '' || this.state.password.trim() == ''} className="login-form-btn" type="submit" value="LET'S GO"/>
+                            <input disabled={this.state.username.trim() === '' || this.state.password.trim() === ''} className="login-form-btn" type="submit" value="LET'S GO"/>
                         </form>
                     </div>
                 </div>
