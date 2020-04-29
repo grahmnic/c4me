@@ -104,29 +104,32 @@ class Review extends React.Component {
             profile = 
             <div>
                 <div>USERNAME: {this.state.profile.username}</div>
-                <div>GPA: {this.state.profile.gpa}</div>
-                <div>SATMATH: {this.state.profile.satmath}</div>
-                <div>SATEBRW: {this.state.profile.satebrw}</div>
-                <div>ACTCOMPOSITE: {this.state.profile.actcomposite}</div>
+                <div>GPA: {this.state.profile.gpa ? this.state.profile.gpa : "n/a"}</div>
+                <div>SATMATH: {this.state.profile.satmath ? this.state.profile.satmath : "n/a"}</div>
+                <div>SATEBRW: {this.state.profile.satebrw ? this.state.profile.satebrw : "n/a"}</div>
+                <div>ACTCOMPOSITE: {this.state.profile.actcomposite ? this.state.profile.actcomposite : "n/a"}</div>
             </div>
         }
 
         return(
-            <div className="reviewPanel">
-                <div className="profilePanel">
-                    {profile}
-                </div>
-                <div className="applicationsWrapper">
-                    <div className="applicationsPanel">
-                        <div className="applicationHeader">
-                            <div>ID</div>
-                            <div>USER</div>
-                            <div>COLLEGE</div>
-                            <div>APPLICATION STATUS</div>
+            <div className="reviewWrapper">
+                <div className="reviewPanel">
+                    <div className="applicationsTitle">Review Questionable Decisions</div>
+                    <div className="applicationsWrapper">
+                        <div className="applicationsPanel">
+                            <div className="applicationHeader">
+                                <div>ID</div>
+                                <div>USER</div>
+                                <div>COLLEGE</div>
+                                <div>APPLICATION STATUS</div>
+                            </div>
+                            {applicationList}
                         </div>
-                        {applicationList}
-                    </div>
 
+                    </div>
+                    <div className="profilePanel fadeInLeft">
+                        {profile}
+                    </div>
                 </div>
             </div>
         );

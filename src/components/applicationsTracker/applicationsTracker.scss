@@ -1,0 +1,108 @@
+.atHeader::after {
+    content: " \f25c";
+    font-size: 14px;
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    color: white;
+}
+
+.atHeader {
+    flex: 1;
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 10px;
+}
+
+.atHeader::first-letter {
+    color: #fbff1e;
+    font-size: 28px;
+}
+
+.atHeaderWrapper {
+    display: flex;
+}
+
+.strictTitle {
+    font-size: 0.7rem !important;
+}
+
+.atToggle {
+    background: black;
+    font-size: 0.85rem !important;
+    font-weight: bold;
+}
+
+.atWrapper {
+
+}
+
+.atWrapperWrapper {
+    height: 100%;
+    width: 100vw;
+    background: #222;
+    background-image: url('../../assets/images/inspiration-geometry.png');
+}
+
+.atPanel {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    padding: 15px;
+    box-sizing: border-box;
+}
+
+.atFilter {
+    flex: 4;
+    min-width: 350px;
+    padding: 15px;
+    background: #292929;
+}
+
+.atFilterInput {
+    margin-bottom: 10px;
+    z-index: 8;
+    position: relative;
+}
+
+.atH1 {
+    color: #464646;
+    letter-spacing: 0.25rem;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+    font-weight: bold;
+    font-size: 1.5rem;
+    text-align: left;
+    z-index: 7;
+    position: relative;
+    text-shadow: 2px 1px 1px rgba(0,0,0,0.25);
+}
+.atH1 + div {
+    margin-bottom: 15px;
+}
+
+.atRange {
+    font-family: 'Roboto Mono', monospace;
+    padding: 0px 10px;
+    position: relative;
+    z-index: 8;
+    font-size: 1rem;
+}
+
+.atdisabledRangeInput {
+    filter: brightness(0.4);
+    pointer-events: none;
+}
+
+.atRangeHeader {
+    color: white;
+    text-align: right;
+    font-size: 1.2rem;
+}
+
+.atGrid {
+    height: 100%;
+    width: 100%;
+    background: #292929;
+    flex: 10;
+}

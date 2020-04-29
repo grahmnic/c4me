@@ -17,9 +17,7 @@ import Login from './components/login/login.js';
 import Home from './components/home/home.js';
 import Profile from './components/profile/profile.js';
 import Collegesearch from './components/collegesearch/collegesearch.js';
-import ManageApplications from './components/manageApplications/manageApplications.js';
-import keyIndex from 'react-key-index';
-import { logDOM } from "@testing-library/react";
+import ApplicationsTracker from './components/applicationsTracker/applicationsTracker.js';
 import Modal from './components/modal/modal.js';
 import Review from './components/reviewquestionabledecisions/review.js';
 
@@ -374,6 +372,9 @@ class App extends React.Component {
                         <Link to="/collegesearch" className={`menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`}>
                           <i className="fas fa-chalkboard"></i>
                         </Link>
+                        <Link to="/applicationstracker" className={`menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`}>
+                          <i class="fas fa-address-card"></i>
+                        </Link>
                         <div onClick={this.handleSignout} className={`menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`}>
                           <i className="fas fa-sign-out-alt"></i>
                         </div>    
@@ -398,6 +399,9 @@ class App extends React.Component {
                       <Route path="/review-questionable-decisions">
                         <Review createPopup={this.createPopup} />
                       </Route>
+                      <Route path="/applicationstracker">
+                        <ApplicationsTracker createPopup={this.createPopup} />
+                      </Route>
                     </Switch>
                   </div>
                 </div>
@@ -408,31 +412,3 @@ class App extends React.Component {
 }
 
 export default App;
-
-
-// You can think of these components as "pages"
-// in your app.
-
-function HomeComponent() {
-  return (
-    <Home />
-  );
-}
-
-function LoginComponent(props) {
-  return (
-    <Login />
-  );
-}
-
-function ProfileComponent() {
-  return (
-    <Profile />
-  )
-}
-
-function CollegesearchComponent() {
-  return (
-    <Collegesearch />
-  )
-}
