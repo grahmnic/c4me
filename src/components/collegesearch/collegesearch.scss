@@ -624,3 +624,8 @@
     padding: 40px;
     color: rgba(255, 255, 255, 0.75);
 }
+
+.majorsList {
+    overflow-y: scroll;
+    max-height: 10rem;
+}

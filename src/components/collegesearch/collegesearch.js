@@ -58,7 +58,7 @@ class Collegesearch extends React.Component {
         this.handleLocationInput = this.handleLocationInput.bind(this);
         this.handleAdmissionRange = this.handleAdmissionRange.bind(this);
         this.handleMoreInfo = this.handleMoreInfo.bind(this);
-        
+
         this.closeModal = this.closeModal.bind(this);
     }
 
@@ -179,6 +179,7 @@ class Collegesearch extends React.Component {
     //get college info from individual result and display modal
 
     handleMoreInfo(collegeinfo) {
+        console.log(collegeinfo);
         this.setState({
             showModal: true,
             indivCollegeInfo: collegeinfo
@@ -484,6 +485,32 @@ class Collegesearch extends React.Component {
 
         let modal;
         if(this.state.showModal) {
+
+            let majorsList = [];
+            for (i = 0; i < this.state.indivCollegeInfo.majors.length; i++) {
+                majorsList.push({
+                    id: i,
+                    value: this.state.indivCollegeInfo.majors[i]
+                });
+            }
+
+            console.log(majorsList);
+
+            let majors = majorsList.map((e) => 
+                <div key={e.id}>
+                    {e.value}
+                </div>
+            );
+
+            let gpa;
+            if (this.state.indivCollegeInfo.gpa == null) {
+                gpa = "N/A";
+            } else {
+                gpa = this.state.indivCollegeInfo.gpa;
+            }
+
+            console.log(majors);
+
             modal = 
             <div>
                 <div className="collegemodal">
@@ -505,11 +532,11 @@ class Collegesearch extends React.Component {
                                 Region: {this.state.indivCollegeInfo.region} <br/>
                                 State: {this.state.indivCollegeInfo.state} <br/>
                                 Admission Rate: {this.state.indivCollegeInfo.admissionrate * 100}% <br/>
-                                Completion Rate: {this.state.indivCollegeInfo.completionrate}% <br/>
-                                Supported Majors:  <br/>
+                                Completion Rate: {this.state.indivCollegeInfo.completionrate}% <br/> <br/>
+                                Supported Majors:  <div className="majorsList"> {majors} </div> <br/>
 
                                 Average Scores: <br/>
-                                GPA: {this.state.indivCollegeInfo.gpa} <br/>
+                                GPA: {gpa} <br/>
 
                                 SAT EBRW: {this.state.indivCollegeInfo.satebrw} <br/>
                                 SAT MATH: {this.state.indivCollegeInfo.satmath} <br/>
