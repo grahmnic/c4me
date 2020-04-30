@@ -1,11 +1,12 @@
 // LIBRARIES
 import React from "react";
-import './App.css';
+import './App.scss';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Link,
+  NavLink,
   Redirect
 } from "react-router-dom";
 
@@ -17,9 +18,7 @@ import Login from './components/login/login.js';
 import Home from './components/home/home.js';
 import Profile from './components/profile/profile.js';
 import Collegesearch from './components/collegesearch/collegesearch.js';
-import ManageApplications from './components/manageApplications/manageApplications.js';
-import keyIndex from 'react-key-index';
-import { logDOM } from "@testing-library/react";
+import ApplicationsTracker from './components/applicationsTracker/applicationsTracker.js';
 import Modal from './components/modal/modal.js';
 import Review from './components/reviewquestionabledecisions/review.js';
 
@@ -29,7 +28,7 @@ class App extends React.Component {
 
         this.state = {
           popups: [],
-          showMenu: false,
+          showMenu: true,
           showModal: false,
           modalOps: null,
           modalCallback: null
@@ -312,36 +311,36 @@ class App extends React.Component {
 
       if(localStorage.getItem("isAdmin") === "true") {
         adminPanel= [
-          <Link to="/review-questionable-decisions" className={`menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`} key="p1"><i class="fas fa-question"></i></Link>,
+          <NavLink to="/review-questionable-decisions" exact={true} activeClassName='activeRoute' className={`admin-btn menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`} key="p1"><i class="fas fa-question"></i><span>Review QD</span></NavLink>,
           <div key="1a" onClick={() => this.showModal({
             title: "Confirm Admin Action",
             content: "Are you sure you want to scrape the college rankings?"
           }, this.handleScrapeRankings)} className={`admin-btn menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`}>
-            <i className="fas fa-database"></i>
+            <i className="fas fa-database"></i><span>Scrape CR</span>
           </div>,
           <div key="1b" onClick={() => this.showModal({
             title: "Confirm Admin Action",
             content: "Are you sure you want to scrape the college data?"
           }, this.handleScrapeData)} className={`admin-btn menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`}>
-            <i className="fas fa-table"></i>
+            <i className="fas fa-table"></i><span>Scrape CD</span>
           </div>,
           <div key="1e" onClick={() => this.showModal({
             title: "Confirm Admin Action",
             content: "Are you sure you want to scrape the college scorecard?"
           }, this.handleImportScorecard)} className={`admin-btn menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`}>
-            <i className="fas fa-table"></i>
+            <i className="fas fa-table"></i><span>Scrape CS</span>
           </div>,
           <div key="1c" onClick={() => this.showModal({
             title: "Confirm Admin Action",
             content: "Are you sure you want to delete all student profiles?"
           }, this.handleDeleteProfiles)} className={`admin-btn menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`}>
-            <i className="fas fa-user-minus"></i>
+            <i className="fas fa-user-minus"></i><span>Delete SP</span>
           </div>,
           <div key="1d" onClick={() => this.showModal({
             title: "Confirm Admin Action",
             content: "Are you sure you want to import all student profiles?"
           }, this.handleImportProfiles)} className={`admin-btn menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`}>
-            <i className="fas fa-user-plus"></i>
+            <i className="fas fa-user-plus"></i><span>Import SP</span>
           </div>
         ]
         
@@ -361,23 +360,26 @@ class App extends React.Component {
                 {re}
                 <div>
                   <div className="root">
-                    <div className={`header ${localStorage.getItem("user") ? '' : 'notLoggedIn'} ${this.state.showMenu ? '' : 'menuClose'}`}>
-                      <div className={`avatar-wrapper ${this.state.showMenu ? 'avatar-wrapper-menu' : ''}`} onClick={this.handleMenu}>
-                        <div className={`avatar ${this.state.showMenu ? 'avatar-menu' : ''}`}></div>
-                      </div>
-                        <Link to="/profile" className={`menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`}>
-                          <i className="far fa-user"></i>
-                        </Link>
-                        <Link to="/" className={`menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`}>
-                          <i className="fas fa-university"></i>
-                        </Link>
-                        <Link to="/collegesearch" className={`menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`}>
-                          <i className="fas fa-chalkboard"></i>
-                        </Link>
+                    <div className="header">
+                        {adminPanel}
+                        <NavLink to="/profile" exact={true} activeClassName='activeRoute' className={`menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`}>
+                          <i className="far fa-user"></i><span>Profile</span>
+                        </NavLink>
+                        <NavLink to="/" exact={true} activeClassName='activeRoute' className={`menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`}>
+                          <i className="fas fa-university"></i><span>Home</span>
+                        </NavLink>
+                        <NavLink to="/collegesearch" exact={true} activeClassName='activeRoute' className={`menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`}>
+                          <i className="fas fa-chalkboard"></i><span>College Search</span>
+                        </NavLink>
+                        <NavLink to="/applicationstracker" exact={true} activeClassName='activeRoute' className={`menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`}>
+                          <i class="fas fa-address-card"></i><span>Applications Tracker</span>
+                        </NavLink>
                         <div onClick={this.handleSignout} className={`menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`}>
-                          <i className="fas fa-sign-out-alt"></i>
+                          <i className="fas fa-sign-out-alt"></i><span>Sign Out</span>
                         </div>    
-                        {adminPanel}             
+                        <div className="avatar-wrapper" onClick={this.handleMenu}>
+                          <div className="avatar" ></div>
+                        </div>             
                     </div>
                   </div>
 
@@ -398,6 +400,9 @@ class App extends React.Component {
                       <Route path="/review-questionable-decisions">
                         <Review createPopup={this.createPopup} />
                       </Route>
+                      <Route path="/applicationstracker">
+                        <ApplicationsTracker createPopup={this.createPopup} />
+                      </Route>
                     </Switch>
                   </div>
                 </div>
@@ -408,31 +413,3 @@ class App extends React.Component {
 }
 
 export default App;
-
-
-// You can think of these components as "pages"
-// in your app.
-
-function HomeComponent() {
-  return (
-    <Home />
-  );
-}
-
-function LoginComponent(props) {
-  return (
-    <Login />
-  );
-}
-
-function ProfileComponent() {
-  return (
-    <Profile />
-  )
-}
-
-function CollegesearchComponent() {
-  return (
-    <Collegesearch />
-  )
-}

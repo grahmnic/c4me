@@ -1,0 +1,43 @@
+.mselector {
+    display: flex;
+    flex-wrap: wrap;
+    height: fit-content;
+    min-height: 1.5rem;
+}
+
+.moptions {
+    width: 100%;
+    position: relative;
+    z-index: 1000;
+    transition: all 0.25s;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    color: #222;
+}
+
+.mselect {
+    
+}
+
+.selectedKey {
+    margin-right: 5px;
+    height: 1.5rem;
+    background-color: #818181;
+    background-image: url('../../assets/images/black-mamba.png');
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    padding: 2px 5px;
+    border-radius: 5px;
+    width: fit-content;
+    margin-bottom: 2px;
+    border: 1px rgb(163, 163, 163) solid;
+}
+
+.selectedKey i {
+    margin-left: 8px;
+    cursor: pointer;
+    &:hover {
+        color: #DDDDDD;
+    }
+}
