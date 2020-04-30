@@ -347,8 +347,10 @@ class App extends React.Component {
       }
 
       var re = '';
+      let loggedIn = true;
       if(!localStorage.getItem("user")) {
         re = <Redirect to="/login" />
+        loggedIn = false;
       }
         return(
             <div>
@@ -360,14 +362,14 @@ class App extends React.Component {
                 {re}
                 <div>
                   <div className="root">
-                    <div className="header">
+                    <div className={`header ${loggedIn ? "" : "notLoggedIn"}`}>
                         {adminPanel}
                         <NavLink to="/profile" exact={true} activeClassName='activeRoute' className={`menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`}>
                           <i className="far fa-user"></i><span>Profile</span>
                         </NavLink>
-                        <NavLink to="/" exact={true} activeClassName='activeRoute' className={`menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`}>
+                        {/* <NavLink to="/" exact={true} activeClassName='activeRoute' className={`menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`}>
                           <i className="fas fa-university"></i><span>Home</span>
-                        </NavLink>
+                        </NavLink> */}
                         <NavLink to="/collegesearch" exact={true} activeClassName='activeRoute' className={`menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`}>
                           <i className="fas fa-chalkboard"></i><span>College Search</span>
                         </NavLink>
@@ -377,13 +379,13 @@ class App extends React.Component {
                         <div onClick={this.handleSignout} className={`menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`}>
                           <i className="fas fa-sign-out-alt"></i><span>Sign Out</span>
                         </div>    
-                        <div className="avatar-wrapper" onClick={this.handleMenu}>
+                        {/* <div className="avatar-wrapper" onClick={this.handleMenu}>
                           <div className="avatar" ></div>
-                        </div>             
+                        </div>              */}
                     </div>
                   </div>
 
-                  <div className="content">
+                  <div className={`content ${loggedIn ? "" : "contentNotLogged"}`}>
                     <Switch>
                       <Route exact path="/">
                         <Home />

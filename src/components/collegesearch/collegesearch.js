@@ -639,11 +639,14 @@ class Collegesearch extends React.Component {
                             <div className="toggleRange"><i className="fas fa-check" onClick={this.toggleRankingRange}></i></div>
                         </div>
 
-                        <div className="nameFilter">
-                                <input className="nameInput" type="text" value={this.state.major1} onChange={this.handleMajor1} placeholder="Major 1"/>
-                        </div>
-                        <div className="nameFilter">
-                                <input className="nameInput" type="text" value={this.state.major2} onChange={this.handleMajor2} placeholder="Major 2"/>
+                        <div className="majors">
+                            <div className="nameFilter">
+                                    <input className="nameInput" type="text" value={this.state.major1} onChange={this.handleMajor1} placeholder="Major 1"/>
+                            </div>
+                            <div className="section"></div>
+                            <div className="nameFilter">
+                                    <input className="nameInput" type="text" value={this.state.major2} onChange={this.handleMajor2} placeholder="Major 2"/>
+                            </div>
                         </div>
 
                         <div className={`range ${this.state.toggleAdmissionsRange ? "" : "disabledRange"}`}>

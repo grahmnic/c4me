@@ -31,6 +31,18 @@
     padding: 10px 0px;
 }
 
+.majors {
+    display: flex;
+}
+
+.majors .nameFilter {
+    flex: 1;
+}
+
+.section {
+    flex: 0.2;
+}
+
 .toggleWrapper {
     display: flex;
     flex-direction: column;

@@ -1,0 +1,135 @@
+.pfCard {
+    height: fit-content;
+    font-family: 'Roboto Mono', monospace;
+    position: relative;
+    margin: 5px;
+    background: rgb(68, 68, 68);
+    min-width: 15rem;
+    border-radius: 10px;
+    flex-basis: 20%;
+    opacity: 0;
+    animation: 0.75s fadeIn;
+    animation-fill-mode: forwards;
+    transition: all 0.5s;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.pfCardE {
+    flex-basis: 50%;
+}
+
+@media (max-width: 1080px) {
+    .pfCardE {
+        flex-basis: 100%;
+    }
+
+    .pfInfoE {
+
+    }
+}
+
+.expandIcon {
+    color: #DDDDDD;
+    position: absolute;
+    bottom: 0.5rem;
+    right: 0.5rem;
+    font-size: 1rem;
+    transition: all 0.25s;
+    cursor: pointer;
+    &:hover {
+        color: rgb(110, 110, 110);
+    }
+}
+
+.expandIconE::before {
+    content: "\f422" !important;
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+}
+
+.pfInfo {
+    padding: 10px;
+    height: fit-content;
+    padding-bottom: 2rem;
+    border-radius: 5px;
+    background: rgb(68, 68, 68);
+    box-sizing: border-box;
+}
+
+.pfInfoE {
+    padding-bottom: 0;
+}
+
+.pfInfoField {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+}
+
+.pfField {
+    color: #DDDDDD;
+    font-size: 0.85rem;
+}
+
+.pfLabel {
+    color: #DDDDDD;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.pfUser {
+    font-size: 1.2rem;
+    color: #fbff1e;
+}
+
+//EXPANDED FIELDS
+.pfMoreInfo {
+    display: none;
+    opacity: 0;
+    padding: 10px;
+    height: fit-content;
+    padding-bottom: 2rem;
+    font-family: 'Roboto Condensed', monospace;
+}
+
+.pfMoreInfoE {
+    display: flex;
+    flex-wrap: wrap;
+    animation: 0.25s fadeIn 0.5s;
+    animation-fill-mode: forwards;
+}
+
+.pfInfoField2 {
+    flex-basis: 33%;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    padding-right: 10px;
+    box-sizing: border-box;
+}
+
+@media (max-width: 1080px) {
+    
+}
+
+.pfLabel2 {
+    font-size: 1rem;
+    color: #DDDDDD;
+}
+
+.pfField2 {
+    font-size: 1rem;
+    color: #DDDDDD;
+}
+
+.pfField32::after {
+    content: "/32";
+    font-size: 0.75rem;
+    color: rgb(139, 139, 139);
+}
+
+.pfField800::after {
+    content: "/800";
+    font-size: 0.75rem;
+    color: rgb(139, 139, 139);
+}
