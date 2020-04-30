@@ -3,6 +3,7 @@ import './collegesearch.scss';
 import CollegeResult from '../collegeResult/collegeResult';
 import '../collegeModal/collegeModal.css';
 import Select from '../select/select.js';
+import MultiSelect from '../select/multiselect.js';
 
 import {Slider, Handles, Tracks} from 'react-compound-slider';
 import {Scrollbars} from 'react-custom-scrollbars';
@@ -25,6 +26,7 @@ class Collegesearch extends React.Component {
             sateRange: [400, 600],
             actRange: [26, 32],
             costRange: [16000,48000],
+            outCostRange: [16000,48000],
             rankingRange: [50, 250],
             popRange: [6000, 14000],
             strict: false,
@@ -41,6 +43,7 @@ class Collegesearch extends React.Component {
             toggleRankingRange: false,
             togglePopRange: false,
             toggleScoreSort: false,
+            toggleOutCostRange: false,
 
             readyModal: false,
             showModal: false,
@@ -54,6 +57,7 @@ class Collegesearch extends React.Component {
         this.prevPage = this.prevPage.bind(this);
 
         this.locationInput = React.createRef();
+        this.stateInput = React.createRef();
         this.sortInput = React.createRef();
         this.handleLocationInput = this.handleLocationInput.bind(this);
         this.handleAdmissionRange = this.handleAdmissionRange.bind(this);
@@ -112,6 +116,18 @@ class Collegesearch extends React.Component {
     toggleCostRange = ()  => {
         this.setState({
             toggleCostRange: !this.state.toggleCostRange
+        })
+    }
+
+    handleOutCostRange = (update) => {
+        this.setState({
+            outCostRange: update
+        });
+    }
+
+    toggleOutCostRange = () => {
+        this.setState({
+            toggleOutCostRange: !this.state.toggleOutCostRange
         })
     }
     
@@ -481,7 +497,61 @@ class Collegesearch extends React.Component {
             {key:"Ranking", value: "ranking"},
             {key:"Admission Rate", value: "admissionrate"},
             {key:"Recommendation Score", value: "score"}
-        ]
+        ];
+
+        
+        const stateOptions = [
+            {key: "Alabama", value: "AL"},
+            {key: "Alaska", value: "AK"},
+            {key: "Arizona", value: "AZ"},
+            {key: "Arkansas", value: "AR"},
+            {key: "California", value: "CA"},
+            {key: "Colorado", value: "CO"},
+            {key: "Connecticut", value: "CT"},
+            {key: "Delaware", value: "DE"},
+            {key: "Florida", value: "FL"},
+            {key: "Georgia", value: "GA"},
+            {key: "Hawaii", value: "HI"},
+            {key: "Idaho", value: "ID"},
+            {key: "Illinois", value: "IL"},
+            {key: "Indiana", value: "IN"},
+            {key: "Iowa", value: "IA"},
+            {key: "Kansas", value: "KS"},
+            {key: "Kentucky", value: "KY"},
+            {key: "Louisiana", value: "LA"},
+            {key: "Maine", value: "ME"},
+            {key: "Maryland", value: "MD"},
+            {key: "Massachusetts", value: "MA"},
+            {key: "Michigan", value: "MI"},
+            {key: "Minnesota", value: "MN"},
+            {key: "Mississippi", value: "MS"},
+            {key: "Missouri", value: "MO"},
+            {key: "Montana", value: "MT"},
+            {key: "Nebraska", value: "NE"},
+            {key: "Nevada", value: "NV"},
+            {key: "New Hampshire", value: "NH"},
+            {key: "New Jersey", value: "NJ"},
+            {key: "New Mexico", value: "NM"},
+            {key: "New York", value: "NY"},
+            {key: "North Carolina", value: "NC"},
+            {key: "North Dakota", value: "ND"},
+            {key: "Ohio", value: "OH"},
+            {key: "Oklahoma", value: "OK"},
+            {key: "Oregon", value: "OR"},
+            {key: "Pennsylvania", value: "PA"},
+            {key: "Rhode Island", value: "RI"},
+            {key: "South Carolina", value: "SC"},
+            {key: "South Dakota", value: "SD"},
+            {key: "Tennessee", value: "TN"},
+            {key: "Texas", value: "TX"},
+            {key: "Utah", value: "UT"},
+            {key: "Vermont", value: "VT"},
+            {key: "Virginia", value: "VA"},
+            {key: "Washington", value: "WA"},
+            {key: "West Virginia", value: "WV"},
+            {key: "Wisconsin", value: "WI"},
+            {key: "Wyoming", value: "WY"}
+        ];
 
         let modal;
         if(this.state.showModal) {
@@ -577,161 +647,183 @@ class Collegesearch extends React.Component {
 
                 {/* Sidebar content*/}
                 <div className="searchSideBar">   
-                    <div className="filterSB">
-                        <div className="filterHeader">
-                            <div className="titleSB">College Search</div>
-                            <div className="toggleWrapper">
-                                <div>STRICT MODE</div>
-                                <label className="switch strictSwitch">'
-                                    <input type="checkbox"  defaultChecked={this.state.strict}  onChange={this.handleStrict}/>
-                                    <span className="toggle round"></span>
-                                </label>
-                            </div>
+                    <Scrollbars renderThumbVertical={this.renderThumb} className="filterSB">
+                        <div className="filterSB">
+                            <div className="filterHeader">
+                                <div className="titleSB">College Search</div>
+                                <div className="toggleWrapper">
+                                    <div>STRICT MODE</div>
+                                    <label className="switch strictSwitch">'
+                                        <input type="checkbox"  defaultChecked={this.state.strict}  onChange={this.handleStrict}/>
+                                        <span className="toggle round"></span>
+                                    </label>
+                                </div>
 
-                        </div>
-                        <div className="headingSep">SORT BY</div>
-                        <div className="sorting">
-                            <Select ref={this.sortInput} changeCallback={this.sortList} options={sortingOptions} />
-                            <div className="sortingOp" onClick={this.toggleSorting}>
-                                <i className={`fas fa-sort-up ${this.state.isAscending ? "sortToggle" : ""}`}></i>
-                                <i className={`fas fa-sort-down ${!this.state.isAscending ? "sortToggle" : ""}`}></i>
                             </div>
-                        </div>
-                        <div className="hr"></div>
-                        <div className="nameFilter">
-                                <input className="nameInput" type="text" value={this.state.collegename} onChange={this.handleCollegeName} placeholder="Name"/>
-                        </div>
-                        <div className="location">
-                            <div className="locationWrapper">
-                                <div className="headingSB">Region</div>
-                                <Select ref={this.locationInput} options={regions} />
+                            <div className="headingSep">SORT BY</div>
+                            <div className="sorting">
+                                <Select ref={this.sortInput} changeCallback={this.sortList} options={sortingOptions} />
+                                <div className="sortingOp" onClick={this.toggleSorting}>
+                                    <i className={`fas fa-sort-up ${this.state.isAscending ? "sortToggle" : ""}`}></i>
+                                    <i className={`fas fa-sort-down ${!this.state.isAscending ? "sortToggle" : ""}`}></i>
+                                </div>
                             </div>
-
-                        </div>
-
-                        <div className={`range ${this.state.toggleCostRange ? "" : "disabledRange"}`}>
-                            <div className={`rangeInput ${this.state.toggleCostRange ? "" : "disabledRangeInput"}`}>
-                                <div className="headingSB">COST <span className="rates">{this.state.costRange[0]}$ - {this.state.costRange[1]}$</span></div>
-                                <RangeSlider onUpdate={this.handleCostRange} ops={{
-                                    defaultValues: [0,48000],
-                                    min: 0,
-                                    max: 100000,
-                                    mode: 2,
-                                    step: 1000,
-                                    ticks: 5
-                                }}/>
-                            </div>
-                            <div className="toggleRange"><i className="fas fa-check" onClick={this.toggleCostRange}></i></div>
-                        </div>
-
-                        <div className={`range ${this.state.toggleRankingRange ? "" : "disabledRange"}`}>
-                            <div className={`rangeInput ${this.state.toggleRankingRange ? "" : "disabledRangeInput"}`}>
-                                <div className="headingSB">Ranking<span className="rates">{this.state.rankingRange[0]} - {this.state.rankingRange[1]}</span></div>
-                                <RangeSlider onUpdate={this.handleRankingRange} ops={{
-                                    defaultValues: [50,250],
-                                    min: 1,
-                                    max: 601,
-                                    mode: 2,
-                                    step: 1,
-                                    ticks: 6
-                                }}/>
-                            </div>
-                            <div className="toggleRange"><i className="fas fa-check" onClick={this.toggleRankingRange}></i></div>
-                        </div>
-
-                        <div className="majors">
+                            <div className="hr"></div>
                             <div className="nameFilter">
-                                    <input className="nameInput" type="text" value={this.state.major1} onChange={this.handleMajor1} placeholder="Major 1"/>
+                                    <input className="nameInput" type="text" value={this.state.collegename} onChange={this.handleCollegeName} placeholder="Name"/>
                             </div>
-                            <div className="section"></div>
-                            <div className="nameFilter">
-                                    <input className="nameInput" type="text" value={this.state.major2} onChange={this.handleMajor2} placeholder="Major 2"/>
+                            <div className="location">
+                                <div className="locationWrapper">
+                                    <div className="headingSB">Region</div>
+                                    <Select ref={this.locationInput} options={regions} />
+                                </div>
                             </div>
-                        </div>
 
-                        <div className={`range ${this.state.toggleAdmissionsRange ? "" : "disabledRange"}`}>
-                            <div className={`rangeInput ${this.state.toggleAdmissionsRange ? "" : "disabledRangeInput"}`}>
-                                <div className="headingSB">Admission Rate<span className="rates">{this.state.admissionsRange[0]}% - {this.state.admissionsRange[1]}%</span></div>
-                                <RangeSlider onUpdate={this.handleAdmissionRange} ops={{
-                                    defaultValues: [25,75],
-                                    min: 1,
-                                    max: 100,
-                                    mode: 2,
-                                    step: 5,
-                                    ticks: 10
-                                }}/>
+                            <div className="location">                    
+                                <div className="locationWrapper">
+                                    <div className="headingSB">States</div>
+                                    <MultiSelect ref={this.stateInput} options={stateOptions} />
+                                </div>
                             </div>
-                            <div className="toggleRange"><i className="fas fa-check" onClick={this.toggleAdmissionRange}></i></div>
-                        </div>
+
+                            <div className={`range ${this.state.toggleCostRange ? "" : "disabledRange"}`}>
+                                <div className={`rangeInput ${this.state.toggleCostRange ? "" : "disabledRangeInput"}`}>
+                                    <div className="headingSB">COST <span className="rates">{this.state.costRange[0]}$ - {this.state.costRange[1]}$</span></div>
+                                    <RangeSlider onUpdate={this.handleCostRange} ops={{
+                                        defaultValues: [0,48000],
+                                        min: 0,
+                                        max: 100000,
+                                        mode: 2,
+                                        step: 1000,
+                                        ticks: 5
+                                    }}/>
+                                </div>
+                                <div className="toggleRange"><i className="fas fa-check" onClick={this.toggleCostRange}></i></div>
+                            </div>
+                            <div className={`range ${this.state.toggleOutCostRange ? "" : "disabledRange"}`}>
+                                <div className={`rangeInput ${this.state.toggleOutCostRange ? "" : "disabledRangeInput"}`}>
+                                    <div className="headingSB">COST <span className="rates">{this.state.outCostRange[0]}$ - {this.state.outCostRange[1]}$</span></div>
+                                    <RangeSlider onUpdate={this.handleOutCostRange} ops={{
+                                        defaultValues: [0,48000],
+                                        min: 0,
+                                        max: 100000,
+                                        mode: 2,
+                                        step: 1000,
+                                        ticks: 5
+                                    }}/>
+                                </div>
+                                <div className="toggleRange"><i className="fas fa-check" onClick={this.toggleOutCostRange}></i></div>
+                            </div>
+
+                            <div className={`range ${this.state.toggleRankingRange ? "" : "disabledRange"}`}>
+                                <div className={`rangeInput ${this.state.toggleRankingRange ? "" : "disabledRangeInput"}`}>
+                                    <div className="headingSB">Ranking<span className="rates">{this.state.rankingRange[0]} - {this.state.rankingRange[1]}</span></div>
+                                    <RangeSlider onUpdate={this.handleRankingRange} ops={{
+                                        defaultValues: [50,250],
+                                        min: 1,
+                                        max: 601,
+                                        mode: 2,
+                                        step: 1,
+                                        ticks: 6
+                                    }}/>
+                                </div>
+                                <div className="toggleRange"><i className="fas fa-check" onClick={this.toggleRankingRange}></i></div>
+                            </div>
+
+                            <div className="majors">
+                                <div className="nameFilter">
+                                        <input className="nameInput" type="text" value={this.state.major1} onChange={this.handleMajor1} placeholder="Major 1"/>
+                                </div>
+                                <div className="section"></div>
+                                <div className="nameFilter">
+                                        <input className="nameInput" type="text" value={this.state.major2} onChange={this.handleMajor2} placeholder="Major 2"/>
+                                </div>
+                            </div>
+
+                            <div className={`range ${this.state.toggleAdmissionsRange ? "" : "disabledRange"}`}>
+                                <div className={`rangeInput ${this.state.toggleAdmissionsRange ? "" : "disabledRangeInput"}`}>
+                                    <div className="headingSB">Admission Rate<span className="rates">{this.state.admissionsRange[0]}% - {this.state.admissionsRange[1]}%</span></div>
+                                    <RangeSlider onUpdate={this.handleAdmissionRange} ops={{
+                                        defaultValues: [25,75],
+                                        min: 1,
+                                        max: 100,
+                                        mode: 2,
+                                        step: 5,
+                                        ticks: 10
+                                    }}/>
+                                </div>
+                                <div className="toggleRange"><i className="fas fa-check" onClick={this.toggleAdmissionRange}></i></div>
+                            </div>
 
 
-                        <div className={`range ${this.state.toggleSatmRange ? "" : "disabledRange"}`}>
-                            <div className={`rangeInput ${this.state.toggleSatmRange ? "" : "disabledRangeInput"}`}>
-                                <div className="headingSB">SAT MATH<span className="rates">{this.state.satmRange[0]} - {this.state.satmRange[1]}</span></div>
-                                <RangeSlider onUpdate={this.handleSATMRange} ops={{
-                                    defaultValues: [400,600],
-                                    min: 100,
-                                    max: 800,
-                                    mode: 2,
-                                    step: 25,
-                                    ticks: 5
-                                }}/>
+                            <div className={`range ${this.state.toggleSatmRange ? "" : "disabledRange"}`}>
+                                <div className={`rangeInput ${this.state.toggleSatmRange ? "" : "disabledRangeInput"}`}>
+                                    <div className="headingSB">SAT MATH<span className="rates">{this.state.satmRange[0]} - {this.state.satmRange[1]}</span></div>
+                                    <RangeSlider onUpdate={this.handleSATMRange} ops={{
+                                        defaultValues: [400,600],
+                                        min: 100,
+                                        max: 800,
+                                        mode: 2,
+                                        step: 25,
+                                        ticks: 5
+                                    }}/>
+                                </div>
+                                <div className="toggleRange"><i className="fas fa-check" onClick={this.toggleSatmRange}></i></div>
                             </div>
-                            <div className="toggleRange"><i className="fas fa-check" onClick={this.toggleSatmRange}></i></div>
-                        </div>
 
-                        
-                        <div className={`range ${this.state.toggleSateRange ? "" : "disabledRange"}`}>
-                            <div className={`rangeInput ${this.state.toggleSateRange ? "" : "disabledRangeInput"}`}>
-                                <div className="headingSB">SAT EBRW<span className="rates">{this.state.sateRange[0]} - {this.state.sateRange[1]}</span></div>
-                                <RangeSlider onUpdate={this.handleSATERange} ops={{
-                                    defaultValues: [400,600],
-                                    min: 100,
-                                    max: 800,
-                                    mode: 2,
-                                    step: 25,
-                                    ticks: 5
-                                }}/>
+                            
+                            <div className={`range ${this.state.toggleSateRange ? "" : "disabledRange"}`}>
+                                <div className={`rangeInput ${this.state.toggleSateRange ? "" : "disabledRangeInput"}`}>
+                                    <div className="headingSB">SAT EBRW<span className="rates">{this.state.sateRange[0]} - {this.state.sateRange[1]}</span></div>
+                                    <RangeSlider onUpdate={this.handleSATERange} ops={{
+                                        defaultValues: [400,600],
+                                        min: 100,
+                                        max: 800,
+                                        mode: 2,
+                                        step: 25,
+                                        ticks: 5
+                                    }}/>
+                                </div>
+                                <div className="toggleRange"><i className="fas fa-check" onClick={this.toggleSateRange}></i></div>
                             </div>
-                            <div className="toggleRange"><i className="fas fa-check" onClick={this.toggleSateRange}></i></div>
-                        </div>
-                        <div className={`range ${this.state.toggleActRange ? "" : "disabledRange"}`}>
-                            <div className={`rangeInput ${this.state.toggleActRange ? "" : "disabledRangeInput"}`}>
-                                <div className="headingSB">ACT COMPOSITE <span className="rates">{this.state.actRange[0]} - {this.state.actRange[1]}</span></div>
-                                <RangeSlider onUpdate={this.handleACTRange} ops={{
-                                    defaultValues: [26,32],
-                                    min: 5,
-                                    max: 36,
-                                    mode: 2,
-                                    step: 1,
-                                    ticks: 9
-                                }}/>
+                            <div className={`range ${this.state.toggleActRange ? "" : "disabledRange"}`}>
+                                <div className={`rangeInput ${this.state.toggleActRange ? "" : "disabledRangeInput"}`}>
+                                    <div className="headingSB">ACT COMPOSITE <span className="rates">{this.state.actRange[0]} - {this.state.actRange[1]}</span></div>
+                                    <RangeSlider onUpdate={this.handleACTRange} ops={{
+                                        defaultValues: [26,32],
+                                        min: 5,
+                                        max: 36,
+                                        mode: 2,
+                                        step: 1,
+                                        ticks: 9
+                                    }}/>
+                                </div>
+                                <div className="toggleRange"><i className="fas fa-check" onClick={this.toggleActRange}></i></div>
                             </div>
-                            <div className="toggleRange"><i className="fas fa-check" onClick={this.toggleActRange}></i></div>
-                        </div>
 
-                        <div className={`range ${this.state.togglePopRange ? "" : "disabledRange"}`}>
-                            <div className={`rangeInput ${this.state.togglePopRange ? "" : "disabledRangeInput"}`}>
-                                <div className="headingSB">POPULATION <span className="rates">{this.state.popRange[0]} - {this.state.popRange[1]}</span></div>
-                                <RangeSlider onUpdate={this.handlePopRange} ops={{
-                                    defaultValues: [6000,14000],
-                                    min: 100,
-                                    max: 80000,
-                                    mode: 2,
-                                    step: 1000,
-                                    ticks: 10
-                                }}/>
+                            <div className={`range ${this.state.togglePopRange ? "" : "disabledRange"}`}>
+                                <div className={`rangeInput ${this.state.togglePopRange ? "" : "disabledRangeInput"}`}>
+                                    <div className="headingSB">POPULATION <span className="rates">{this.state.popRange[0]} - {this.state.popRange[1]}</span></div>
+                                    <RangeSlider onUpdate={this.handlePopRange} ops={{
+                                        defaultValues: [6000,14000],
+                                        min: 100,
+                                        max: 80000,
+                                        mode: 2,
+                                        step: 1000,
+                                        ticks: 10
+                                    }}/>
+                                </div>
+                                <div className="toggleRange"><i className="fas fa-check" onClick={this.togglePopRange}></i></div>
                             </div>
-                            <div className="toggleRange"><i className="fas fa-check" onClick={this.togglePopRange}></i></div>
-                        </div>
 
-                        <div className="filterBtns">
-                            <button className="searchBtn" onClick={this.searchColleges}>Search</button>
-                            <div className="filterSep"></div>
-                            <button className="searchBtn" onClick={this.calculateScore}>Recommendations</button>
+                            <div className="filterBtns">
+                                <button className="searchBtn" onClick={this.searchColleges}>Search</button>
+                                <div className="filterSep"></div>
+                                <button className="searchBtn" onClick={this.calculateScore}>Recommendations</button>
+                            </div>
                         </div>
-                        
-                    </div>
+                                               
+                    </Scrollbars>
                 </div>
 
                 {/* Where college search results show up */}

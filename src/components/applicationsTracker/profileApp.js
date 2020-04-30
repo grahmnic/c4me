@@ -22,10 +22,21 @@ class ProfileApp extends React.Component {
 
     render() {
         let moreInfo = null;
-
+        const colors = {
+            'accepted': '#2ECC71',
+            'deferred': '#F39C12',
+            'waitlisted': '#884EA0',
+            'pending': '#F1C40F',
+            'with-drawn': '#D0D3D4',
+            'denied': '#A93226'
+        };
+        const getColor = (status) => 
+        {
+            return colors[status]
+        };
         return(
-            <div className={`pfCard ${this.state.expanded ? "pfCardE" : null}`} style={{animationDelay: (Math.random(0, 1) * 0.25).toString() + "s" }}>
-                <div className={`pfInfo ${this.state.expanded ? "pfInfoE" : null}`}>
+            <div className={`pfCard ${this.state.expanded ? "pfCardE" : null}`} style={{animationDelay: (Math.random(0, 1) * 0.25).toString() + "s", backgroundColor: getColor(this.props.data.status) }}>
+                <div className={`pfInfo ${this.state.expanded ? "pfInfoE" : null}`} style={{backgroundColor: getColor(this.props.data.status)}}>
                     <div className="pfInfoField">
                         <div className="pfLabel pfUser">{this.props.data.username}</div>
                     </div>

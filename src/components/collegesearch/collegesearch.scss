@@ -18,7 +18,7 @@
 .filterSB {
     display: flex;
     flex-direction: column;
-    height: 100%;
+    height: fit-content;
     padding: 5px 25px;
     box-sizing: border-box;
     background: rgba(0, 0, 0, 0.75);
@@ -182,7 +182,7 @@
 
 .filterBtns {
     display: flex;
-
+    margin-bottom: 15px;
 }
 
 .searchBtn:hover {
