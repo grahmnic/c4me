@@ -171,11 +171,11 @@ class Profile extends React.Component {
             hasError = true;
         }
         if (this.state.userInfo.numpassedaps != null && (this.state.userInfo.numpassedaps > 20 || this.state.userInfo.numpassedaps < 0)) {
-            errorString += "Your 'Number of APs' value is invalid. \n"
+            errorString += "Your 'Number of APs' value is invalid.\n"
             hasError = true;
         }
-        if (this.state.userInfo.satmath != null && (this.state.userInfo.collegeclass > 2030 || this.state.userInfo.collegeclass < 2016)) {
-            errorString += "Your College Class value is invalid. \n"
+        if (this.state.userInfo.collegeclass != null && (parseInt(this.state.userInfo.collegeclass) > 2030 || parseInt(this.state.userInfo.collegeclass) < 2016)) {
+            errorString += "Your College Class value is invalid.\n"
             hasError = true;
         }
 
@@ -547,16 +547,13 @@ class Profile extends React.Component {
                 <div className="content-card">
                     <div className="progress-section">
                         <div className="progress-title">
-                            <div className="progress-bg">
-                                
-                            </div>
                             <div className="progress-title-content">
                                 <div className="statsTab">
                                     <div onClick={this.toggleViewStats}>YOUR STATISTICS</div>
-                                    <div><i className="far fa-edit" onClick={this.toggleEditStats}></i></div>
                                 </div>
                                 <div className="manageAppsTab" onClick={this.toggleManageApps}>MANAGE APPLICATIONS</div>
                             </div>
+                            
                         </div>
                         <div className="progress-stats">
                         {progressRow}
@@ -564,6 +561,9 @@ class Profile extends React.Component {
                     </div>
                     <div className="divider"></div>
                     <div className="stats">
+                        <div className="editStats">
+                            <i className="far fa-edit" onClick={this.toggleEditStats}></i>
+                        </div>
                         {statRows}
                     </div>
                 </div>
@@ -573,7 +573,6 @@ class Profile extends React.Component {
                     <div className="progress-title-content">
                         <div className="statsTab">
                             <div onClick={this.toggleViewStats}>YOUR STATISTICS</div>
-                            <div><i className="far fa-edit" onClick={this.toggleEditStats}></i></div>
                         </div>
                         <div className="manageAppsTab" onClick={this.toggleManageApps}>MANAGE APPLICATIONS</div>
                     </div>
