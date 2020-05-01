@@ -63,11 +63,14 @@ class Review extends React.Component {
         });
     }
 
-    validateDecision = (id) => {
+    validateDecision = (name, user) => {
         const requestOptions = {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({applicationid: id})
+            body: JSON.stringify({
+                collegename: name,
+                username: user
+            })
         };
         fetch('https://chads4us.herokuapp.com/validatedecision/', requestOptions)
         .then(data => {
@@ -81,7 +84,7 @@ class Review extends React.Component {
             } else {
                 this.props.createPopup({
                     title: "VALIDATED APPLICATION",
-                    content: "Application " + id + " has been accepted."
+                    content: "The application has been accepted."
                 });
                 this.getApplications();
             }
@@ -90,12 +93,11 @@ class Review extends React.Component {
 
     render() {
         const applicationList = this.state.applications.map((e) => 
-        <div key={e.applicationid} className="application" onClick={() => this.fetchProfile(e.username)}>
-            <div>{e.applicationid}</div>
-            <div>{e.username}</div>
+        <div key={e.username + e.collegename} className="application">
+            <div style={{textDecoration: "underline", cursor: "pointer"}} onClick={() => this.fetchProfile(e.username)}>{e.username}</div>
             <div>{e.collegename}</div>
             <div>{e.status}</div>
-            <button onClick={() => this.validateDecision(e.applicationid)}><i class="fas fa-check"></i></button>
+            <button onClick={() => this.validateDecision(e.collegename, e.username)}><i class="fas fa-check"></i></button>
         </div>
         );
 
@@ -118,7 +120,6 @@ class Review extends React.Component {
                     <div className="applicationsWrapper">
                         <div className="applicationsPanel">
                             <div className="applicationHeader">
-                                <div>ID</div>
                                 <div>USER</div>
                                 <div>COLLEGE</div>
                                 <div>APPLICATION STATUS</div>
