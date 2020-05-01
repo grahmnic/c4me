@@ -50,8 +50,6 @@ class SHS extends React.Component {
     }
 
     render() {
-
-        console.log(this.state.highschoolOptions);
         return(
             <div className="hsPanel">
                 <div className="hsInnerPanel">
