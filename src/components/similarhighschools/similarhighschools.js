@@ -12,6 +12,10 @@ class SHS extends React.Component {
         }
     }
 
+    setNameRef = (ref) => {
+        this.highschoolname = ref;
+    }
+
     handleHighSchoolName = (e) => {
         this.setState({
             highschoolname: e.target.value
@@ -19,7 +23,7 @@ class SHS extends React.Component {
     }
 
     fetchHS = () => {
-
+        alert(this.highschoolname.getInstance().getValue());
     }
 
     render() {
@@ -35,7 +39,7 @@ class SHS extends React.Component {
                 <div className="hsInnerPanel">
                     <div className="hsSearch">
                         <div className="hsInputWrapper">
-                            <DataList changeCallback={this.handleHighSchoolName} options={highschools} placeholder="Enter a highschool" fontSize="1.75rem" padding="10px 15px" />
+                            <DataList ref={this.setNameRef} options={highschools} placeholder="Enter a highschool" fontSize="1.75rem" padding="10px 15px" />
                         </div>
                     </div>
                 </div>

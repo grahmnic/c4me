@@ -60,7 +60,7 @@ class DataList extends React.Component {
 
         return(
             <div className="datalist">
-                <input onChange={this.filterValues} onFocus={this.onFocus} style={{fontSize: this.props.fontSize, padding: this.props.padding}} className="dlInput" type="text" value={this.state.value} placeholder={this.props.placeholder}/>
+                <input onChange={this.filterValues} onFocus={this.onFocus} style={{fontSize: this.props.fontSize, padding: this.props.padding}} className="dlInput" type="text" value={this.state.value || ""} placeholder={this.props.placeholder}/>
                 <div className="dlOptions">
                     {!this.state.toggleDisplayedValues || displayedValues}
                 </div>
