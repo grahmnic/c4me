@@ -109,7 +109,7 @@ class ApplicationsTracker extends React.Component {
         };
 
         // console.log(this.state);
-        console.log(this.highSchoolInput.current.value);
+        // console.log(this.highSchoolInput.current.value);
         fetch('https://chads4us.herokuapp.com/apptracker', requestOptions)
             .then(response => {
                 if (response.ok) {
