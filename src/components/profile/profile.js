@@ -107,7 +107,7 @@ class Profile extends React.Component {
             hasError = true;
         } 
         if (this.state.userInfo.satmath != null && (this.state.userInfo.satmath > 800 || this.state.userInfo.satmath < 0)) {
-            errorString += "Your SAT Math value is invalid. \n"
+            errorString += "Your SAT Math value is invalid. \n";
             hasError = true;
         } 
         if (this.state.userInfo.satebrw != null && (this.state.userInfo.satebrw > 800 || this.state.userInfo.satebrw < 0)) {
@@ -115,7 +115,7 @@ class Profile extends React.Component {
             hasError = true;
         } 
         if (this.state.userInfo.satmath != null && (this.state.userInfo.actcomposite > 32 || this.state.userInfo.actcomposite < 0)) {
-            errorString += "Your ACT Composite value is invalid. \n"
+            errorString += "Your ACT Composite value is invalid. \n";
             hasError = true;
         }
         if (this.state.userInfo.actenglish != null && (this.state.userInfo.actenglish > 75 || this.state.userInfo.actenglish < 0)) {
@@ -123,11 +123,11 @@ class Profile extends React.Component {
             hasError = true;
         } 
         if (this.state.userInfo.actmath != null && (this.state.userInfo.actmath > 60 || this.state.userInfo.actmath < 0)) {
-            errorString += "Your ACT Math value is invalid. \n"
+            errorString += "Your ACT Math value is invalid. \n";
             hasError = true;
         }
         if (this.state.userInfo.actreading != null && (this.state.userInfo.actreading > 40 || this.state.userInfo.actreading < 0)) {
-            errorString += "Your ACT Reading value is invalid. \n"
+            errorString += "Your ACT Reading value is invalid. \n";
             hasError = true;
         }
         if (this.state.userInfo.actscience != null && (this.state.userInfo.actscience > 40 || this.state.userInfo.actscience < 0)) {
@@ -135,7 +135,7 @@ class Profile extends React.Component {
             hasError = true;
         } 
         if (this.state.userInfo.satliterature != null && (this.state.userInfo.satliterature > 800 || this.state.userInfo.satliterature < 0)) {
-            errorString += "Your SAT Literature value is invalid. \n"
+            errorString += "Your SAT Literature value is invalid. \n";
             hasError = true;
         }
         if (this.state.userInfo.satushistory != null && (this.state.userInfo.satushistory > 800 || this.state.userInfo.satushistory < 0)) {
@@ -143,7 +143,7 @@ class Profile extends React.Component {
             hasError = true;
         } 
         if (this.state.userInfo.satworldhistory != null && (this.state.userInfo.satworldhistory > 800 || this.state.userInfo.satmath < 0)) {
-            errorString += "Your SAT World History value is invalid. \n"
+            errorString += "Your SAT World History value is invalid. \n";
             hasError = true;
         }
         if (this.state.userInfo.satmath1 != null && (this.state.userInfo.satmath1 > 800 || this.state.userInfo.satmath1 < 0)) {
@@ -151,7 +151,7 @@ class Profile extends React.Component {
             hasError = true;
         } 
         if (this.state.userInfo.satmath2 != null && (this.state.userInfo.satmath2 > 800 || this.state.userInfo.satmath2 < 0)) {
-            errorString += "Your SAT Math II value is invalid. \n"
+            errorString += "Your SAT Math II value is invalid. \n";
             hasError = true;
         }
         if (this.state.userInfo.satecobio != null && (this.state.userInfo.satecobio > 800 || this.state.userInfo.satecobio < 0)) {
@@ -159,23 +159,28 @@ class Profile extends React.Component {
             hasError = true;
         } 
         if (this.state.userInfo.satmolbio != null && (this.state.userInfo.satmolbio > 800 || this.state.userInfo.satmolbio < 0)) {
-            errorString += "Your SAT Molecular Biology value is invalid. \n"
+            errorString += "Your SAT Molecular Biology value is invalid. \n";
             hasError = true;
         }
         if (this.state.userInfo.satchem != null && (this.state.userInfo.satchem > 800 || this.state.userInfo.satchem < 0)) {
-            errorString += "Your SAT Chemistry value is invalid. \n"
+            errorString += "Your SAT Chemistry value is invalid. \n";
             hasError = true;
         }
         if (this.state.userInfo.satphysics != null && (this.state.userInfo.satphysics > 800 || this.state.userInfo.satphysics < 0)) {
-            errorString += "Your SAT Physics value is invalid. \n"
+            errorString += "Your SAT Physics value is invalid. \n";
             hasError = true;
         }
         if (this.state.userInfo.numpassedaps != null && (this.state.userInfo.numpassedaps > 20 || this.state.userInfo.numpassedaps < 0)) {
-            errorString += "Your 'Number of APs' value is invalid.\n"
+            errorString += "Your 'Number of APs' value is invalid.\n";
             hasError = true;
         }
         if (this.state.userInfo.collegeclass != null && (parseInt(this.state.userInfo.collegeclass) > 2030 || parseInt(this.state.userInfo.collegeclass) < 2016)) {
-            errorString += "Your College Class value is invalid.\n"
+            errorString += "Your College Class value is invalid.\n";
+            hasError = true;
+        }
+
+        if ((this.state.userInfo.highschoolname === "" || this.state.userInfo.highschoolname === null) && (this.state.userInfo.gpa != null)) {
+            errorString += "Cannot have gpa with no highschool.\n";
             hasError = true;
         }
 

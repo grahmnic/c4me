@@ -722,7 +722,7 @@ class Collegesearch extends React.Component {
                                         min: 1,
                                         max: 100,
                                         mode: 2,
-                                        step: 5,
+                                        step: 1,
                                         ticks: 10
                                     }}/>
                                 </div>
@@ -738,7 +738,7 @@ class Collegesearch extends React.Component {
                                         min: 100,
                                         max: 800,
                                         mode: 2,
-                                        step: 25,
+                                        step: 1,
                                         ticks: 5
                                     }}/>
                                 </div>
@@ -754,7 +754,7 @@ class Collegesearch extends React.Component {
                                         min: 100,
                                         max: 800,
                                         mode: 2,
-                                        step: 25,
+                                        step: 1,
                                         ticks: 5
                                     }}/>
                                 </div>
@@ -783,7 +783,7 @@ class Collegesearch extends React.Component {
                                         min: 100,
                                         max: 80000,
                                         mode: 2,
-                                        step: 1000,
+                                        step: 1,
                                         ticks: 10
                                     }}/>
                                 </div>
