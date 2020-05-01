@@ -27,7 +27,6 @@ class AppModal extends React.Component {
                 <div className="appmodal-background">
                 </div>
                 <div className="appmodal-wrapper">
-                
                     <div className="appmodal-panel">
                         <div className="appmodal-title">
                             {this.props.ops.title}

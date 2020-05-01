@@ -128,7 +128,9 @@ class ManageApplications extends React.Component {
 
     closeModal() {
         this.setState({
-            showModal: false
+            showModal: false,
+            newAppDataSchool: null,
+            newAppDataStatus: null,
         });
     }
 
