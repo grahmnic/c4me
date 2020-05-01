@@ -269,8 +269,6 @@ class Collegesearch extends React.Component {
             title: "INITIATING SEARCH",
             content: "Fetching results for your search."
         });
-        console.log(this.stateRef.getInstance());
-        console.log(this.locationInput.current.getValue());
         const requestOptions = {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
@@ -297,35 +295,25 @@ class Collegesearch extends React.Component {
                 highactcomposite: this.state.toggleActRange ? this.state.actRange[1] : null
             })
         };
-        console.log(requestOptions.body)
         fetch('https://chads4us.herokuapp.com/searchcolleges', requestOptions)
             .then(response => {
-                if (response.ok) {
-                    return response.json();
+                if (response.status == 200) {
+                    response.json().then((data) => {
+                        console.log(data)
+                        this.handleRef();
+                        this.setState({
+                            collegeData: data,
+                            page: 1,
+                            toggleScoreSort: false,
+                            isLoading: false
+                        });
+                    });
                 } else {
                     this.props.createPopup({
                         title: "SEARCH ERROR",
                         content: "Error: " + response.error
                     })
                 }
-            }).then(data => {
-                console.log(data)
-                this.handleRef();
-                this.setState({
-                    collegeData: data,
-                    page: 1,
-                    toggleScoreSort: false,
-                    isLoading: false
-                });
-            }).catch(error => {
-                this.props.createPopup({
-                    title: "SEARCH ERROR",
-                    content: "Error: " + error
-                })
-                this.setState({
-                    error: error,
-                    loading: false
-                });
             });
     }
 

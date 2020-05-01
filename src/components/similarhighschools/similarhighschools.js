@@ -8,8 +8,13 @@ class SHS extends React.Component {
         
         this.state = {
             highschoolname: "",
-            highschools: []
+            highschools: [],
+            highschoolOptions: []
         }
+    }
+
+    componentDidMount() {
+        this.fetchHS();
     }
 
     setNameRef = (ref) => {
@@ -23,23 +28,36 @@ class SHS extends React.Component {
     }
 
     fetchHS = () => {
-        alert(this.highschoolname.getInstance().getValue());
+        const requestOptions = {
+            method: 'GET',
+            headers: {'Content-Type': 'application/json'}
+        };
+        fetch('https://chads4us.herokuapp.com/getallhs', requestOptions)
+            .then(response => {
+                if (response.status == 200) {
+                    response.json().then((data) => {
+                        this.setState({
+                            highschoolOptions: data
+                        });
+                    });
+                } else {
+                    this.props.createPopup({
+                        title: "HIGHSCHOOL OPS ERROR",
+                        content: "Error in fetching highschool names"
+                    });
+                }
+            });
     }
 
     render() {
-        const highschools = [
-            "Bronx Science",
-            "Stuyveyson",
-            "Bayside Highschool",
-            "Deez Nuts"
-        ];
 
+        console.log(this.state.highschoolOptions);
         return(
             <div className="hsPanel">
                 <div className="hsInnerPanel">
                     <div className="hsSearch">
                         <div className="hsInputWrapper">
-                            <DataList ref={this.setNameRef} options={highschools} placeholder="Enter a highschool" fontSize="1.75rem" padding="10px 15px" />
+                            <DataList ref={this.setNameRef} options={this.state.highschoolOptions} placeholder="Enter a highschool" fontSize="1.75rem" padding="10px 15px" />
                         </div>
                     </div>
                 </div>
