@@ -1,6 +1,7 @@
 import React from 'react';
 import DataList from '../select/datalist.js';
 import './similarhighschools.scss';
+import Scrollbars from 'react-custom-scrollbars';
 
 class SHS extends React.Component {
     constructor(props) {
@@ -27,6 +28,35 @@ class SHS extends React.Component {
         });
     }
 
+    searchHS = () => {
+        this.props.createPopup({
+            title: "FINDING SIMILAR HS",
+            content: "Calculating similarity scores for highschools."
+        });
+        const requestOptions = {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                highschool: this.highschoolname.getInstance().getValue() ? this.highschoolname.getInstance().getValue().trim() : null
+            })
+        };
+        fetch('https://chads4us.herokuapp.com/findsimilarhs', requestOptions)
+            .then(response => {
+                if (response.status == 200) {
+                    response.json().then((data) => {
+                        this.setState({
+                            highschools: data
+                        });
+                    });
+                } else {
+                    this.props.createPopup({
+                        title: "HIGHSCHOOL SEARCH ERROR",
+                        content: "Error in searching for highschools."
+                    });
+                }
+            });
+    }
+
     fetchHS = () => {
         const requestOptions = {
             method: 'GET',
@@ -50,12 +80,20 @@ class SHS extends React.Component {
     }
 
     render() {
+        const highschools = this.state.highschools.map((e, index) => 
+            <div key={index} className="highschool" style={{animationDelay: (index * 0.05).toString() + "s"}}>{e.hsname}</div>
+        );
+
         return(
             <div className="hsPanel">
                 <div className="hsInnerPanel">
                     <div className="hsSearch">
                         <div className="hsInputWrapper">
-                            <DataList ref={this.setNameRef} options={this.state.highschoolOptions} placeholder="Enter a highschool" fontSize="1.75rem" padding="10px 15px" />
+                            <DataList autofill={true} ref={this.setNameRef} options={this.state.highschoolOptions} placeholder="Enter a highschool" fontSize="1.75rem" padding="10px 15px" />
+                            <button className="hsBtn" onClick={this.searchHS}>SEARCH</button>
+                        </div>
+                        <div className={`highschools ${this.state.highschools.length ? "hsDisplay" : null}`}>
+                            {highschools}
                         </div>
                     </div>
                 </div>

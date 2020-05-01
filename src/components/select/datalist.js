@@ -20,9 +20,17 @@ class DataList extends React.Component {
     }
 
     handleClickOutside = (e) => {
-        this.setState({
-            toggleDisplayedValues: false
-        })
+        if(this.props.autofill) {
+            this.setState({
+                value: this.state.value ? this.state.displayedValues[0] || null : null,
+                toggleDisplayedValues: false
+            });
+        } else {
+            this.setState({
+                toggleDisplayedValues: false
+            });
+        }
+
     }
 
     filterValues = (e) => {
