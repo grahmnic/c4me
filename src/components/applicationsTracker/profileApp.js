@@ -39,6 +39,7 @@ class ProfileApp extends React.Component {
                 <div className={`pfInfo ${this.state.expanded ? "pfInfoE" : null}`} style={{backgroundColor: getColor(this.props.data.status)}}>
                     <div className="pfInfoField">
                         <div className="pfLabel pfUser">{this.props.data.username}</div>
+                        <div className="pfLabel" style={{float: "right"}}>{this.props.data.status}</div>
                     </div>
                     <div className="pfInfoField"><div className="pfLabel">RESIDENCE STATE: </div><div className="pfField">{this.props.data.residencestate ? this.props.data.residencestate : "n/a"}</div></div>
                     <div className="pfInfoField">

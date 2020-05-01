@@ -19,6 +19,7 @@ import Home from './components/home/home.js';
 import Profile from './components/profile/profile.js';
 import Collegesearch from './components/collegesearch/collegesearch.js';
 import ApplicationsTracker from './components/applicationsTracker/applicationsTracker.js';
+import SHS from './components/similarhighschools/similarhighschools.js';
 import Modal from './components/modal/modal.js';
 import Review from './components/reviewquestionabledecisions/review.js';
 
@@ -371,10 +372,13 @@ class App extends React.Component {
                           <i className="fas fa-university"></i><span>Home</span>
                         </NavLink> */}
                         <NavLink to="/collegesearch" exact={true} activeClassName='activeRoute' className={`menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`}>
-                          <i className="fas fa-chalkboard"></i><span>College Search</span>
+                          <i class="fas fa-graduation-cap"></i><span>College Search</span>
+                        </NavLink>
+                        <NavLink to="/similarhighschools" exact={true} activeClassName='activeRoute' className={`menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`}>
+                        <i class="fas fa-school"></i><span>Similar Highschools</span>
                         </NavLink>
                         <NavLink to="/applicationstracker" exact={true} activeClassName='activeRoute' className={`menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`}>
-                          <i class="fas fa-address-card"></i><span>Applications Tracker</span>
+                        <i class="fas fa-th"></i><span>Applications Tracker</span>
                         </NavLink>
                         <div onClick={this.handleSignout} className={`menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`}>
                           <i className="fas fa-sign-out-alt"></i><span>Sign Out</span>
@@ -404,6 +408,9 @@ class App extends React.Component {
                       </Route>
                       <Route path="/applicationstracker">
                         <ApplicationsTracker createPopup={this.createPopup} />
+                      </Route>
+                      <Route path="/similarhighschools">
+                        <SHS createPopup={this.createPopup} />
                       </Route>
                     </Switch>
                   </div>
