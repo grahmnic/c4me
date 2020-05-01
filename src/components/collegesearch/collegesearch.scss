@@ -59,11 +59,12 @@
 
 .location {
     display: flex;
+    align-items: center;
     width: 100%;
 }
 
 .locationWrapper {
-    flex: 10 !important;
+    flex: 8 !important;
 }
 
 .location div {
@@ -120,12 +121,54 @@
     pointer-events: none;
 }
 
+.disabledLocationInput {
+    filter: brightness(0.2);
+    pointer-events: none;
+}
+
 .disabledRangeInput + .toggleRange {
     color: rgb(138, 138, 138);
 }
 
 .disabledRangeInput + .toggleRange i {
     border-color: rgb(138, 138, 138);
+}
+
+.disabledLocationInput + .toggleLocation i {
+    border-color: rgb(138, 138, 138);
+}
+
+.disabledLocationInput + .toggleLocation {
+    color: rgb(138, 138, 138);
+}
+
+.toggleLocation {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fbff1e;
+    position: relative;
+}
+
+.toggleLocation i {
+    border-radius: 2px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: 1px solid #fbff1e;
+    cursor: pointer;
+    transition: background-color 0.25s;
+    padding: 6px;
+    font-size: 0.75rem;
+}
+
+.toggleLocation i:hover {
+    background-color: rgba(172, 172, 172, 0.25);
+}
+
+.toggleLocation i:active {
+    filter: brightness(0.6);
 }
 
 .rangeInput {

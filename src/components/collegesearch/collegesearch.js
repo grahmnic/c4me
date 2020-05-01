@@ -42,7 +42,7 @@ class Collegesearch extends React.Component {
             toggleRankingRange: false,
             togglePopRange: false,
             toggleScoreSort: false,
-
+            toggleLocation: true,
             readyModal: false,
             showModal: false,
             modalOps: null,
@@ -55,13 +55,16 @@ class Collegesearch extends React.Component {
         this.prevPage = this.prevPage.bind(this);
 
         this.locationInput = React.createRef();
-        this.stateInput = React.createRef();
         this.sortInput = React.createRef();
         this.handleLocationInput = this.handleLocationInput.bind(this);
         this.handleAdmissionRange = this.handleAdmissionRange.bind(this);
         this.handleMoreInfo = this.handleMoreInfo.bind(this);
 
         this.closeModal = this.closeModal.bind(this);
+    }
+
+    setStateRef = (ref) => {
+        this.stateRef = ref;
     }
 
     handleCollegeName = (e) => {
@@ -74,6 +77,10 @@ class Collegesearch extends React.Component {
         this.setState({
             major1: e.target.value
         });
+    }
+
+    handleToggleLocation = () => {
+        this.setState({ toggleLocation: !this.state.toggleLocation})
     }
 
     handleMajor2 = (e) => {
@@ -262,6 +269,8 @@ class Collegesearch extends React.Component {
             title: "INITIATING SEARCH",
             content: "Fetching results for your search."
         });
+        console.log(this.stateRef.getInstance());
+        console.log(this.locationInput.current.getValue());
         const requestOptions = {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
@@ -273,7 +282,7 @@ class Collegesearch extends React.Component {
                 highadmissionrate: this.state.toggleAdmissionsRange ? this.state.admissionsRange[1] : null,
                 costofattendance: this.state.toggleCostRange ? this.state.costRange[1] : null,
                 isRegion: this.state.toggleLocation,
-                location: this.state.toggleLocation ? this.locationInput.current.value : this.stateInput.current.value,
+                location: this.state.toggleLocation ? (this.locationInput.current.getValue() || null) : this.stateRef.getInstance().getValues(),
                 major1: this.state.major1,
                 major2: this.state.major2,
                 lowranking: this.state.toggleRankingRange ? this.state.rankingRange[0] : null,
@@ -660,18 +669,19 @@ class Collegesearch extends React.Component {
                                     <input className="nameInput" type="text" value={this.state.collegename} onChange={this.handleCollegeName} placeholder="Name"/>
                             </div>
                             <div className="location">
-                                <div className="locationWrapper">
+                                <div className={`locationWrapper ${this.state.toggleLocation ? null : "disabledLocationInput"}`}>
                                     <div className="headingSB">Region</div>
                                     <Select ref={this.locationInput} options={regions} />
                                 </div>
-                                <div></div>
+                                <div className="toggleLocation"><i className="fas fa-check" onClick={this.handleToggleLocation}></i></div>
                             </div>
 
                             <div className="location">
-                                <div className="locationWrapper">
+                                <div className={`locationWrapper ${!this.state.toggleLocation ? null : "disabledLocationInput"}`}>
                                     <div className="headingSB">States</div>
-                                    <MultiSelect ref={this.stateInput} options={stateOptions} />
+                                    <MultiSelect ref={this.setStateRef} options={stateOptions} />
                                 </div>
+                                <div className="toggleLocation"><i className="fas fa-check" onClick={this.handleToggleLocation}></i></div>
                             </div>
 
                             <div className={`range ${this.state.toggleCostRange ? "" : "disabledRange"}`}>
