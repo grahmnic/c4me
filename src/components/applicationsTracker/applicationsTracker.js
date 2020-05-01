@@ -102,6 +102,9 @@ class ApplicationsTracker extends React.Component {
                 appstatuses: this.applicationInput.current.value
             })
         };
+
+        // console.log(this.state);
+        console.log(this.highSchoolInput.current.value);
         fetch('https://chads4us.herokuapp.com/apptracker', requestOptions)
             .then(response => {
                 if (response.ok) {
@@ -222,7 +225,7 @@ class ApplicationsTracker extends React.Component {
         let counter = 0;
         let counter2 = 0;
 
-            for(var i = 0; i < this.state.profiles.length; i++) {
+            for(i = 0; i < this.state.profiles.length; i++) {
                 if(this.state.profiles[i].gpa && this.state.profiles[i].satmath && this.state.profiles[i].gpa >= 0 && this.state.profiles[i].satmath >= 0) {
                     let xField = 0;
                     let index = 0;
