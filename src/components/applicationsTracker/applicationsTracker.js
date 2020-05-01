@@ -25,14 +25,19 @@ class ApplicationsTracker extends React.Component {
             xField: "SAT (MATH+EBRW)"
         }
 
-        this.highSchoolInput = React.createRef();
-        this.applicationInput = React.createRef();
         this.scatterplotInput = React.createRef();
+    }
+
+    getApps = (ref) => {
+        this.applicationRef = ref;
+    }
+
+    getHighschools = (ref) => {
+        this.highSchoolRef = ref;
     }
 
     componentDidMount() {
         this.fetchHS();
-        this.fetchProfiles();
     }
 
     handleScatterplot = (val) => {
@@ -98,8 +103,8 @@ class ApplicationsTracker extends React.Component {
                 collegename: this.state.collegename,
                 lowcollegeclass: this.state.toggleCollegeRange ? this.state.collegeRange[0] : null,
                 highcollegeclass: this.state.toggleCollegeRange ? this.state.collegeRange[1] : null,
-                highschools: this.highSchoolInput.current.value,
-                appstatuses: this.applicationInput.current.value
+                highschools: this.highSchoolRef.getInstance().getValues(),
+                appstatuses: this.applicationRef.getInstance().getValues()
             })
         };
 
@@ -421,7 +426,11 @@ class ApplicationsTracker extends React.Component {
                         <div className="graphVal">{meanXField}</div>
                         <div className="graphLabel">MEAN {this.state.xField}</div>
                     </div>
-                    <Select ref={this.scatterplotInput} options={scatterPlotOptions} changeCallback={this.handleScatterplot} />
+                    <div className="graphField">
+                        <Select ref={this.scatterplotInput} options={scatterPlotOptions} changeCallback={this.handleScatterplot} />
+                        <div className="graphLabel">X-AXIS</div>
+                    </div>
+                    
                 </div>
             </div>
 
@@ -474,9 +483,9 @@ class ApplicationsTracker extends React.Component {
                                 <div className="toggleRange"><i className="fas fa-check" onClick={this.toggleCollegeRange}></i></div>
                             </div>
                             <div className="atH1">High Schools</div>
-                            <MultiSelect ref={this.highSchoolInput} options={this.state.highSchoolOptions} />
+                            <MultiSelect ref={this.getHighschools} options={this.state.highSchoolOptions} />
                             <div className="atH1">Application Status</div>
-                            <MultiSelect ref={this.applicationInput} options={applicationOptions} />
+                            <MultiSelect ref={this.getApps} options={applicationOptions} />
                             <div className="atBtns">
                                     <button className="atBtn" onClick={this.fetchProfiles}>
                                         Search
@@ -490,6 +499,7 @@ class ApplicationsTracker extends React.Component {
                                         </div>
                                     </div>
                             </div>
+
                         </div>
                         <Scrollbars renderThumbVertical={this.renderThumb} renderThumbHorizontal={this.renderThumb} className="atGrid">
                             {profileList}

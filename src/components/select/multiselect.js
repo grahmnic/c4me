@@ -58,7 +58,7 @@ class MultiSelect extends React.Component {
         }
     }
 
-    getValues() {
+    getValues = () => {
         return this.state.selectedValues;
     }
 
