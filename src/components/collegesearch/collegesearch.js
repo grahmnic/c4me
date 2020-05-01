@@ -26,7 +26,6 @@ class Collegesearch extends React.Component {
             sateRange: [400, 600],
             actRange: [26, 32],
             costRange: [16000,48000],
-            outCostRange: [16000,48000],
             rankingRange: [50, 250],
             popRange: [6000, 14000],
             strict: false,
@@ -43,7 +42,6 @@ class Collegesearch extends React.Component {
             toggleRankingRange: false,
             togglePopRange: false,
             toggleScoreSort: false,
-            toggleOutCostRange: false,
 
             readyModal: false,
             showModal: false,
@@ -116,18 +114,6 @@ class Collegesearch extends React.Component {
     toggleCostRange = ()  => {
         this.setState({
             toggleCostRange: !this.state.toggleCostRange
-        })
-    }
-
-    handleOutCostRange = (update) => {
-        this.setState({
-            outCostRange: update
-        });
-    }
-
-    toggleOutCostRange = () => {
-        this.setState({
-            toggleOutCostRange: !this.state.toggleOutCostRange
         })
     }
     
@@ -286,7 +272,8 @@ class Collegesearch extends React.Component {
                 lowadmissionrate: this.state.toggleAdmissionsRange ? this.state.admissionsRange[0] : null,
                 highadmissionrate: this.state.toggleAdmissionsRange ? this.state.admissionsRange[1] : null,
                 costofattendance: this.state.toggleCostRange ? this.state.costRange[1] : null,
-                region: this.locationInput.current.getValue(),
+                isRegion: this.state.toggleLocation,
+                location: this.state.toggleLocation ? this.locationInput.current.value : this.stateInput.current.value,
                 major1: this.state.major1,
                 major2: this.state.major2,
                 lowranking: this.state.toggleRankingRange ? this.state.rankingRange[0] : null,
@@ -677,9 +664,10 @@ class Collegesearch extends React.Component {
                                     <div className="headingSB">Region</div>
                                     <Select ref={this.locationInput} options={regions} />
                                 </div>
+                                <div></div>
                             </div>
 
-                            <div className="location">                    
+                            <div className="location">
                                 <div className="locationWrapper">
                                     <div className="headingSB">States</div>
                                     <MultiSelect ref={this.stateInput} options={stateOptions} />
@@ -699,20 +687,6 @@ class Collegesearch extends React.Component {
                                     }}/>
                                 </div>
                                 <div className="toggleRange"><i className="fas fa-check" onClick={this.toggleCostRange}></i></div>
-                            </div>
-                            <div className={`range ${this.state.toggleOutCostRange ? "" : "disabledRange"}`}>
-                                <div className={`rangeInput ${this.state.toggleOutCostRange ? "" : "disabledRangeInput"}`}>
-                                    <div className="headingSB">COST <span className="rates">{this.state.outCostRange[0]}$ - {this.state.outCostRange[1]}$</span></div>
-                                    <RangeSlider onUpdate={this.handleOutCostRange} ops={{
-                                        defaultValues: [0,48000],
-                                        min: 0,
-                                        max: 100000,
-                                        mode: 2,
-                                        step: 1000,
-                                        ticks: 5
-                                    }}/>
-                                </div>
-                                <div className="toggleRange"><i className="fas fa-check" onClick={this.toggleOutCostRange}></i></div>
                             </div>
 
                             <div className={`range ${this.state.toggleRankingRange ? "" : "disabledRange"}`}>

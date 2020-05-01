@@ -6,7 +6,7 @@
     background: rgb(68, 68, 68);
     min-width: 15rem;
     border-radius: 10px;
-    flex-basis: 20%;
+    flex-basis: 19.2%;
     opacity: 0;
     animation: 0.75s fadeIn;
     animation-fill-mode: forwards;
@@ -123,7 +123,7 @@
 }
 
 .pfField32::after {
-    content: "/32";
+    content: "/36";
     font-size: 0.75rem;
     color: rgb(139, 139, 139);
 }

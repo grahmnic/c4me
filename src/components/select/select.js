@@ -37,7 +37,7 @@ class Select extends React.Component {
         }
     }
 
-    getValue() {
+    getValue = () => {
         return this.state.selectedValue;
     }
 
