@@ -74,7 +74,7 @@ class MultiSelect extends React.Component {
             selected = this.state.selectedKeys.map((e) => 
                 <div className="selectedKey" key={e}>
                     {e}
-                <i class="fas fa-times" onClick={() => this.removeValue(e, this.state.options.filter(obj => {
+                <i className="fas fa-times" onClick={() => this.removeValue(e, this.state.options.filter(obj => {
                     return obj.key === e
                 })[0].value)}></i>
                 </div>

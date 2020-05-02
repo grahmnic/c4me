@@ -5,7 +5,6 @@ import LoginLogoBot from '../../assets/images/book.png';
 import HandLogo from '../../assets/images/women_hand.png';
 import AbstractLogo from '../../assets/images/abstrakt-design-03.png';
 import { Redirect } from 'react-router-dom';
-import Parallax from 'parallax-js';
 
 class Login extends React.Component {
     constructor(props) {
@@ -277,7 +276,7 @@ class Login extends React.Component {
                     <div className={`login-panel  ${hideLeft}`}>
                         <div className="login-banner">
                             <div className="login-logo">
-                                <img src={AbstractLogo} />
+                                <img alt="logo" src={AbstractLogo} />
                                 <div className="login-title">C4ME</div>
                             </div>
                             <div className="login-banner-info">

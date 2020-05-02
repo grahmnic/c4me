@@ -5,13 +5,9 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link,
   NavLink,
   Redirect
 } from "react-router-dom";
-
-// ASSETS
-import avatarImage from './assets/images/ralph.jpg';
 
 // COMPONENTS
 import Login from './components/login/login.js';
@@ -312,7 +308,7 @@ class App extends React.Component {
 
       if(localStorage.getItem("isAdmin") === "true") {
         adminPanel= [
-          <NavLink to="/review-questionable-decisions" exact={true} activeClassName='activeRoute' className={`admin-btn menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`} key="p1"><i class="fas fa-question"></i><span>Review QD</span></NavLink>,
+          <NavLink to="/review-questionable-decisions" exact={true} activeClassName='activeRoute' className={`admin-btn menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`} key="p1"><i className="fas fa-question"></i><span>Review QD</span></NavLink>,
           <div key="1a" onClick={() => this.showModal({
             title: "Confirm Admin Action",
             content: "Are you sure you want to scrape the college rankings?"
@@ -372,13 +368,13 @@ class App extends React.Component {
                           <i className="fas fa-university"></i><span>Home</span>
                         </NavLink> */}
                         <NavLink to="/collegesearch" exact={true} activeClassName='activeRoute' className={`menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`}>
-                          <i class="fas fa-graduation-cap"></i><span>College Search</span>
+                          <i className="fas fa-graduation-cap"></i><span>College Search</span>
                         </NavLink>
                         <NavLink to="/similarhighschools" exact={true} activeClassName='activeRoute' className={`menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`}>
-                        <i class="fas fa-school"></i><span>Similar Highschools</span>
+                        <i className="fas fa-school"></i><span>Similar Highschools</span>
                         </NavLink>
                         <NavLink to="/applicationstracker" exact={true} activeClassName='activeRoute' className={`menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`}>
-                        <i class="fas fa-th"></i><span>Applications Tracker</span>
+                        <i className="fas fa-th"></i><span>Applications Tracker</span>
                         </NavLink>
                         <div onClick={this.handleSignout} className={`menu-btn ${this.state.showMenu ? 'menu-btn-active' : ''}`}>
                           <i className="fas fa-sign-out-alt"></i><span>Sign Out</span>

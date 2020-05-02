@@ -5,11 +5,8 @@ import '../collegeModal/collegeModal.css';
 import Select from '../select/select.js';
 import MultiSelect from '../select/multiselect.js';
 
-import {Slider, Handles, Tracks} from 'react-compound-slider';
 import {Scrollbars} from 'react-custom-scrollbars';
 import RangeSlider from '../slider/slider';
-import { thisTypeAnnotation } from '@babel/types';
-import { white } from 'color-name';
 
 class Collegesearch extends React.Component {
 
@@ -297,7 +294,7 @@ class Collegesearch extends React.Component {
         };
         fetch('https://chads4us.herokuapp.com/searchcolleges', requestOptions)
             .then(response => {
-                if (response.status == 200) {
+                if (response.status === 200) {
                     response.json().then((data) => {
                         console.log(data)
                         this.handleRef();

@@ -1,6 +1,5 @@
 import React from 'react';
 import './review.scss';
-import profileImage from '../../assets/images/ralph.jpg';
 
 class Review extends React.Component {
     constructor(props) {
@@ -22,7 +21,7 @@ class Review extends React.Component {
         };
         fetch('https://chads4us.herokuapp.com/reviewdecisions', requestOptions)
         .then(data => {
-            if(data.status != 200) {
+            if(data.status !== 200) {
                 data.json().then(res => {
                     this.props.createPopup({
                         title: "APPLICATIONS ERROR",
@@ -46,7 +45,7 @@ class Review extends React.Component {
         };
         fetch('https://chads4us.herokuapp.com/profile/' + username, requestOptions)
         .then(data => {
-            if(data.status != 200) {
+            if(data.status !== 200) {
                 data.json().then(res => {
                     this.props.createPopup({
                         title: "PROFILE FETCH",
@@ -74,7 +73,7 @@ class Review extends React.Component {
         };
         fetch('https://chads4us.herokuapp.com/validatedecision/', requestOptions)
         .then(data => {
-            if(data.status != 200) {
+            if(data.status !== 200) {
                 data.json().then(res => {
                     this.props.createPopup({
                         title: "VALIDATION ERROR",
@@ -97,7 +96,7 @@ class Review extends React.Component {
             <div style={{textDecoration: "underline", cursor: "pointer"}} onClick={() => this.fetchProfile(e.username)}>{e.username}</div>
             <div>{e.collegename}</div>
             <div>{e.status}</div>
-            <button onClick={() => this.validateDecision(e.collegename, e.username)}><i class="fas fa-check"></i></button>
+            <button onClick={() => this.validateDecision(e.collegename, e.username)}><i className="fas fa-check"></i></button>
         </div>
         );
 

@@ -5,6 +5,7 @@ import Select from '../select/select.js';
 import ProfileApp from './profileApp.js';
 import MultiSelect from '../select/multiselect.js';
 import { ResponsiveScatterPlot } from '@nivo/scatterplot';
+import DataList from '../select/datalist.js';
 
 //IMPORTED LIBRARIES
 import {Scrollbars} from 'react-custom-scrollbars';
@@ -14,7 +15,7 @@ class ApplicationsTracker extends React.Component {
         super(props);
         this.state = {
             strict: false,
-            collegename: "",
+            collegeOptions: [],
             toggleCollegeRange: false,
             collegeRange: [2014,2018],
             sorting: null,
@@ -28,6 +29,10 @@ class ApplicationsTracker extends React.Component {
         this.scatterplotInput = React.createRef();
     }
 
+    setNameRef = (ref) => {
+        this.collegename = ref;
+    }
+
     getApps = (ref) => {
         this.applicationRef = ref;
     }
@@ -38,6 +43,29 @@ class ApplicationsTracker extends React.Component {
 
     componentDidMount() {
         this.fetchHS();
+        this.fetchColleges();
+    }
+
+    fetchColleges = () => {
+        const requestOptions = {
+            method: 'GET',
+            headers: {'Content-Type': 'application/json'}
+        };
+        fetch('https://chads4us.herokuapp.com/getallcollegenames', requestOptions)
+            .then(response => {
+                if (response.status === 200) {
+                    response.json().then((data) => {
+                        this.setState({
+                            collegeOptions: data
+                        });
+                    });
+                } else {
+                    this.props.createPopup({
+                        title: "COLLEGE OPS ERROR",
+                        content: "Error in fetching college names."
+                    });
+                }
+            });
     }
 
     handleScatterplot = (val) => {
@@ -100,7 +128,7 @@ class ApplicationsTracker extends React.Component {
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
                 isStrict: this.state.strict,
-                collegename: this.state.collegename,
+                collegename: this.collegename.getInstance().getValue(),
                 lowcollegeclass: this.state.toggleCollegeRange ? this.state.collegeRange[0] : null,
                 highcollegeclass: this.state.toggleCollegeRange ? this.state.collegeRange[1] : null,
                 highschools: this.highSchoolRef.getInstance().getValues(),
@@ -109,7 +137,7 @@ class ApplicationsTracker extends React.Component {
         };
         fetch('https://chads4us.herokuapp.com/apptracker', requestOptions)
             .then(response => {
-                if (response.status == 200) {
+                if (response.status === 200) {
                     response.json().then((data) => {
                         const determineOrder = (x) => {
                             switch(x) {
@@ -179,14 +207,15 @@ class ApplicationsTracker extends React.Component {
         ];
 
         let profiles = [];
-        for(var i = 0; i < this.state.profiles.length; i++) {
+        for(var m = 0; m < this.state.profiles.length; m++) {
             profiles.push({
-                id: i,
-                value: this.state.profiles[i]
+                id: m,
+                value: this.state.profiles[m]
             });
         }
 
         let profileList = null;
+        let appInfo = null;
         if(this.state.scatterplot) {
             let data = [{
                 "id": "accepted",
@@ -431,22 +460,23 @@ class ApplicationsTracker extends React.Component {
                         ]}
                     />
                 </div>
-                <div className="graphInfo">
-                    <div className="graphField">
-                        <div className="graphVal">{meanGPA}</div>
-                        <div className="graphLabel">MEAN GPA</div>
-                    </div>
-                    <div className="graphField">
-                        <div className="graphVal">{meanXField}</div>
-                        <div className="graphLabel">MEAN {this.state.xField}</div>
-                    </div>
-                    <div className="graphField">
-                        <Select ref={this.scatterplotInput} options={scatterPlotOptions} changeCallback={this.handleScatterplot} />
-                        <div className="graphLabel">X-AXIS</div>
-                    </div>
-                    
+            </div>;
+
+            appInfo =                
+            <div className="graphInfo">
+                <div className="graphField">
+                    <div className="graphVal">{meanGPA}</div>
+                    <div className="graphLabel">MEAN GPA</div>
                 </div>
-            </div>
+                <div className="graphField">
+                    <div className="graphVal">{meanXField}</div>
+                    <div className="graphLabel">MEAN {this.state.xField}</div>
+                </div>
+                <div className="graphField">
+                    <Select ref={this.scatterplotInput} options={scatterPlotOptions} changeCallback={this.handleScatterplot} />
+                    <div className="graphLabel">X-AXIS</div>
+                </div>
+            </div>;
 
 
         } else {
@@ -454,6 +484,45 @@ class ApplicationsTracker extends React.Component {
                 <ProfileApp data={e.value} className="profileCard" key={e.id} style={{ animationDelay: (e.id * 0.05).toString() + "s"}}>
                 </ProfileApp>
             );
+
+            let meanGPA = 0;
+            let meanSATM = 0;
+            let meanSATE = 0;
+            let meanACT = 0;
+            let numGPA = 0;
+            let numSATM = 0;
+            let numSATE = 0;
+            let numACT = 0;
+            for(var index = 0; index < this.state.profiles.length; index++) {
+                meanGPA += this.state.profiles[index].gpa;  
+                meanSATM += this.state.profiles[index].satmath;
+                meanSATE += this.state.profiles[index].satebrw;
+                meanACT += this.state.profiles[index].actcomposite;
+                numGPA++;
+                numSATM++;
+                numSATE++;
+                numACT++;
+            }
+
+            appInfo = 
+            <div className="graphInfo">
+                <div className="graphField">
+                    <div className="graphVal">{(meanGPA/numGPA).toFixed(2)}</div>
+                    <div className="graphLabel">MEAN GPA</div>
+                </div>
+                <div className="graphField">
+                    <div className="graphVal">{(meanSATM/numSATM).toFixed(2)}</div>
+                    <div className="graphLabel">MEAN SAT MATH</div>
+                </div>
+                <div className="graphField">
+                    <div className="graphVal">{(meanSATE/numSATE).toFixed(2)}</div>
+                    <div className="graphLabel">MEAN SAT EBRW</div>
+                </div>
+                <div className="graphField">
+                    <div className="graphVal">{(meanACT/numACT).toFixed(2)}</div>
+                    <div className="graphLabel">MEAN ACT COMP.</div>
+                </div>
+            </div>
 
             if (!profileList.length) {
                 profileList = <div className="atEmpty">Sorry, there seems to be no matching searches. ;(</div>
@@ -478,8 +547,8 @@ class ApplicationsTracker extends React.Component {
                                 </div>
                             </div>
                             <div className="atH1">College Name</div>
-                            <div className="atFilterInput">
-                                <input className="nameInput" type="text" value={this.state.collegename} onChange={this.handleCollegeName} placeholder="College Name"/>
+                            <div className="atDataList">
+                                <DataList autofill={true} ref={this.setNameRef} options={this.state.collegeOptions} placeholder="Enter a college name" fontSize="1rem" padding="5px 10px"/>
                             </div>
                             <div className="atH1">College Class</div>
                             <div className={`atRange range ${this.state.toggleCollegeRange ? "" : "atdisabledRange"}`}>
@@ -513,7 +582,9 @@ class ApplicationsTracker extends React.Component {
                                         </div>
                                     </div>
                             </div>
-
+                            <div className="appInfo">
+                                {appInfo}
+                            </div>
                         </div>
                         <Scrollbars renderThumbVertical={this.renderThumb} renderThumbHorizontal={this.renderThumb} className="atGrid">
                             {profileList}
