@@ -276,7 +276,7 @@ class ApplicationsTracker extends React.Component {
         let counter = 0;
         let counter2 = 0;
 
-            for(i = 0; i < this.state.profiles.length; i++) {
+            for(var i = 0; i < this.state.profiles.length; i++) {
                 if(this.state.profiles[i].gpa && this.state.profiles[i].satmath && this.state.profiles[i].gpa >= 0 && this.state.profiles[i].satmath >= 0) {
                     let xField = 0;
                     let index = 0;
