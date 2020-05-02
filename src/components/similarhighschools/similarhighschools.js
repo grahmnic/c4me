@@ -80,7 +80,22 @@ class SHS extends React.Component {
 
     render() {
         const highschools = this.state.highschools.map((e, index) => 
-            <div key={index} className="highschool" style={{animationDelay: (index * 0.05).toString() + "s"}}>{e.hsname}</div>
+            <div key={index} className="highschool" style={{animationDelay: (index * 0.05).toString() + "s"}}>
+                
+                    {e.hsname}
+                <div className="highschoolInfo">
+                    
+                    <div>AVG GPA: {e.hsavggpa}</div>
+                    <div>Niche Grade: {e.hsnichegrade}</div>
+                    <div>AVG SAT: {e.hsavgsat}</div>
+                    <div>AVG ACT: {e.avgact}</div>
+                    <div>GRAD RATE: {e.gradrate}</div>
+                    <div>HS City: {e.hscity}</div>
+                    <div>Recommendation Score: {e.score}</div>
+
+                </div>
+                
+            </div>
         );
 
         return(
