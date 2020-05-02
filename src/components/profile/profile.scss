@@ -110,6 +110,7 @@
 .user-info > div > .datalist > .dlInput{
     caret-color: #222;
     color: #222;
+    width: 100% !important;
     &::placeholder {
         color: rgba(34, 34, 34, 0.4);
     }
