@@ -4,6 +4,7 @@ import { Redirect } from 'react-router-dom';
 import Progress from './progress/progress.js';
 import profileImage from '../../assets/images/ralph.jpg';
 import ManageApplications from '../manageApplications/manageApplications.js';
+import DataList from '../select/datalist.js';
 
 
 class Profile extends React.Component {
@@ -23,7 +24,8 @@ class Profile extends React.Component {
             editingStats: false,
             new_password: null,
             viewStats: true,
-            manageApps: false
+            manageApps: false,
+            highschoolOptions: []
         }
 
         this.handleCollegeClass = this.handleCollegeClass.bind(this);
@@ -73,11 +75,13 @@ class Profile extends React.Component {
     }
 
     componentDidMount() {
+        const requestOptions = {
+            method: 'GET',
+            headers: {'Content-Type': 'application/json'}
+        };
+
         if (localStorage.getItem("user")) {
-            const requestOptions = {
-                method: 'GET',
-                headers: {'Content-Type': 'application/json'}
-            };
+            
             fetch('https://chads4us.herokuapp.com/profile/' + localStorage.getItem("user"), requestOptions)
             .then(data => {
                 if(data.status !== 200) {
@@ -97,6 +101,26 @@ class Profile extends React.Component {
                 }
             });
         }
+
+        fetch('https://chads4us.herokuapp.com/getallhs/', requestOptions)
+            .then(response => {
+                if (response.status === 200) {
+                    response.json().then((data) => {
+                        this.setState({
+                            highschoolOptions: data
+                        });
+                    });
+                } else {
+                    this.props.createPopup({
+                        title: "High School Name Error",
+                        content: "Error in getting high school name."
+                    });
+                }
+            });
+    }
+
+    setHSNameRef = (ref) => {
+        this.highschoolname = ref;
     }
 
     checkInfo() {
@@ -367,7 +391,12 @@ class Profile extends React.Component {
                     </div>
                     <div>
                         <div>HIGHSCHOOL</div>
-                        <input value={this.state.userInfo.highschoolname} type="text" onChange={this.handleHighschoolName}/>
+                        {/* <input value={this.state.userInfo.highschoolname} type="text" onChange={this.handleHighschoolName}/> */}
+                        <DataList autofill={false} ref={this.setHSNameRef} options={this.state.highschoolOptions}
+                            placeholder="High School Name"
+                            fontSize="1rem"
+                            padding="2px"> 
+                        </DataList>
                     </div>
                     <div>
                         <div>H.S. LOCATION</div>
