@@ -192,7 +192,7 @@ class Collegesearch extends React.Component {
     //get college info from individual result and display modal
 
     handleMoreInfo(collegeinfo) {
-        console.log(collegeinfo);
+        // console.log(collegeinfo);
         this.setState({
             showModal: true,
             indivCollegeInfo: collegeinfo
@@ -252,7 +252,7 @@ class Collegesearch extends React.Component {
                         this.setState({
                             similarProfilesList: data
                         });
-                        console.log(this.state.similarProfilesList);
+                        // console.log(this.state.similarProfilesList);
                     });
                 } else {
                     this.props.createPopup({
@@ -295,7 +295,7 @@ class Collegesearch extends React.Component {
                         collegeData: collegeList,
                         toggleScoreSort: true
                     });
-                    console.log(this.state.collegeData);
+                    // console.log(this.state.collegeData);
                 })
             }
         });
@@ -336,7 +336,7 @@ class Collegesearch extends React.Component {
             .then(response => {
                 if (response.status === 200) {
                     response.json().then((data) => {
-                        console.log(data)
+                        // console.log(data)
                         this.handleRef();
                         this.setState({
                             collegeData: data,
@@ -585,7 +585,7 @@ class Collegesearch extends React.Component {
                 });
             }
 
-            console.log(majorsList);
+            // console.log(majorsList);
 
             let majors = majorsList.map((e) => 
                 <div key={e.id}>
@@ -600,7 +600,7 @@ class Collegesearch extends React.Component {
                 gpa = this.state.indivCollegeInfo.gpa;
             }
 
-            console.log(majors);
+            // console.log(majors);
 
             let profilesList = [];
             for (i = 0; i < this.state.similarProfilesList.length; i++) {
