@@ -61,6 +61,8 @@
     box-sizing: border-box;
     background: #292929;
     padding-bottom: 20px;
+    overflow-y: scroll;
+    max-height: 100%;
 }
 
 .atFilterInput {
@@ -268,3 +270,24 @@
     font-weight: 300;
     text-transform: uppercase;
 }
+
+
+/* width */
+::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f12d; 
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #DDDDDD; 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }

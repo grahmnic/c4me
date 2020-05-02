@@ -109,39 +109,37 @@ class ApplicationsTracker extends React.Component {
         };
         fetch('https://chads4us.herokuapp.com/apptracker', requestOptions)
             .then(response => {
-                if (response.ok) {
-                    return response.json();
+                if (response == 200) {
+                    response.json().then((data) => {
+                        const determineOrder = (x) => {
+                            switch(x) {
+                                case "accepted":
+                                    return 0;
+                                case "denied":
+                                    return 1;
+                                case "pending":
+                                    return 5;
+                                case "deferred":
+                                    return 2;
+                                case "withdrawn":
+                                    return 4;
+                                case "wait-listed":
+                                    return 3;
+                                default:
+                                    return null;
+                            }
+                        }
+                        data.sort((a,b) => determineOrder(a.status) > determineOrder(b.status));
+                        this.setState({
+                            profiles: data
+                        });
+                    });
                 } else {
-                    throw new Error('Error in fetching data');
+                    this.props.createPopup({
+                        title: "APPLICATION TRACKER ERROR",
+                        content: "Error in searching for applications."
+                    });
                 }
-            }).then(data => {
-                const determineOrder = (x) => {
-                    switch(x) {
-                        case "accepted":
-                            return 0;
-                        case "denied":
-                            return 1;
-                        case "pending":
-                            return 5;
-                        case "deferred":
-                            return 2;
-                        case "withdrawn":
-                            return 4;
-                        case "wait-listed":
-                            return 3;
-                        default:
-                            return null;
-                    }
-                }
-                data.sort((a,b) => determineOrder(a.status) > determineOrder(b.status));
-                this.setState({
-                    profiles: data
-                });
-            }).catch(error => {
-                this.props.createPopup({
-                    title: "APPLICATION TRACKER ERROR",
-                    content: "Error: " + error
-                });
             });
     }
 

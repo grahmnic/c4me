@@ -21,8 +21,11 @@ class DataList extends React.Component {
 
     handleClickOutside = (e) => {
         if(this.props.autofill) {
+            let val = this.state.value;
+            val = this.state.value || "";
+            val = this.state.displayedValues.indexOf(val) !== -1 ? val : this.state.displayedValues[0];
             this.setState({
-                value: this.state.value ? this.state.displayedValues[0] || null : null,
+                value: val,
                 toggleDisplayedValues: false
             });
         } else {
@@ -65,11 +68,10 @@ class DataList extends React.Component {
         const displayedValues = this.state.displayedValues.map((e) => 
             <div className="dlOp" onClick={this.selectValue} style={{fontSize: `calc(${this.props.fontSize}/1.5)`, padding: this.props.padding}} key={e}>{e}</div>
         );
-
         return(
             <div className="datalist">
                 <input onChange={this.filterValues} onFocus={this.onFocus} style={{fontSize: this.props.fontSize, padding: this.props.padding}} className="dlInput" type="text" value={this.state.value || ""} placeholder={this.props.placeholder}/>
-                <div className="dlOptions">
+                <div className="dlOptions" >
                     {!this.state.toggleDisplayedValues || displayedValues}
                 </div>
             </div>            
