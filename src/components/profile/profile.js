@@ -626,7 +626,7 @@ class Profile extends React.Component {
                                 </div>
                                 <div className="info-img">
                                     <div className="profile-image-wrapper">
-                                        <img className="profile-image" alt="profile-image" src={profileImage}/>
+                                        <img className="profile-image" alt="profile" src={profileImage}/>
                                     </div>
                                     
                                 </div>

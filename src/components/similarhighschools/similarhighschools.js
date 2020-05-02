@@ -1,7 +1,6 @@
 import React from 'react';
 import DataList from '../select/datalist.js';
 import './similarhighschools.scss';
-import Scrollbars from 'react-custom-scrollbars';
 
 class SHS extends React.Component {
     constructor(props) {
@@ -42,7 +41,7 @@ class SHS extends React.Component {
         };
         fetch('https://chads4us.herokuapp.com/findsimilarhs', requestOptions)
             .then(response => {
-                if (response.status == 200) {
+                if (response.status === 200) {
                     response.json().then((data) => {
                         this.setState({
                             highschools: data
@@ -64,7 +63,7 @@ class SHS extends React.Component {
         };
         fetch('https://chads4us.herokuapp.com/getallhs', requestOptions)
             .then(response => {
-                if (response.status == 200) {
+                if (response.status === 200) {
                     response.json().then((data) => {
                         this.setState({
                             highschoolOptions: data
@@ -73,7 +72,7 @@ class SHS extends React.Component {
                 } else {
                     this.props.createPopup({
                         title: "HIGHSCHOOL OPS ERROR",
-                        content: "Error in fetching highschool names"
+                        content: "Error in fetching highschool names."
                     });
                 }
             });

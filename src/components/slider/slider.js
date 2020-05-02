@@ -35,7 +35,7 @@ class RangeSlider extends Component {
 
   render() {
     const {
-      state: { domain, values, update, reversed },
+      state: { domain, values, reversed },
     } = this
 
     return (

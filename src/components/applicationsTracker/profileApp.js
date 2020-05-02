@@ -21,7 +21,6 @@ class ProfileApp extends React.Component {
     }
 
     render() {
-        let moreInfo = null;
         const colors = {
             'accepted': '#2ECC71',
             'deferred': '#F39C12',
@@ -69,7 +68,7 @@ class ProfileApp extends React.Component {
                     <div className="pfInfoField2"><div className="pfLabel2">SAT PHYS: </div><div className="pfField2 pfField800">{this.props.data.satphysics || "n/a"}</div></div>
                     <div className="pfInfoField2"><div className="pfLabel2 pfNotTest">PASSED APS: </div><div className="pfField2">{this.props.data.numpassedaps || "n/a"}</div></div>
                 </div>
-                <i class={`fas fa-expand-alt expandIcon ${this.state.expanded ? "expandIconE" : null}`} onClick={this.expandCard}></i>
+                <i className={`fas fa-expand-alt expandIcon ${this.state.expanded ? "expandIconE" : null}`} onClick={this.expandCard}></i>
             </div>
         );
     }
