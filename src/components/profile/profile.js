@@ -220,11 +220,17 @@ class Profile extends React.Component {
 
     saveEdits(editReason) {
 
+        // console.log(this.highschoolname.getInstance().getValue());
+        this.setState({ userInfo: { ...this.state.userInfo, highschoolname: this.highschoolname.getInstance().getValue()}});
+
         if(JSON.stringify(this.state.userInfo) !== JSON.stringify(this.state.old_userInfo)) {
 
             //check for errors first
 
             if(!this.checkInfo()) {
+
+                
+
                 this.props.createPopup({
                     title: "SAVING EDITS",
                     content: "Your profile edits are being saved."
@@ -313,7 +319,7 @@ class Profile extends React.Component {
     }
 
     handleHighschoolName(e) {
-        this.setState({ userInfo: { ...this.state.userInfo, highschoolname: e.target.value}})
+        this.setState({ userInfo: { ...this.state.userInfo, highschoolname: this.highschoolname}})
     }
     handleHighschoolCity(e) {
         this.setState({ userInfo: { ...this.state.userInfo, highschoolcity: e.target.value}})
