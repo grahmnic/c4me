@@ -46,7 +46,8 @@ class Collegesearch extends React.Component {
             modalOps: null,
             modalCallback: null,
             indivCollegeInfo: null,
-            collegeOptions: []
+            collegeOptions: [],
+            similarProfilesList: []
         }
         
         this.handlePage = this.handlePage.bind(this);
@@ -235,7 +236,6 @@ class Collegesearch extends React.Component {
                         this.setState({
                             collegeOptions: data
                         });
-                        console.log(this.state.collegeOptions);
                     });
                 } else {
                     this.props.createPopup({
@@ -244,6 +244,23 @@ class Collegesearch extends React.Component {
                     });
                 }
             });
+        
+        fetch('https://chads4us.herokuapp.com/getfive', requestOptions) 
+            .then(response => {
+                if (response.status === 200) {
+                    response.json().then((data) => {
+                        this.setState({
+                            similarProfilesList: data
+                        });
+                        console.log(this.state.similarProfilesList);
+                    });
+                } else {
+                    this.props.createPopup({
+                        title: "Similar Profiles Error",
+                        content: "Error in getting similar profiles"
+                    });
+                }
+            })
     }
 
     calculateScore = () => {
@@ -585,6 +602,25 @@ class Collegesearch extends React.Component {
 
             console.log(majors);
 
+            let profilesList = [];
+            for (i = 0; i < this.state.similarProfilesList.length; i++) {
+                profilesList.push({
+                    id: i,
+                    value: this.state.similarProfilesList[i]
+                });
+            }
+
+            let similarProfiles = profilesList.map((e) => 
+                <div className="indivProfile" key={e.id}>
+                    <span className="profileUsername"> Username: {e.value.username} <br/> </span>
+                    GPA: {e.value.gpa} <br/>
+                    SAT Math: {e.value.satmath} <br/>
+                    SAT EBRW: {e.value.satebrw} <br/>
+                    ACT Composite: {e.value.actcomposite} <br/>
+                </div>
+
+            );
+
             modal = 
             <div>
                 <div className="collegemodal">
@@ -614,8 +650,10 @@ class Collegesearch extends React.Component {
 
                                 SAT EBRW: {this.state.indivCollegeInfo.satebrw} <br/>
                                 SAT MATH: {this.state.indivCollegeInfo.satmath} <br/>
-                                ACT COMPOSITE: {this.state.indivCollegeInfo.actcomposite}
-                                
+                                ACT COMPOSITE: {this.state.indivCollegeInfo.actcomposite} <br/>
+                                <br/>
+                                Similar Profiles: <div className="similarProfiles"> {similarProfiles} </div>
+
                             </div>
                             <div className="collegemodal-btns">
                                 <div className="collegemodal-cancel" onClick={this.closeModal}>
