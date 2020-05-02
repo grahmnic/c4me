@@ -109,7 +109,7 @@ class ApplicationsTracker extends React.Component {
         };
         fetch('https://chads4us.herokuapp.com/apptracker', requestOptions)
             .then(response => {
-                if (response == 200) {
+                if (response.status == 200) {
                     response.json().then((data) => {
                         const determineOrder = (x) => {
                             switch(x) {
