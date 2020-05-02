@@ -282,6 +282,10 @@
     margin-top: 1rem;
 }
 
+.nameFilter > .datalist {
+    align-items: flex-start;
+}
+
 .nameInput {
     font-family: 'Roboto Condensed', monospace;
     padding: 4px;

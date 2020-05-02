@@ -4,6 +4,7 @@ import CollegeResult from '../collegeResult/collegeResult';
 import '../collegeModal/collegeModal.css';
 import Select from '../select/select.js';
 import MultiSelect from '../select/multiselect.js';
+import DataList from '../select/datalist.js';
 
 import {Slider, Handles, Tracks} from 'react-compound-slider';
 import {Scrollbars} from 'react-custom-scrollbars';
@@ -47,7 +48,8 @@ class Collegesearch extends React.Component {
             showModal: false,
             modalOps: null,
             modalCallback: null,
-            indivCollegeInfo: null
+            indivCollegeInfo: null,
+            collegeOptions: []
         }
         
         this.handlePage = this.handlePage.bind(this);
@@ -65,6 +67,10 @@ class Collegesearch extends React.Component {
 
     setStateRef = (ref) => {
         this.stateRef = ref;
+    }
+
+    setCollegeRef = (ref) => {
+        this.collegeNameRef = ref;
     }
 
     handleCollegeName = (e) => {
@@ -224,6 +230,23 @@ class Collegesearch extends React.Component {
                     loading: false
                 });
             });
+
+        fetch('https://chads4us.herokuapp.com/getallcollegenames', requestOptions)
+            .then(response => {
+                if (response.status === 200) {
+                    response.json().then((data) => {
+                        this.setState({
+                            collegeOptions: data
+                        });
+                        console.log(this.state.collegeOptions);
+                    });
+                } else {
+                    this.props.createPopup({
+                        title: "College Name Error",
+                        content: "Error in getting college names."
+                    });
+                }
+            });
     }
 
     calculateScore = () => {
@@ -275,7 +298,7 @@ class Collegesearch extends React.Component {
             body: JSON.stringify({
                 username: localStorage.getItem("user"),
                 isStrict: this.state.strict,
-                collegename: this.state.collegename,
+                collegename: this.collegeNameRef.getInstance().getValue(),
                 lowadmissionrate: this.state.toggleAdmissionsRange ? this.state.admissionsRange[0] : null,
                 highadmissionrate: this.state.toggleAdmissionsRange ? this.state.admissionsRange[1] : null,
                 costofattendance: this.state.toggleCostRange ? this.state.costRange[1] : null,
@@ -654,7 +677,12 @@ class Collegesearch extends React.Component {
                             </div>
                             <div className="hr"></div>
                             <div className="nameFilter">
-                                    <input className="nameInput" type="text" value={this.state.collegename} onChange={this.handleCollegeName} placeholder="Name"/>
+
+                                    <DataList autofill={false} className="nameInput" ref={this.setCollegeRef} options={this.state.collegeOptions} placeholder="Name" 
+                                        fontSize="1rem" 
+                                        padding="6px"
+                                        >
+                                    </DataList>
                             </div>
                             <div className="location">
                                 <div className={`locationWrapper ${this.state.toggleLocation ? null : "disabledLocationInput"}`}>

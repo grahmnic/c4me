@@ -48,7 +48,7 @@ class CollegeResult extends React.Component {
                         <div className="collegeTypeRateWrap">
                             <div className="collegeTypeRate"><strong>Institution Type:</strong> {this.props.data.institutiontype ? this.props.data.institutiontype : "n/a"}
                             </div>
-                            <div><strong>Admission Rate:</strong> {this.props.data.admissionrate ? (this.props.data.admissionrate * 100) + "%" : "n/a"}</div>
+                            <div><strong>Admission Rate:</strong> {this.props.data.admissionrate ? (this.props.data.admissionrate * 100).toFixed(2) + "%" : "n/a"}</div>
                         </div>
                         <div className="collegeDetailWrap">
                             <div className="collegeDetailText">
