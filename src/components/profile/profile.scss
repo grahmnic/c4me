@@ -100,6 +100,23 @@
     display: table-cell;
 }
 
+.user-info > div > .datalist {
+    align-items: flex-start;
+    padding-left: 0 !important;
+    width: 100%;
+    background: #DDDDDD;
+}
+
+.user-info > div > .datalist > .dlInput{
+    caret-color: #222;
+    color: #222;
+    &::placeholder {
+        color: rgba(34, 34, 34, 0.4);
+    }
+}
+
+
+
 .user-info > div > div:nth-child(1) {
     font-weight: bold;
     padding-left: 20px;

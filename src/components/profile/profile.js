@@ -1,5 +1,5 @@
 import React from 'react';
-import './profile.css';
+import './profile.scss';
 import { Redirect } from 'react-router-dom';
 import Progress from './progress/progress.js';
 import profileImage from '../../assets/images/ralph.jpg';
@@ -393,9 +393,9 @@ class Profile extends React.Component {
                         <div>HIGHSCHOOL</div>
                         {/* <input value={this.state.userInfo.highschoolname} type="text" onChange={this.handleHighschoolName}/> */}
                         <DataList autofill={false} ref={this.setHSNameRef} options={this.state.highschoolOptions}
-                            placeholder="High School Name"
+                            placeholder="Enter highschool"
                             fontSize="1rem"
-                            padding="2px"> 
+                            padding="3px 5px"> 
                         </DataList>
                     </div>
                     <div>
