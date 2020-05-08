@@ -7,7 +7,7 @@ class DataList extends React.Component {
         super(props);
 
         this.state = {
-            value: null,
+            value: this.props.value || null,
             displayedValues: this.props.options,
             toggleDisplayedValues: false
         }

@@ -95,7 +95,7 @@ class Profile extends React.Component {
                     data.json().then(res => {
                         this.setState({
                             userInfo: res,
-                            old_userInfo: res
+                            old_userInfo: Object.assign({}, res)
                         });
                     });
                 }
@@ -219,23 +219,25 @@ class Profile extends React.Component {
 
 
     saveEdits(editReason) {
-
         // console.log(this.highschoolname.getInstance().getValue());
-        this.setState({ userInfo: { ...this.state.userInfo, highschoolname: this.highschoolname.getInstance().getValue()}});
+        let userInfoStr = this.state.userInfo;
+        if(editReason === 'profile information') {
+            userInfoStr.highschoolname = this.highschoolname.getInstance().getValue();
+        }
 
-        if(JSON.stringify(this.state.userInfo) !== JSON.stringify(this.state.old_userInfo)) {
+        if(JSON.stringify(userInfoStr) !== JSON.stringify(this.state.old_userInfo)) {
 
             //check for errors first
 
             if(!this.checkInfo()) {
-
+                
                 
 
                 this.props.createPopup({
                     title: "SAVING EDITS",
                     content: "Your profile edits are being saved."
                 });
-                var userInfo = this.state.userInfo;
+                var userInfo = userInfoStr;
                 userInfo.password = this.state.new_password;
                 const requestOptions = {
                     method: 'POST',
@@ -401,7 +403,8 @@ class Profile extends React.Component {
                         <DataList autofill={false} ref={this.setHSNameRef} options={this.state.highschoolOptions}
                             placeholder="Enter highschool"
                             fontSize="1rem"
-                            padding="3px 5px"> 
+                            padding="3px 5px"
+                            value={this.state.userInfo.highschoolname}> 
                         </DataList>
                     </div>
                     <div>
