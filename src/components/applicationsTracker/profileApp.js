@@ -52,10 +52,10 @@ class ProfileApp extends React.Component {
                 <div className={`pfMoreInfo ${this.state.expanded ? "pfMoreInfoE" : null}`}>
                     <div className="pfInfoField2"><div className="pfLabel2">SAT MATH: </div><div className="pfField2 pfField800">{this.props.data.satmath || "n/a"}</div></div>
                     <div className="pfInfoField2"><div className="pfLabel2">SAT EBRW: </div><div className="pfField2 pfField800">{this.props.data.satebrw || "n/a"}</div></div>
-                    <div className="pfInfoField2"><div className="pfLabel2">ACT ENG: </div><div className="pfField2 pfField32">{this.props.data.actenglish || "n/a"}</div></div>
-                    <div className="pfInfoField2"><div className="pfLabel2">ACT MATH: </div><div className="pfField2 pfField32">{this.props.data.actmath || "n/a"}</div></div>
-                    <div className="pfInfoField2"><div className="pfLabel2">ACT READ: </div><div className="pfField2 pfField32">{this.props.data.actreading || "n/a"}</div></div>
-                    <div className="pfInfoField2"><div className="pfLabel2">SAT SCI: </div><div className="pfField2 pfField32">{this.props.data.actscience || "n/a"}</div></div>
+                    <div className="pfInfoField2"><div className="pfLabel2">ACT ENG: </div><div className="pfField2 pfField75">{this.props.data.actenglish || "n/a"}</div></div>
+                    <div className="pfInfoField2"><div className="pfLabel2">ACT MATH: </div><div className="pfField2 pfField60">{this.props.data.actmath || "n/a"}</div></div>
+                    <div className="pfInfoField2"><div className="pfLabel2">ACT READ: </div><div className="pfField2 pfField40">{this.props.data.actreading || "n/a"}</div></div>
+                    <div className="pfInfoField2"><div className="pfLabel2">SAT SCI: </div><div className="pfField2 pfField40">{this.props.data.actscience || "n/a"}</div></div>
                     <div className="pfInfoField2"><div className="pfLabel2">ACT COMP: </div><div className="pfField2 pfField32">{this.props.data.actcomposite || "n/a"}</div></div>
                     <div className="pfInfoField2"><div className="pfLabel2">SAT LIT: </div><div className="pfField2 pfField800">{this.props.data.satliterature || "n/a"}</div></div>
                     <div className="pfInfoField2"><div className="pfLabel2">SAT USH: </div><div className="pfField2 pfField800">{this.props.data.satushistory || "n/a"}</div></div>

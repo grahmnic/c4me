@@ -138,7 +138,7 @@ class Profile extends React.Component {
             errorString += "Your SAT EBRW value is invalid. \n";
             hasError = true;
         } 
-        if (this.state.userInfo.satmath != null && (this.state.userInfo.actcomposite > 32 || this.state.userInfo.actcomposite < 0)) {
+        if (this.state.userInfo.satmath != null && (this.state.userInfo.actcomposite > 36 || this.state.userInfo.actcomposite < 0)) {
             errorString += "Your ACT Composite value is invalid. \n";
             hasError = true;
         }
